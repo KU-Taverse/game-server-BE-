@@ -3,10 +3,12 @@ package kutaverse.game.map.repository;
 import kutaverse.game.map.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
+@Repository
 public class RedisUserRepository implements UserRepository{
 
     private final ReactiveRedisOperations<String, Object> redisOperations;
