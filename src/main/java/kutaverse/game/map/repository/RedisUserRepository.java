@@ -11,21 +11,21 @@ import reactor.core.publisher.Mono;
 @Repository
 public class RedisUserRepository implements UserRepository{
 
-    private final ReactiveRedisOperations<String, Object> redisOperations;
+    private final ReactiveRedisOperations<String, User> redisOperations;
     @Override
     public Mono<Boolean> save(User user) {
         return redisOperations.opsForValue().set(user.getKey(),user);
     }
 
     @Override
-    public Mono<Object> get(String key) {//왜 형변환을 할 수 없을까?
+    public Mono<User> get(String key) {
         return redisOperations.opsForValue().get(key);
 
 
     }
 
     @Override
-    public Flux<User> getAll() {//왜 형변환을 할 수 있을까?
+    public Flux<User> getAll() {
         return redisOperations.keys("*")
                 .flatMap(value->redisOperations.opsForValue().get(value))
                 .cast(User.class);

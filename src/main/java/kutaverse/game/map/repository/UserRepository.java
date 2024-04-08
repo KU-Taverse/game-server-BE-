@@ -8,7 +8,7 @@ public interface UserRepository {
 
     Mono<Boolean> save(User user);
 
-    Mono<Object> get(String key);
+    Mono<User> get(String key);
 
     Flux<User> getAll();
 

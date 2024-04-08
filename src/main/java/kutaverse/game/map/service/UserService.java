@@ -10,7 +10,7 @@ public interface UserService {
 
     Flux<User> getAll();
 
-    Mono<Object> getOne(String key);
+    Mono<User> getOne(String key);
 
     Mono<Long> deleteById(String key);
 }

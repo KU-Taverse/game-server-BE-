@@ -24,7 +24,7 @@ public class RedisUserService implements UserService {
     }
 
     @Override
-    public Mono<Object> getOne(String id) {
+    public Mono<User> getOne(String id) {
         return userRepository.get(id);
     }
 
