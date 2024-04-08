@@ -34,7 +34,7 @@ public class RedisUserController implements UserController{
     }
 
     @DeleteMapping("/user/{key}")
-    public Mono<Long> deleteDessert(@PathVariable(value = "key") String key) {
+    public Mono<Long> deleteUser(@PathVariable(value = "key") String key) {
         return userService.deleteById(key);
     }
 }
