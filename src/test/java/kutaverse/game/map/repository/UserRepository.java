@@ -6,9 +6,9 @@ import reactor.core.publisher.Mono;
 
 public interface UserRepository {
 
-    Mono<User> save(User user);
+    Mono<Boolean> save(User user);
 
-    Mono<User> get(String key);
+    Mono<Object> get(String key);
 
     Flux<User> getAll();
 
