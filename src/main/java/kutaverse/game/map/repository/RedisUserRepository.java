@@ -27,8 +27,8 @@ public class RedisUserRepository implements UserRepository{
     @Override
     public Flux<User> getAll() {
         return redisOperations.keys("*")
-                .flatMap(value->redisOperations.opsForValue().get(value))
-                .cast(User.class);
+                .flatMap(value->redisOperations.opsForValue().get(value));
+
     }
 
     @Override

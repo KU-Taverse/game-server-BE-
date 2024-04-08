@@ -3,12 +3,13 @@ package kutaverse.game.map.controller;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class RedisUserController implements UserController{
 
@@ -28,12 +29,12 @@ public class RedisUserController implements UserController{
 
     @GetMapping("/user/{key}")
     @Override
-    public Mono<User> getUser(@PathVariable String key) {
+    public Mono<User> getUser(@PathVariable(value = "key") String key) {
         return userService.getOne(key).cast(User.class);
     }
 
     @DeleteMapping("/user/{key}")
-    public Mono<Long> deleteDessert(@PathVariable String key) {
+    public Mono<Long> deleteDessert(@PathVariable(value = "key") String key) {
         return userService.deleteById(key);
     }
 }
