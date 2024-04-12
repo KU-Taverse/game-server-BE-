@@ -17,7 +17,7 @@ public class RedisUserController implements UserController{
 
     @PostMapping("/user")
     @Override
-    public Mono<Boolean> addUser(@RequestBody User user) {
+    public Mono<User> addUser(@RequestBody User user) {
         return userService.create(user);
     }
 

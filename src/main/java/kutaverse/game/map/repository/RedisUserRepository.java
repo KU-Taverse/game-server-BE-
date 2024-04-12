@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @RequiredArgsConstructor
 @Repository
@@ -13,8 +14,11 @@ public class RedisUserRepository implements UserRepository{
 
     private final ReactiveRedisOperations<String, User> redisOperations;
     @Override
-    public Mono<Boolean> save(User user) {
-        return redisOperations.opsForValue().set(user.getKey(),user);
+    public Mono<User> save(User user) {
+        return redisOperations.opsForValue()
+                .set(user.getKey(),user)
+                .then(Mono.just(user.getKey()))
+                .flatMap(key->redisOperations.opsForValue().get(key));
     }
 
     @Override

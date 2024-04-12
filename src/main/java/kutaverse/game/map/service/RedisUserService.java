@@ -14,7 +14,7 @@ public class RedisUserService implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Mono<Boolean> create(User user) {
+    public Mono<User> create(User user) {
         return userRepository.save(user);
     }
 
