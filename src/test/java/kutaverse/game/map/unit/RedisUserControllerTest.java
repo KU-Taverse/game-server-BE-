@@ -1,4 +1,4 @@
-package kutaverse.game.map;
+package kutaverse.game.map.unit;
 
 import kutaverse.game.map.controller.RedisUserController;
 import kutaverse.game.map.controller.UserController;
@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
-@Import(RedisUserController.class)
+@Import(RedisUserController.class)//현재에는 필요 없는 것 같다
 public class RedisUserControllerTest {
 
     @MockBean
@@ -27,9 +27,6 @@ public class RedisUserControllerTest {
 
     @Autowired
     UserController userController;
-
-    // unit test
-    // integration test
 
     //validation이 필요하다
     @Test
