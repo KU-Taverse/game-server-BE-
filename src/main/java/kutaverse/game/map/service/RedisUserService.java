@@ -19,12 +19,12 @@ public class RedisUserService implements UserService {
     }
 
     @Override
-    public Flux<User> getAll() {
+    public Flux<User> findAll() {
         return userRepository.getAll();
     }
 
     @Override
-    public Mono<User> getOne(String id) {
+    public Mono<User> findOne(String id) {
         return userRepository.get(id);
     }
 

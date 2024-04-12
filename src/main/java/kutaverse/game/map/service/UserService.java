@@ -8,9 +8,9 @@ public interface UserService {
 
     Mono<User> create(User user);
 
-    Flux<User> getAll();
+    Flux<User> findAll();
 
-    Mono<User> getOne(String key);
+    Mono<User> findOne(String key);
 
     Mono<Long> deleteById(String key);
 }
