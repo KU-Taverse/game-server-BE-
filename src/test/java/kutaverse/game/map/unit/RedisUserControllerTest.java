@@ -61,7 +61,7 @@ public class RedisUserControllerTest {
     }
 
     @Test
-    @DisplayName("unit test-controller test 저장되 모든 유저를 찾을 수 있어야한다.")
+    @DisplayName("unit test-controller test 저장된 모든 유저를 찾을 수 있어야한다.")
     public void test3(){
         //given
 
