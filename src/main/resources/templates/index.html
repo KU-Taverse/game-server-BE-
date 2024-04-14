@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commeow Chat</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="chat-container">
+    <div id="nickname-input">
+        <input type="text" id="username" placeholder="닉네임을 입력하세요...">
+        <!--<button id="confirmUsername" onclick="confirmUsername()">완료</button>-->
+    </div>
+    <div class="chat-box">
+        <ul id="message-list"></ul>
+        <div id="message-input1">
+            <input type="text" id="inputMessage1" placeholder="PositionX를 입력하세요...">
+        </div>
+        <div id="message-input2">
+            <input type="text" id="inputMessage2" placeholder="PositionY를  입력하세요...">
+        </div>
+        <div id="message-input3">
+            <input type="text" id="inputMessage3" placeholder="PositionZ를 입력하세요...">
+        </div>
+        <div id="message-input4">
+            <input type="text" id="inputMessage4" placeholder="EulerAngleX를 입력하세요...">
+        </div>
+        <div id="message-input5">
+            <input type="text" id="inputMessage5" placeholder="EulerAngleY를 입력하세요...">
+        </div>
+        <div id="message-input6">
+            <input type="text" id="inputMessage6" placeholder="EulerAngleZ를 입력하세요...">
+        </div>
+        <div id="message-input7">
+            <input type="text" id="inputMessage7" placeholder="status를 입력하세요...">
+            <button onclick="sendMessage()">전송</button>
+        </div>
+    </div>
+
+</div>
+<script>
+    const chatWebSocket = new WebSocket('ws://' + location.host + '/ws-chat');
+    const userId=document.getElementById('username');
+    const positionX=document.getElementById('inputMessage1');
+    const positionY=document.getElementById('inputMessage2');
+    const positionZ=document.getElementById('inputMessage3');
+    const eulerAngleX=document.getElementById('inputMessage4');
+    const eulerAngleY=document.getElementById('inputMessage5');
+    const eulerAngleZ=document.getElementById('inputMessage6');
+    const status=document.getElementById('inputMessage7');
+
+
+
+    const messageList = document.getElementById('message-list');
+
+    chatWebSocket.onmessage = function(event) {
+        const li = document.createElement('li');
+        li.innerText = event.data;
+        messageList.appendChild(li);
+    };
+
+    chatWebSocket.onclose = function(event) {
+        alert('웹소켓이 닫혔습니다! 다시 연결하려면 페이지를 새로고침 해주세요.');
+    };
+    /*private Long userId;
+    private Long positionX;
+    private Long positionY;
+    private Long positionZ;
+    private Long eulerAngleX;
+    private Long eulerAngleY;
+    private Long eulerAngleZ;
+    private String status;*/
+    function sendMessage() {
+        /*if (inputMessage.value.trim() === '') {
+            return;
+        }*/
+
+        // chatWebSocket.send(inputMessage.value);
+        //const username = document.getElementById("username").value.trim();
+        const messageObject = {
+            userId: userId.value,
+            positionX: positionX.value,
+            positionY: positionY.value,
+            positionZ: positionZ.value,
+            eulerAngleX: eulerAngleX.value,
+            eulerAngleY: eulerAngleY.value,
+            eulerAngleZ: eulerAngleZ.value,
+            status: status.value
+        };
+        console.log(messageObject)
+        chatWebSocket.send(JSON.stringify(messageObject));
+        resetMessage()
+    }
+    function resetMessage(){
+
+        this.userId = '';
+        this.positionX = '';
+        this.positionY = '';
+        this.positionZ = '';
+        this.eulerAngleX = '';
+        this.eulerAngleY = '';
+        this.eulerAngleZ = '';
+        this.status = '';
+    }
+
+    function confirmUsername() {
+        const usernameInput = document.getElementById("username");
+        const confirmButton = document.getElementById("confirmUsername");
+
+        if (usernameInput.value.trim() !== '') {
+            usernameInput.disabled = true;
+            confirmButton.disabled = true;
+            confirmButton.style.backgroundColor = "gray";
+        }
+    }
+</script>
+</body>
+</html>
