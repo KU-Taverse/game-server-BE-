@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.map.dto.MapRequestDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -20,6 +21,9 @@ public class CustomWebSocketHandler implements WebSocketHandler {
 
 	public CustomWebSocketHandler(Sinks.Many<String> sink) {
 		this.sink = sink;
+	}
+	public void sendMessageToAllClients(String message) {
+		sink.emitNext(message, Sinks.EmitFailureHandler.FAIL_FAST);
 	}
 
 	@Override
