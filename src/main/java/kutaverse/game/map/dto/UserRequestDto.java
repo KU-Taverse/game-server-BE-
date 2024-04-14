@@ -7,7 +7,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class MapRequestDto {
+public class UserRequestDto {
 
     private String userId;
     private String positionX;
