@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 public interface UserController {
 
 
-    Mono<Boolean> addUser(User user);
+    Mono<User> addUser(User user);
 
 
     Flux<User> getAllUser();

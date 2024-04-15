@@ -14,17 +14,17 @@ public class RedisUserService implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Mono<Boolean> create(User user) {
+    public Mono<User> create(User user) {
         return userRepository.save(user);
     }
 
     @Override
-    public Flux<User> getAll() {
+    public Flux<User> findAll() {
         return userRepository.getAll();
     }
 
     @Override
-    public Mono<User> getOne(String id) {
+    public Mono<User> findOne(String id) {
         return userRepository.get(id);
     }
 

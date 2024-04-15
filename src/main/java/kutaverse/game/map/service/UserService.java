@@ -6,11 +6,11 @@ import reactor.core.publisher.Mono;
 
 public interface UserService {
 
-    Mono<Boolean> create(User user);
+    Mono<User> create(User user);
 
-    Flux<User> getAll();
+    Flux<User> findAll();
 
-    Mono<User> getOne(String key);
+    Mono<User> findOne(String key);
 
     Mono<Long> deleteById(String key);
 }
