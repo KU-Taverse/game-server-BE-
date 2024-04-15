@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface UserRepository {
 
-    Mono<Boolean> save(User user);
+    Mono<User> save(User user);
 
     Mono<User> get(String key);
 
