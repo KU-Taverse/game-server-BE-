@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.map.dto.UserRequestDto;
 import kutaverse.game.map.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Component
 public class SaveHandler implements WebSocketHandler {
 
     private final UserService userService;
@@ -16,6 +18,7 @@ public class SaveHandler implements WebSocketHandler {
         try{
             ObjectMapper objectMapper=new ObjectMapper();
             UserRequestDto mapRequestDto=objectMapper.readValue(e, UserRequestDto.class);
+            userService.update(mapRequestDto).subscribe();
 
         } catch (
                 JsonMappingException ex) {
@@ -24,6 +27,6 @@ public class SaveHandler implements WebSocketHandler {
                 JsonProcessingException ex) {
             throw new RuntimeException("jsonprocessingexception 발생");
         }
-        return null;
+        return "";
     }
 }

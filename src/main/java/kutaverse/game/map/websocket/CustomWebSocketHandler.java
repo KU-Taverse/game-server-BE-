@@ -18,8 +18,9 @@ public class CustomWebSocketHandler implements org.springframework.web.reactive.
 	public CustomWebSocketHandler(Sinks.Many<String> sink) {
 		this.sink = sink;
 	}
-	public void sendMessageToAllClients(String message) {
+	public Mono<Void> sendMessageToAllClients(String message) {
 		sink.emitNext(message, Sinks.EmitFailureHandler.FAIL_FAST);
+		return null;
 	}
 
 	@Override
@@ -29,7 +30,6 @@ public class CustomWebSocketHandler implements org.springframework.web.reactive.
 				.map(e -> e.getPayloadAsText())
 				.map(e -> {
 					WebSocketHandler webSocketHandler= WebSocketHandlerMapping.getHandler(e);
-
 					return webSocketHandler.handle(e);
 				});
 

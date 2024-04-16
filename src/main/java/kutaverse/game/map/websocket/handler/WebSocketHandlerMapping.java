@@ -3,8 +3,10 @@ package kutaverse.game.map.websocket.handler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Component
 public class WebSocketHandlerMapping {
 
 
@@ -17,9 +19,10 @@ public class WebSocketHandlerMapping {
     @PostConstruct
     private void initialize() {
         saveHandler = saveHandlerBean;
-        responseHandler=responseHandlerBean;
+        responseHandler = responseHandlerBean;
     }
-    public static WebSocketHandler getHandler(String message){
+
+    public static WebSocketHandler getHandler(String message) {
         return saveHandler;
     }
 }
