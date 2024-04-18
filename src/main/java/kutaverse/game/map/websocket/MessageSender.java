@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -26,11 +27,22 @@ public class MessageSender {
 
     @Scheduled(fixedRate = 1000) // 5초마다 실행
     public void sendMessageToClients() {
+        Mono<String> result=Mono.just("");
 
-        userService.findAll().subscribe(u->sendUsersAsJsonToClients(u));
+        userService.findAll()
+                .collectList()
+                .flatMap(u -> {
+                    String combinedUsers = u.stream()
+                            .map(Object::toString)
+                            .collect(Collectors.joining(" "));
+                    // 기존의 result Mono에 새로운 값을 추가하여 반환
+                    return result.map(existingValue -> existingValue + " " + combinedUsers);
+
+                }).subscribe(this::sendUsersAsJsonToClients);
+
     }
 
-    private Mono<Void> sendUsersAsJsonToClients(User user) {
+    private Mono<Void> sendUsersAsJsonToClients(String user) {
         try {
             String json = objectMapper.writeValueAsString(user);
             return webSocketHandler.sendMessageToAllClients(json);
