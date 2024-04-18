@@ -39,6 +39,11 @@
             <button onclick="sendMessage()">전송</button>
         </div>
     </div>
+    <div>
+        <ul id="output-list">
+
+        </ul>
+    </div>
 
 </div>
 <script>
@@ -54,10 +59,17 @@
 
 
 
-    const messageList = document.getElementById('message-list');
+    const messageList = document.getElementById('output-list');
 
     chatWebSocket.onmessage = function(event) {
+        const outputChildren = document.getElementsByClassName("output-child");
+        // HTMLCollection의 모든 요소를 제거
+        while(outputChildren.length > 0) {
+            outputChildren[0].remove();
+        }
+
         const li = document.createElement('li');
+        li.classList.add('output-child');
         li.innerText = event.data;
         messageList.appendChild(li);
     };
