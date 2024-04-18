@@ -24,7 +24,7 @@ public class MessageSender {
 
     ObjectMapper objectMapper=new ObjectMapper();
 
-    @Scheduled(fixedRate = 5000) // 5초마다 실행
+    @Scheduled(fixedRate = 1000) // 5초마다 실행
     public void sendMessageToClients() {
 
         userService.findAll().subscribe(u->sendUsersAsJsonToClients(u));
