@@ -29,7 +29,7 @@ public class UserRequestDto {
                 .eulerAngleX(Integer.valueOf(eulerAngleX))
                 .eulerAngleY(Integer.valueOf(eulerAngleY))
                 .eulerAngleZ(Integer.valueOf(eulerAngleZ))
-                .status(Status.JUMP)
+                .status(Status.valueOf(status))
                 .build();
     }
 }
