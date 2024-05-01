@@ -125,7 +125,7 @@ jobs:
         key: ${{ secrets.KEY }}
         envs: GITHUB_SHA
         script: |
-          sudo docker-compose -f $COMPOSE down --rmi all
+#          sudo docker rm -f $(docker ps -qa)
           sudo docker pull ${{ secrets.DOCKER_REPO }}
           docker-compose up -d
           docker image prune -f
