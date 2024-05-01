@@ -118,7 +118,7 @@ jobs:
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       env:
-        COMPOSE: "/root/compose/docker-compose.yml"
+        COMPOSE: ${{ secrets.DOCKER_PATH }}
       id: deploy
       with:
         host: ${{ secrets.HOST }}
@@ -131,4 +131,4 @@ jobs:
           sudo docker rm $(docker ps -a -q)
           sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/sample-repository
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sample-repository
-          sudo docker-compose -f ${COMPOSE} up -d
+          sudo docker-compose -f $COMPOSE up -d
