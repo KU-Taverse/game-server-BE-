@@ -127,6 +127,8 @@ jobs:
         key: ${{ secrets.KEY }}
         envs: GITHUB_SHA
         script: |
-          sudo docker-compose -f $COMPOSE down --rmi all
-          sudo docker pull $/$APP:latest
-          sudo docker-compose -f $COMPOSE up -d
+          sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          sudo docker rm $(docker ps -a -q)
+          sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/sample-repository:latest
+          sudo docker pull ${{ secrets.DOCKER_PASSWORD }}/sample-repository:latest
+          sudo docker-compose up -d
