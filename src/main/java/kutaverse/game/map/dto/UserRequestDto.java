@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class UserRequestDto {
-
+    private MapRequestType mapRequestType;
     private String userId;
     private String positionX;
     private String positionY;
