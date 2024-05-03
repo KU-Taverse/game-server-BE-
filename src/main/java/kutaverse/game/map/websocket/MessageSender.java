@@ -25,8 +25,6 @@ public class MessageSender {
 
     private final UserService userService;
 
-    ObjectMapper objectMapper=new ObjectMapper();
-
     @Scheduled(fixedRate = 1000) // 5초마다 실행
     public void sendMessageToClients() {
 
