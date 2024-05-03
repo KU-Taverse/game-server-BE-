@@ -130,5 +130,6 @@ jobs:
           sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           sudo docker rm $(docker ps -a -q)
           sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/sample-repository
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sample-repository
-          sudo docker-compose -f $COMPOSE up -d
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sample-repositor
+          cd {{secrets.PROJECT_PATH}}
+          sudo docker-compose up --build
