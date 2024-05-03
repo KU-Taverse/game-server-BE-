@@ -136,4 +136,4 @@ jobs:
           sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/sample-repository
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sample-repository
           
-          sudo docker-compose up --build
+          sudo docker-compose up --build -d
