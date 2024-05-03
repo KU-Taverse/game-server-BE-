@@ -1,30 +1,45 @@
 package kutaverse.game.map.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 @Getter
 @RedisHash(value = "user", timeToLive = 30) //초단위
 @NoArgsConstructor
+@ToString
 public class User {
 
     @Id
     private String key;
 
-    private String name;
-
     private Integer positionX;
 
     private Integer positionY;
 
+    private Integer positionZ;
 
-    public User(String key, String name) {
-        this.key=key;
-        this.name = name;
-        positionX=0;
-        positionY=0;
+    private Integer eulerAngleX;
 
+    private Integer eulerAngleY;
+
+    private Integer eulerAngleZ;
+
+    private Status status;
+
+    @Builder
+    public User(String key, Integer positionX, Integer positionY, Integer positionZ, Integer eulerAngleX, Integer eulerAngleY, Integer eulerAngleZ, Status status) {
+        this.key = key;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.positionZ = positionZ;
+        this.eulerAngleX = eulerAngleX;
+        this.eulerAngleY = eulerAngleY;
+        this.eulerAngleZ = eulerAngleZ;
+        this.status = status;
     }
+
 }

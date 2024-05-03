@@ -1,6 +1,7 @@
 package kutaverse.game.map.service;
 
 import kutaverse.game.map.domain.User;
+import kutaverse.game.map.dto.UserRequestDto;
 import kutaverse.game.map.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,10 @@ public class RedisUserService implements UserService {
     public Mono<Long> deleteById(String key) {
         return userRepository.delete(key);
     }
+
+    @Override
+    public Mono<User> update(UserRequestDto userRequestDto) {
+        return create(userRequestDto.toEntity());
+    }
+
 }

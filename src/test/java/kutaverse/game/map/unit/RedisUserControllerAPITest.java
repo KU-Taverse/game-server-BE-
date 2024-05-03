@@ -2,6 +2,7 @@ package kutaverse.game.map.unit;
 
 import kutaverse.game.map.controller.RedisUserController;
 import kutaverse.game.map.controller.UserController;
+import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.service.UserService;
 import org.assertj.core.api.Assertions;
@@ -45,8 +46,7 @@ public class RedisUserControllerAPITest {
             "작업이 필요합니다")
     public void test1(){
         //given
-        User user=new User("1","user1");
-        User user1=new User("1","user1");
+        User user=new User("1", 1, 2, 3, 4,5,6, Status.STAND);
         Mockito.when(userService.create(user)).thenReturn(Mono.just(user));
         //when
 
@@ -66,7 +66,7 @@ public class RedisUserControllerAPITest {
     public void test2(){
         //given
         String key="1";
-        User user=new User(key,"user1");
+        User user=new User(key, 1, 2, 3, 4,5,6, Status.STAND);
         Mockito.when(userService.findOne("1")).thenReturn(Mono.just(user));
         //when
 
@@ -76,8 +76,8 @@ public class RedisUserControllerAPITest {
 
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.key").isEqualTo(key)
-                .jsonPath("$.name").isEqualTo("user1");
+                .jsonPath("$.key").isEqualTo(key);
+
 
         Mockito.verify(userService,Mockito.times(1)).findOne(key);
     }
@@ -87,8 +87,8 @@ public class RedisUserControllerAPITest {
     public void test3(){
         //given
 
-        User user1=new User("1","user1");
-        User user2=new User("2","user2");
+        User user1=new User("1", 1, 2, 3, 4,5,6, Status.STAND);
+        User user2=new User("2", 1, 2, 3, 4,5,6, Status.STAND);
 
         Mockito.when(userService.findAll()).thenReturn(Flux.just(user1,user2));
         //when
@@ -100,9 +100,7 @@ public class RedisUserControllerAPITest {
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$[0].key").isEqualTo("1")
-                .jsonPath("$[0].name").isEqualTo("user1")
-                .jsonPath("$[1].key").isEqualTo("2")
-                .jsonPath("$[1].name").isEqualTo("user2");
+                .jsonPath("$[1].key").isEqualTo("2");
 
 
         //then
