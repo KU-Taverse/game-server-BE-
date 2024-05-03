@@ -14,19 +14,7 @@ public class SaveHandler implements WebSocketHandler {
 
     private final UserService userService;
     @Override
-    public String handle(String e) {
-        try{
-            ObjectMapper objectMapper=new ObjectMapper();
-            UserRequestDto mapRequestDto=objectMapper.readValue(e, UserRequestDto.class);
-            userService.update(mapRequestDto).subscribe();
-
-        } catch (
-                JsonMappingException ex) {
-            throw new RuntimeException("jsonMappring Exception 발생");
-        } catch (
-                JsonProcessingException ex) {
-            throw new RuntimeException("jsonprocessingexception 발생");
-        }
-        return "";
+    public void handle(UserRequestDto userRequestDto) {
+        userService.update(userRequestDto).subscribe();
     }
 }

@@ -1,7 +1,7 @@
 package kutaverse.game.map.websocket.handler;
 
+import kutaverse.game.map.dto.UserRequestDto;
+
 public interface WebSocketHandler {
-
-
-    String handle(String e);
+    void handle(UserRequestDto userRequestDto);
 }

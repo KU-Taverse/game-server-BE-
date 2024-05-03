@@ -1,5 +1,6 @@
 package kutaverse.game.map.websocket.handler;
 
+import kutaverse.game.map.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResponseHandler implements WebSocketHandler {
     @Override
-    public String handle(String e) {
-        return null;
+    public void handle(UserRequestDto e) {
     }
 }
