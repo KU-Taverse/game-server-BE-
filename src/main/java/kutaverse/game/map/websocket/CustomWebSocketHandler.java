@@ -32,6 +32,10 @@ public class CustomWebSocketHandler implements org.springframework.web.reactive.
 		ObjectMapper objectMapper=new ObjectMapper();
 		var output = session.receive()
 				.map(WebSocketMessage::getPayloadAsText)
+				.doOnNext(data -> {
+					// Output raw data
+					System.out.println("Received raw data: " + data);
+				})
 				.map(data-> {
 					try {
 						return objectMapper.readValue(data, UserRequestDto.class);

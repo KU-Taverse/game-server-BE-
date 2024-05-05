@@ -78,7 +78,7 @@
 
         // 받은 텍스트 데이터를 파싱하여 사용자 정보를 추출
         const userData = extractUserData(event.data);
-        console.log("respose"+userData)
+        console.log("respose",userData)
         // 사용자 정보를 화면에 출력
         userData.forEach(function(user) {
             const li = document.createElement('li');
@@ -110,7 +110,13 @@
             eulerAngleZ: eulerAngleZ.value,
             status: status.value
         };
-        console.log("request"+messageObject)
+        for (const key in messageObject) {
+            if (key !== 'mapRequestType' && key !== 'status') {
+                // mapRequestType과 status를 제외하고 모든 값을 double로 변환
+                messageObject[key] = parseFloat(messageObject[key]);
+            }
+        }
+        console.log("request",messageObject)
         chatWebSocket.send(JSON.stringify(messageObject));
         resetMessage()
     };

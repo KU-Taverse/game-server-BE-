@@ -12,22 +12,22 @@ import lombok.ToString;
 public class UserResponseDto {
 
     private String userId;
-    private String positionX;
-    private String positionY;
-    private String positionZ;
-    private String eulerAngleX;
-    private String eulerAngleY;
-    private String eulerAngleZ;
+    private Double positionX;
+    private Double positionY;
+    private Double positionZ;
+    private Double eulerAngleX;
+    private Double eulerAngleY;
+    private Double eulerAngleZ;
     private String status;
 
     public UserResponseDto(User user) {
         this.userId = user.getKey();
-        this.positionX = String.valueOf(user.getPositionX());
-        this.positionY = String.valueOf(user.getPositionY());
-        this.positionZ = String.valueOf(user.getPositionZ());
-        this.eulerAngleX = String.valueOf(user.getEulerAngleX());
-        this.eulerAngleY = String.valueOf(user.getEulerAngleY());
-        this.eulerAngleZ = String.valueOf(user.getEulerAngleZ());
+        this.positionX=user.getPositionX();
+        this.positionY=user.getPositionY();
+        this.positionZ=user.getPositionZ();
+        this.eulerAngleX=user.getEulerAngleX();
+        this.eulerAngleY=user.getEulerAngleY();
+        this.eulerAngleZ=user.getEulerAngleZ();
         this.status = String.valueOf(user.getStatus());
     }
 

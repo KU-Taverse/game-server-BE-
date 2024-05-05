@@ -12,24 +12,24 @@ import lombok.ToString;
 public class UserRequestDto {
     private MapRequestType mapRequestType;
     private String userId;
-    private String positionX;
-    private String positionY;
-    private String positionZ;
-    private String eulerAngleX;
-    private String eulerAngleY;
-    private String eulerAngleZ;
-    private String status;
+    private Double positionX;
+    private Double positionY;
+    private Double positionZ;
+    private Double eulerAngleX;
+    private Double eulerAngleY;
+    private Double eulerAngleZ;
+    private Status status;
 
     public User toEntity(){
         return User.builder()
                 .key(userId)
-                .positionX(Integer.valueOf(positionX))
-                .positionY(Integer.valueOf(positionY))
-                .positionZ(Integer.valueOf(positionZ))
-                .eulerAngleX(Integer.valueOf(eulerAngleX))
-                .eulerAngleY(Integer.valueOf(eulerAngleY))
-                .eulerAngleZ(Integer.valueOf(eulerAngleZ))
-                .status(Status.valueOf(status))
+                .positionX(positionX)
+                .positionY(positionY)
+                .positionZ(positionZ)
+                .eulerAngleX(eulerAngleX)
+                .eulerAngleY(eulerAngleY)
+                .eulerAngleZ(eulerAngleZ)
+                .status(status)
                 .build();
     }
 }

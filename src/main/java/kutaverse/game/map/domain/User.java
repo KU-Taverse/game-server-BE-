@@ -23,17 +23,17 @@ public class User {
     @Id
     private String key;
 
-    private Integer positionX;
+    private Double positionX;
 
-    private Integer positionY;
+    private Double positionY;
 
-    private Integer positionZ;
+    private Double positionZ;
 
-    private Integer eulerAngleX;
+    private Double eulerAngleX;
 
-    private Integer eulerAngleY;
+    private Double eulerAngleY;
 
-    private Integer eulerAngleZ;
+    private Double eulerAngleZ;
 
     private Status status;
 
@@ -43,7 +43,7 @@ public class User {
     private LocalDateTime localDateTime;
 
     @Builder
-    public User(String key, Integer positionX, Integer positionY, Integer positionZ, Integer eulerAngleX, Integer eulerAngleY, Integer eulerAngleZ, Status status) {
+    public User(String key, Double positionX, Double positionY, Double positionZ, Double eulerAngleX, Double eulerAngleY, Double eulerAngleZ, Status status) {
         this.key = key;
         this.positionX = positionX;
         this.positionY = positionY;
