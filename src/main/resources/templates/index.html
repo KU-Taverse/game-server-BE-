@@ -57,6 +57,16 @@
         <button onclick="deleteRequest()">삭제</button>
         <!--<button id="confirmUsername" onclick="confirmUsername()">완료</button>-->
     </div>
+    <div id="duration">
+        <div id="current-duration" th:text="${currentDuration}">
+            <!-- 타임리프 표현식을 통해 현재 시간을 표시합니다. -->
+        </div>
+        <div id="duration-input">
+            <input type="text" id="post-duration-input" placeholder="제한 시간을 입력하세요...">
+            <!-- 변경 버튼 클릭 시 something() 함수를 호출합니다. -->
+            <button onclick="changeDuration()">변경</button>
+        </div>
+    </div>
 </div>
 <script>
     const chatWebSocket = new WebSocket('ws://' + location.host + '/ws-chat');
@@ -180,6 +190,37 @@
 
         return userData;
     }
+    function changeDuration() {
+        // 입력된 값을 가져옴
+        const inputTime = document.getElementById('post-duration-input').value;
+
+        // POST 요청을 보냄
+        fetch(`/map/time?time=${inputTime}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버로부터 받은 값을 current-duration 요소에 업데이트
+                console.log(data)
+                document.getElementById('current-duration').innerText = "현재 제한 시간: "+data;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    window.onload = function() {
+        // GET 요청 보내기
+        fetch('/map/time')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                // 서버로부터 받은 값을 current-duration 요소에 업데이트
+                document.getElementById('current-duration').innerText = "현재 제한 시간: "+data;
+            })
+            .catch(error => console.error('Error:', error));
+    };
 </script>
 </body>
 </html>
