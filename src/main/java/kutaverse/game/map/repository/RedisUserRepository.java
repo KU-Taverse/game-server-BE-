@@ -13,14 +13,35 @@ import reactor.core.scheduler.Schedulers;
 public class RedisUserRepository implements UserRepository{
 
     private final ReactiveRedisOperations<String, User> redisOperations;
-    @Override
+    /*@Override
     public Mono<User> save(User user) {
         return redisOperations.opsForValue()
                 .set(user.getKey(),user)
                 .then(Mono.just(user.getKey()))
                 .flatMap(key->redisOperations.opsForValue().get(key));
+    }*/
+    @Override
+    public Mono<User> save(User user) {
+        return redisOperations.opsForValue()
+                .get(user.getKey()) // Check if the user already exists
+                .flatMap(findUser -> {
+                    if (findUser != null) {
+                        user.updateTime();
+                        return redisOperations.opsForValue()
+                                .set(user.getKey(), user)
+                                .then(Mono.just(user));
+                    } else {
+                        return redisOperations.opsForValue()
+                                .set(user.getKey(), user)
+                                .then(Mono.just(user));
+                    }
+                })
+                .switchIfEmpty( // If user doesn't exist, save it as new
+                        redisOperations.opsForValue()
+                                .set(user.getKey(), user)
+                                .then(Mono.just(user))
+                );
     }
-
     @Override
     public Mono<User> get(String key) {
         return redisOperations.opsForValue().get(key);
