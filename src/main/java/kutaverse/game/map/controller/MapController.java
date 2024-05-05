@@ -15,8 +15,9 @@ public class MapController {
     private final MessageSender messageSender;
 
     @PostMapping("/time")
-    public Mono<String> addUser(@RequestParam ("time")long time) {
+    public Mono<String> setDuration(@RequestParam ("time")long time) {
         messageSender.setDurationTime(time);
         return Mono.just("success");
     }
+
 }
