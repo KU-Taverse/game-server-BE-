@@ -34,7 +34,7 @@ public class RedisUserControllerTest {
     @DisplayName("unit test-controller test user를 저장했을 때 user에 대한 return 값을 받아 와야 한다.")
     public void test1(){
         //given
-        User user=new User("1", 1, 2, 3, 4,5,6, Status.STAND);
+        User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
         Mockito.when(userService.create(user)).thenReturn(Mono.just(user));
         //when
 
@@ -49,7 +49,7 @@ public class RedisUserControllerTest {
     public void test2(){
         //given
         String key="1";
-        User user=new User(key, 1, 2, 3, 4,5,6, Status.STAND);
+        User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
         Mockito.when(userService.findOne("1")).thenReturn(Mono.just(user));
         //when
 
@@ -64,8 +64,8 @@ public class RedisUserControllerTest {
     public void test3(){
         //given
 
-        User user1=new User("1", 1, 2, 3, 4,5,6, Status.STAND);
-        User user2=new User("2", 1, 2, 3, 4,5,6, Status.STAND);
+        User user1=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
+        User user2=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
 
         Mockito.when(userService.findAll()).thenReturn(Flux.just(user1,user2));
         //when

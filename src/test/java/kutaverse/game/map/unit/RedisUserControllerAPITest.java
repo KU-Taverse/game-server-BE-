@@ -7,6 +7,7 @@ import kutaverse.game.map.domain.User;
 import kutaverse.game.map.service.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -46,7 +47,7 @@ public class RedisUserControllerAPITest {
             "작업이 필요합니다")
     public void test1(){
         //given
-        User user=new User("1", 1, 2, 3, 4,5,6, Status.STAND);
+        User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
         Mockito.when(userService.create(user)).thenReturn(Mono.just(user));
         //when
 
@@ -66,7 +67,7 @@ public class RedisUserControllerAPITest {
     public void test2(){
         //given
         String key="1";
-        User user=new User(key, 1, 2, 3, 4,5,6, Status.STAND);
+        User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
         Mockito.when(userService.findOne("1")).thenReturn(Mono.just(user));
         //when
 
@@ -87,8 +88,8 @@ public class RedisUserControllerAPITest {
     public void test3(){
         //given
 
-        User user1=new User("1", 1, 2, 3, 4,5,6, Status.STAND);
-        User user2=new User("2", 1, 2, 3, 4,5,6, Status.STAND);
+        User user1=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
+        User user2=new User("2", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
 
         Mockito.when(userService.findAll()).thenReturn(Flux.just(user1,user2));
         //when
