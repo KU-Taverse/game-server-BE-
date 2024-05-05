@@ -78,11 +78,11 @@
 
         // 받은 텍스트 데이터를 파싱하여 사용자 정보를 추출
         const userData = extractUserData(event.data);
-
+        console.log("respose"+userData)
         // 사용자 정보를 화면에 출력
         userData.forEach(function(user) {
             const li = document.createElement('li');
-            console.log(user)
+
             li.classList.add('output-child');
             li.innerText = `UserID: ${user.userId}, Position: (${user.positionX}, ${user.positionY}, ${user.positionZ}), Euler Angles: (${user.eulerAngleX}, ${user.eulerAngleY}, ${user.eulerAngleZ}), Status: ${user.status}`;
             messageList.appendChild(li);
@@ -110,7 +110,7 @@
             eulerAngleZ: eulerAngleZ.value,
             status: status.value
         };
-        console.log(messageObject)
+        console.log("request"+messageObject)
         chatWebSocket.send(JSON.stringify(messageObject));
         resetMessage()
     };
@@ -149,16 +149,16 @@
         // 정규식 패턴을 사용하여 사용자 정보를 추출
         const pattern = /{([^}]+)}/g;
         const matches = text.match(pattern);
-        console.log(text);
+
         // 추출된 사용자 정보를 객체로 변환
         const userData = matches.map(match => {
             const data = match.split(', ');
             const user = {};
-            console.log("dump "+data);
+
             data.forEach(item => {
 
                 const cleanedItem = item.replace(/[{}]/g, '');
-                console.log("item "+cleanedItem)
+
                 const [key, value] = cleanedItem.split("=");
                 user[key.trim()] = value; // 작은따옴표(') 제거
             });
