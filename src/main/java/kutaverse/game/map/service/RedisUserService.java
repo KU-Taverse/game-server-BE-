@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 @Service
 public class RedisUserService implements UserService {
@@ -23,6 +26,15 @@ public class RedisUserService implements UserService {
     public Flux<User> findAll() {
         return userRepository.getAll();
     }
+
+    @Override
+    public Flux<User> findAllByTime(long length){
+        if(length==0)
+            return findAll();
+        //10
+        Flux<User> userFlux=findAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length);
+        return userFlux;
+    };
 
     @Override
     public Mono<User> findOne(String id) {

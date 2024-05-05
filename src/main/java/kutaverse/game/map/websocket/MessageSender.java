@@ -18,17 +18,24 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
+
 public class MessageSender {
 
     private final CustomWebSocketHandler webSocketHandler;
 
     private final UserService userService;
 
+    private Long durationTime; //맵 유지 기간 N 초에 대해서
+
+    public MessageSender(CustomWebSocketHandler webSocketHandler, UserService userService) {
+        this.webSocketHandler = webSocketHandler;
+        this.userService = userService;
+        this.durationTime = 10L;
+    }
     @Scheduled(fixedRate = 1000) // 5초마다 실행
     public void sendMessageToClients() {
 
-        userService.findAll()
+        userService.findAllByTime(durationTime)
                 .collectList()
                 .map(u -> u.stream()
                         .map(UserResponseDto::new)
@@ -40,5 +47,9 @@ public class MessageSender {
 
     private Mono<Void> sendUsersAsJsonToClients(String user) {
         return webSocketHandler.sendMessageToAllClients("{"+user+"}");
+    }
+
+    public void setDurationTime(Long durationTime) {
+        this.durationTime = durationTime;
     }
 }

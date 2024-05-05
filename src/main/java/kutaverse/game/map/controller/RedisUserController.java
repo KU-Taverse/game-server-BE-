@@ -37,4 +37,5 @@ public class RedisUserController implements UserController{
     public Mono<Long> deleteUser(@PathVariable(value = "key") String key) {
         return userService.deleteById(key);
     }
+
 }
