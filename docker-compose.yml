@@ -5,7 +5,7 @@ services:
     ports:
       - 6379:6379
   springbootapp:
-    image: ji0513ji/sample-repository:v1.0.0
+    image: ji0513ji/game-server:latest
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
