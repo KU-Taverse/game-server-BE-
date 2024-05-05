@@ -52,4 +52,5 @@ public class MessageSender {
     public void setDurationTime(Long durationTime) {
         this.durationTime = durationTime;
     }
+    public Long getDurationTime(){ return this.durationTime; }
 }
