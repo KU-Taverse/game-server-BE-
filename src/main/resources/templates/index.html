@@ -94,10 +94,13 @@
         messageList.innerHTML = '';
 
         // 받은 텍스트 데이터를 파싱하여 사용자 정보를 추출
+        console.log("respose",event.data)
+
         const userData = extractUserData(event.data);
-        console.log("respose",userData)
+
         // 사용자 정보를 화면에 출력
         userData.forEach(function(user) {
+
             const li = document.createElement('li');
 
             li.classList.add('output-child');
@@ -175,15 +178,13 @@
 
         // 추출된 사용자 정보를 객체로 변환
         const userData = matches.map(match => {
-            const data = match.split(', ');
+            const data = match.split(',');
             const user = {};
 
             data.forEach(item => {
-
-                const cleanedItem = item.replace(/[{}]/g, '');
-
-                const [key, value] = cleanedItem.split("=");
-                user[key.trim()] = value; // 작은따옴표(') 제거
+                const cleanedItem = item.trim().replace(/[{}"]/g, ''); // 작은따옴표('), 큰따옴표(") 제거
+                const [key, value] = cleanedItem.split(':');
+                user[key.trim()] = value.trim(); // 작은따옴표(') 제거
             });
             return user;
         });
