@@ -45,12 +45,12 @@ public class User {
     @Builder
     public User(String key, Double positionX, Double positionY, Double positionZ, Double eulerAngleX, Double eulerAngleY, Double eulerAngleZ, Status status) {
         this.key = key;
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.positionZ = positionZ;
-        this.eulerAngleX = eulerAngleX;
-        this.eulerAngleY = eulerAngleY;
-        this.eulerAngleZ = eulerAngleZ;
+        this.positionX = Math.round(positionX*1000.0)/1000.0;
+        this.positionY = Math.round(positionY*1000.0)/1000.0;;
+        this.positionZ = Math.round(positionZ*1000.0)/1000.0;
+        this.eulerAngleX = Math.round(eulerAngleX*1000.0)/1000.0;
+        this.eulerAngleY = Math.round(eulerAngleY*1000.0)/1000.0;
+        this.eulerAngleZ = Math.round(eulerAngleZ*1000.0)/1000.0;
         this.status = status;
         this.localDateTime=LocalDateTime.now();
     }
