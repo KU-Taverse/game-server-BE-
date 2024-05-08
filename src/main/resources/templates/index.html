@@ -26,13 +26,13 @@
             <input type="text" id="inputMessage3" placeholder="PositionZ를 입력하세요...">
         </div>
         <div id="message-input4">
-            <input type="text" id="inputMessage4" placeholder="EulerAngleX를 입력하세요...">
+            <input type="text" id="inputMessage4" placeholder="rotationPitch를 입력하세요...">
         </div>
         <div id="message-input5">
-            <input type="text" id="inputMessage5" placeholder="EulerAngleY를 입력하세요...">
+            <input type="text" id="inputMessage5" placeholder="rotationYaw를 입력하세요...">
         </div>
         <div id="message-input6">
-            <input type="text" id="inputMessage6" placeholder="EulerAngleZ를 입력하세요...">
+            <input type="text" id="inputMessage6" placeholder="rotationRoll 입력하세요...">
         </div>
         <div id="message-input7">
             <select id="inputMessage7">
@@ -76,9 +76,9 @@
     const positionX=document.getElementById('inputMessage1');
     const positionY=document.getElementById('inputMessage2');
     const positionZ=document.getElementById('inputMessage3');
-    const eulerAngleX=document.getElementById('inputMessage4');
-    const eulerAngleY=document.getElementById('inputMessage5');
-    const eulerAngleZ=document.getElementById('inputMessage6');
+    const rotationPitch=document.getElementById('inputMessage4');
+    const rotationYaw=document.getElementById('inputMessage5');
+    const rotationRoll=document.getElementById('inputMessage6');
     const status=document.getElementById('inputMessage7');
     //user 삭제 데이터
     const delete_username=document.getElementById('delete-username-input')
@@ -105,7 +105,7 @@
             const li = document.createElement('li');
 
             li.classList.add('output-child');
-            li.innerText = `UserID: ${user.userId}, Position: (${user.positionX}, ${user.positionY}, ${user.positionZ}), Euler Angles: (${user.eulerAngleX}, ${user.eulerAngleY}, ${user.eulerAngleZ}), Status: ${user.status}`;
+            li.innerText = `UserID: ${user.userId}, Position: (${user.positionX}, ${user.positionY}, ${user.positionZ}), Euler Angles: (${user.rotationPitch}, ${user.rotationYaw}, ${user.rotationRoll}), Status: ${user.status}`;
             messageList.appendChild(li);
         });
     };
@@ -126,9 +126,9 @@
             positionX: positionX.value,
             positionY: positionY.value,
             positionZ: positionZ.value,
-            eulerAngleX: eulerAngleX.value,
-            eulerAngleY: eulerAngleY.value,
-            eulerAngleZ: eulerAngleZ.value,
+            rotationPitch: rotationPitch.value,
+            rotationYaw: rotationYaw.value,
+            rotationRoll: rotationRoll.value,
             status: status.value
         };
         for (const key in messageObject) {
@@ -156,9 +156,9 @@
         this.positionX = '';
         this.positionY = '';
         this.positionZ = '';
-        this.eulerAngleX = '';
-        this.eulerAngleY = '';
-        this.eulerAngleZ = '';
+        this.rotationPitch = '';
+        this.rotationYaw = '';
+        this.rotationRoll = '';
         this.status = '';
     }
 

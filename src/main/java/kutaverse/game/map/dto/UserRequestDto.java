@@ -15,9 +15,9 @@ public class UserRequestDto {
     private Double positionX;
     private Double positionY;
     private Double positionZ;
-    private Double eulerAngleX;
-    private Double eulerAngleY;
-    private Double eulerAngleZ;
+    private Double rotationPitch;
+    private Double rotationYaw;
+    private Double rotationRoll;
     private Status status;
 
     public User toEntity(){
@@ -26,9 +26,9 @@ public class UserRequestDto {
                 .positionX(positionX)
                 .positionY(positionY)
                 .positionZ(positionZ)
-                .eulerAngleX(eulerAngleX)
-                .eulerAngleY(eulerAngleY)
-                .eulerAngleZ(eulerAngleZ)
+                .rotationPitch(rotationPitch)
+                .rotationYaw(rotationYaw)
+                .rotationRoll(rotationRoll)
                 .status(status)
                 .build();
     }

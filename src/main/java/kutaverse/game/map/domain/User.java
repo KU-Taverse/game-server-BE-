@@ -29,11 +29,11 @@ public class User {
 
     private Double positionZ;
 
-    private Double eulerAngleX;
+    private Double rotationPitch;
 
-    private Double eulerAngleY;
+    private Double rotationYaw;
 
-    private Double eulerAngleZ;
+    private Double rotationRoll;
 
     private Status status;
 
@@ -43,14 +43,14 @@ public class User {
     private LocalDateTime localDateTime;
 
     @Builder
-    public User(String key, Double positionX, Double positionY, Double positionZ, Double eulerAngleX, Double eulerAngleY, Double eulerAngleZ, Status status) {
+    public User(String key, Double positionX, Double positionY, Double positionZ, Double rotationPitch, Double rotationYaw, Double rotationRoll, Status status) {
         this.key = key;
         this.positionX = Math.round(positionX*1000.0)/1000.0;
         this.positionY = Math.round(positionY*1000.0)/1000.0;;
         this.positionZ = Math.round(positionZ*1000.0)/1000.0;
-        this.eulerAngleX = Math.round(eulerAngleX*1000.0)/1000.0;
-        this.eulerAngleY = Math.round(eulerAngleY*1000.0)/1000.0;
-        this.eulerAngleZ = Math.round(eulerAngleZ*1000.0)/1000.0;
+        this.rotationPitch = Math.round(rotationPitch*1000.0)/1000.0;
+        this.rotationYaw = Math.round(rotationYaw*1000.0)/1000.0;
+        this.rotationRoll = Math.round(rotationRoll*1000.0)/1000.0;
         this.status = status;
         this.localDateTime=LocalDateTime.now();
     }

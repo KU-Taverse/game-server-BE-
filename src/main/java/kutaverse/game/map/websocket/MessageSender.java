@@ -18,7 +18,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-
 public class MessageSender {
 
     private final CustomWebSocketHandler webSocketHandler;
@@ -34,7 +33,7 @@ public class MessageSender {
         this.userService = userService;
         this.durationTime = 10L;
     }
-    @Scheduled(fixedRate = 100) // 0.1초마다 실행
+    @Scheduled(fixedRate = 1000) // 0.1초마다 실행
     public void sendMessageToClients() {
 
         userService.findAllByTime(durationTime)

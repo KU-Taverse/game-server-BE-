@@ -32,14 +32,9 @@ public class CustomWebSocketHandler implements org.springframework.web.reactive.
 	@Override
 	public Mono<Void> handle(WebSocketSession session) {
 		ObjectMapper objectMapper=new ObjectMapper();
-		var output = session.receive()
+		session.receive()
 				.map(WebSocketMessage::getPayloadAsText)
-				.doOnNext(data -> {
-					// Output raw data
-					System.out.println("Received raw data: " + data);
-				})
 				.map(data-> {
-
 					try {
 						return objectMapper.readValue(data, UserRequestDto.class);
 					} catch (Exception e) {
@@ -48,10 +43,11 @@ public class CustomWebSocketHandler implements org.springframework.web.reactive.
 
 
 				})
-				.doOnNext(e -> {
+				.subscribe(e->{
 					WebSocketHandler webSocketHandler = WebSocketHandlerMapping.getHandler(e);
 					webSocketHandler.handle(e);
-				}).subscribe();
+				});
+
 		return session.send(sink.asFlux().map(session::textMessage));
 	}
 }

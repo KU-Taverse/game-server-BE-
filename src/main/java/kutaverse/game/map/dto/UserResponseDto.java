@@ -15,9 +15,9 @@ public class UserResponseDto {
     private Double positionX;
     private Double positionY;
     private Double positionZ;
-    private Double eulerAngleX;
-    private Double eulerAngleY;
-    private Double eulerAngleZ;
+    private Double rotationPitch;
+    private Double rotationYaw;
+    private Double rotationRoll;
     private String status;
 
     public UserResponseDto(User user) {
@@ -25,9 +25,9 @@ public class UserResponseDto {
         this.positionX=user.getPositionX();
         this.positionY=user.getPositionY();
         this.positionZ=user.getPositionZ();
-        this.eulerAngleX=user.getEulerAngleX();
-        this.eulerAngleY=user.getEulerAngleY();
-        this.eulerAngleZ=user.getEulerAngleZ();
+        this.rotationPitch=user.getRotationPitch();
+        this.rotationYaw=user.getRotationYaw();
+        this.rotationRoll=user.getRotationRoll();
         this.status = String.valueOf(user.getStatus());
     }
 
@@ -38,9 +38,9 @@ public class UserResponseDto {
                 ", positionX='" + positionX + '\'' +
                 ", positionY='" + positionY + '\'' +
                 ", positionZ='" + positionZ + '\'' +
-                ", eulerAngleX='" + eulerAngleX + '\'' +
-                ", eulerAngleY='" + eulerAngleY + '\'' +
-                ", eulerAngleZ='" + eulerAngleZ + '\'' +
+                ", ='" + rotationPitch + '\'' +
+                ", rotationYaw='" + rotationYaw + '\'' +
+                ", rotationRoll='" + rotationRoll + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }
