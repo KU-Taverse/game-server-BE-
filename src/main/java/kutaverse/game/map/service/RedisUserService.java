@@ -1,10 +1,12 @@
 package kutaverse.game.map.service;
 
+import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.UserRequestDto;
 import kutaverse.game.map.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -32,7 +34,7 @@ public class RedisUserService implements UserService {
         if(length==0)
             return findAll();
         //10
-        Flux<User> userFlux=findAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length);
+        Flux<User> userFlux=findAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus()!=Status.NOTUSE);
         return userFlux;
     };
 
@@ -49,6 +51,15 @@ public class RedisUserService implements UserService {
     @Override
     public Mono<User> update(UserRequestDto userRequestDto) {
         return create(userRequestDto.toEntity());
+    }
+
+    @Override
+    public Mono<User> changeState(String id, Status status){
+        return findOne(id)
+                .map(user -> {
+                    user.setStatus(status);
+                    return user;
+                });
     }
 
 }

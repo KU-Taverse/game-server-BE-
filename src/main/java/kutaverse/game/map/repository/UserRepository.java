@@ -13,4 +13,6 @@ public interface UserRepository {
     Flux<User> getAll();
 
     Mono<Long> delete(String key);
+
+    Mono<User>update(User user);
 }

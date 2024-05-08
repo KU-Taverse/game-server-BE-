@@ -54,7 +54,6 @@ public class MessageSender {
                         return ""; // 또는 예외를 던지거나 다른 기본값을 반환하세요.
                     }
                 })
-                .doOnNext(System.out::println)
                 .subscribe(this::sendUsersAsJsonToClients);
 
     }

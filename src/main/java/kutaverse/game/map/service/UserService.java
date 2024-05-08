@@ -1,5 +1,6 @@
 package kutaverse.game.map.service;
 
+import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.UserRequestDto;
 import reactor.core.publisher.Flux;
@@ -20,4 +21,6 @@ public interface UserService {
     Mono<Long> deleteById(String key);
 
     Mono<User> update(UserRequestDto userRequestDto);
+
+    Mono<User> changeState(String id, Status status);
 }

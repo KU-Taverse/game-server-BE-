@@ -13,13 +13,6 @@ import reactor.core.scheduler.Schedulers;
 public class RedisUserRepository implements UserRepository{
 
     private final ReactiveRedisOperations<String, User> redisOperations;
-    /*@Override
-    public Mono<User> save(User user) {
-        return redisOperations.opsForValue()
-                .set(user.getKey(),user)
-                .then(Mono.just(user.getKey()))
-                .flatMap(key->redisOperations.opsForValue().get(key));
-    }*/
     @Override
     public Mono<User> save(User user) {
         return redisOperations.opsForValue()
@@ -35,12 +28,7 @@ public class RedisUserRepository implements UserRepository{
                                 .set(user.getKey(), user)
                                 .then(Mono.just(user));
                     }
-                })
-                .switchIfEmpty( // If user doesn't exist, save it as new
-                        redisOperations.opsForValue()
-                                .set(user.getKey(), user)
-                                .then(Mono.just(user))
-                );
+                });
     }
     @Override
     public Mono<User> get(String key) {
@@ -59,5 +47,11 @@ public class RedisUserRepository implements UserRepository{
     @Override
     public Mono<Long> delete(String key) {
         return redisOperations.delete(key);
+    }
+
+    @Override
+    public Mono<User>update(User user){
+        //TODO
+        return Mono.just(user);
     }
 }

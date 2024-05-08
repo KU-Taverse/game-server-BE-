@@ -58,4 +58,8 @@ public class User {
     public void updateTime() {
         this.localDateTime=LocalDateTime.now();
     }
+
+    public void setStatus(Status status){
+        this.status=status;
+    }
 }

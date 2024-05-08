@@ -12,6 +12,8 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
+import java.io.IOException;
+
 
 @Component
 @Slf4j
@@ -37,11 +39,14 @@ public class CustomWebSocketHandler implements org.springframework.web.reactive.
 					System.out.println("Received raw data: " + data);
 				})
 				.map(data-> {
+
 					try {
 						return objectMapper.readValue(data, UserRequestDto.class);
-					} catch (JsonProcessingException e) {
+					} catch (Exception e) {
 						throw new RuntimeException(e);
 					}
+
+
 				})
 				.doOnNext(e -> {
 					WebSocketHandler webSocketHandler = WebSocketHandlerMapping.getHandler(e);
