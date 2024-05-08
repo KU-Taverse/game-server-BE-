@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,6 +120,7 @@
 
         // chatWebSocket.send(inputMessage.value);
         //const username = document.getElementById("username").value.trim();
+        console.log(userId.value)
         const messageObject = {
             mapRequestType: "SAVE",
             userId: userId.value,
@@ -131,12 +132,7 @@
             rotationRoll: rotationRoll.value,
             status: status.value
         };
-        for (const key in messageObject) {
-            if (key !== 'mapRequestType' && key !== 'status') {
-                // mapRequestType과 status를 제외하고 모든 값을 double로 변환
-                messageObject[key] = parseFloat(messageObject[key]);
-            }
-        }
+
         console.log("request",messageObject)
         chatWebSocket.send(JSON.stringify(messageObject));
         resetMessage()
