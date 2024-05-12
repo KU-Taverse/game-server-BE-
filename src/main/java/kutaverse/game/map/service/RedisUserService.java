@@ -32,7 +32,7 @@ public class RedisUserService implements UserService {
     @Override
     public Flux<User> findAllByTime(long length){
         if(length==0)
-            return findAll();
+            return findAll().filter(user -> user.getStatus()!=Status.NOTUSE);
 
         return findAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus()!=Status.NOTUSE);
 
