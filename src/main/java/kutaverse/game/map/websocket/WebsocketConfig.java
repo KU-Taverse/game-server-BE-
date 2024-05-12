@@ -14,7 +14,7 @@ public class WebsocketConfig {
 
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping(WebSocketHandler wsh) {
-		return new SimpleUrlHandlerMapping(Map.of("/ws-chat", wsh), 1);
+		return new SimpleUrlHandlerMapping(Map.of("/map", wsh), 1);
 	}
 
 	@Bean

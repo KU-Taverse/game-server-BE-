@@ -6,7 +6,7 @@ import org.springframework.web.reactive.result.view.Rendering;
 import reactor.core.publisher.Mono;
 
 @Controller
-public class WebSocketController {
+public class ViewController {
     @GetMapping("/")
     public Mono<Rendering> home() {
         return Mono.just(Rendering.view("index").build());
