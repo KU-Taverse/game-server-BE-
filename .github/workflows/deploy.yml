@@ -8,12 +8,12 @@
 name: Java CD with Gradle
 
 on:
-  pull_request:
-  merge_group:
-    branches: [ "main" ]
+  issue_comment:
+    types: [ created, edited ]
 
 jobs:
   deploy:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/쿠타버스') && contains(github.event.comment.body, '배포')
     runs-on: ubuntu-latest
     permissions:
       write-all
@@ -71,3 +71,20 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             
             sudo docker-compose up --build -d
+
+      - name: Notify
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🌎 배포하였습니다.'
+            })
+
+      - name: add label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: 자동 배포
