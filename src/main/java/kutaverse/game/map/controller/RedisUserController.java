@@ -28,19 +28,19 @@ public class RedisUserController implements UserController{
         return userService.findAll();
     }
 
-    @GetMapping("{key}")
+    @GetMapping("{userId}")
     @Override
-    public Mono<User> getUser(@PathVariable(value = "key") String key) {
-        return userService.findOne(key);
+    public Mono<User> getUser(@PathVariable(value = "userId") String userId) {
+        return userService.findOne(userId);
     }
 
-    @DeleteMapping("{key}")
-    public Mono<Long> deleteUser(@PathVariable(value = "key") String key) {
-        return userService.deleteById(key);
+    @DeleteMapping("{userId}")
+    public Mono<Long> deleteUser(@PathVariable(value = "userId") String userId) {
+        return userService.deleteById(userId);
     }
 
 
-    @PostMapping("/state/{key}")
-    public Mono<User> changeState(@PathVariable(value = "key") String key, @RequestParam("state")Status status) { return userService.changeState(key,status); }
+    @PostMapping("/state/{userId}")
+    public Mono<User> changeState(@PathVariable(value = "userId") String userId, @RequestParam("state")Status status) { return userService.changeState(userId,status); }
 
 }

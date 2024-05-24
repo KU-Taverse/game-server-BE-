@@ -22,7 +22,7 @@ public class UserRequestDto {
 
     public User toEntity(){
         return User.builder()
-                .key(userId)
+                .userId(userId)
                 .positionX(positionX)
                 .positionY(positionY)
                 .positionZ(positionZ)

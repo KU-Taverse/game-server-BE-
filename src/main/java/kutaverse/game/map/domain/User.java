@@ -11,17 +11,16 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
 
 import java.time.LocalDateTime;
 
 @Getter
-@RedisHash(value = "user", timeToLive = 30) //초단위
 @NoArgsConstructor
-@ToString
 public class User {
 
     @Id
-    private String key;
+    private String userId;
 
     private Double positionX;
 
@@ -43,8 +42,8 @@ public class User {
     private LocalDateTime localDateTime;
 
     @Builder
-    public User(String key, Double positionX, Double positionY, Double positionZ, Double rotationPitch, Double rotationYaw, Double rotationRoll, Status status) {
-        this.key = key;
+    public User(String userId, Double positionX, Double positionY, Double positionZ, Double rotationPitch, Double rotationYaw, Double rotationRoll, Status status) {
+        this.userId = userId;
         this.positionX = Math.round(positionX*1000.0)/1000.0;
         this.positionY = Math.round(positionY*1000.0)/1000.0;;
         this.positionZ = Math.round(positionZ*1000.0)/1000.0;

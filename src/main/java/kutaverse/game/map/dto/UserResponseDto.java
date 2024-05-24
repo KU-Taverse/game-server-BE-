@@ -21,29 +21,13 @@ public class UserResponseDto {
     private String status;
 
     public UserResponseDto(User user) {
-        this.userId = user.getKey();
-        this.positionX=user.getPositionX();
-        this.positionY=user.getPositionY();
-        this.positionZ=user.getPositionZ();
-        this.rotationPitch=user.getRotationPitch();
-        this.rotationYaw=user.getRotationYaw();
-        this.rotationRoll=user.getRotationRoll();
+        this.userId = user.getUserId();
+        this.positionX = user.getPositionX();
+        this.positionY = user.getPositionY();
+        this.positionZ = user.getPositionZ();
+        this.rotationPitch = user.getRotationPitch();
+        this.rotationYaw = user.getRotationYaw();
+        this.rotationRoll = user.getRotationRoll();
         this.status = String.valueOf(user.getStatus());
     }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "userId='" + userId + '\'' +
-                ", positionX='" + positionX + '\'' +
-                ", positionY='" + positionY + '\'' +
-                ", positionZ='" + positionZ + '\'' +
-                ", ='" + rotationPitch + '\'' +
-                ", rotationYaw='" + rotationYaw + '\'' +
-                ", rotationRoll='" + rotationRoll + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
-
-
 }

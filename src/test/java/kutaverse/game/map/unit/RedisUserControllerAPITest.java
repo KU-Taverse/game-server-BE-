@@ -42,15 +42,18 @@ public class RedisUserControllerAPITest {
     @MockBean
     UserService userService;
 
+    User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
+    User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
+    User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
+
     @Test
     @DisplayName("unit test-API test user를 저장했을 때 user에 대한 return 값을 받아 와야 한다. " +
             "작업이 필요합니다")
-    public void test1(){
+    public void test1() {
+
         //given
-        User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
         Mockito.when(userService.create(user)).thenReturn(Mono.just(user));
         //when
-
         webTestClient.post()
                 .uri("/user")
                 .body(Mono.just(user), User.class)
@@ -58,78 +61,64 @@ public class RedisUserControllerAPITest {
 
                 .expectStatus().isOk()
                 .expectBody();
-
-
     }
 
     @Test
     @DisplayName("unit test-API test 저장된 유저를 찾아야한다.")
-    public void test2(){
+    public void test2() {
+
         //given
-        String key="1";
-        User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
+        String userId = "1";
         Mockito.when(userService.findOne("1")).thenReturn(Mono.just(user));
         //when
-
         webTestClient.get()
                 .uri("/user/1")
                 .exchange()
 
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.key").isEqualTo(key);
-
-
-        Mockito.verify(userService,Mockito.times(1)).findOne(key);
+                .jsonPath("$.userId").isEqualTo(userId);
+        Mockito.verify(userService, Mockito.times(1)).findOne(userId);
     }
 
     @Test
     @DisplayName("unit test-API test 저장된 모든 유저를 찾을 수 있어야한다.")
-    public void test3(){
+    public void test3() {
+
         //given
-
-        User user1=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
-        User user2=new User("2", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
-
-        Mockito.when(userService.findAll()).thenReturn(Flux.just(user1,user2));
+        Mockito.when(userService.findAll()).thenReturn(Flux.just(user1, user2));
         //when
-
         webTestClient.get()
                 .uri("/user")
                 .exchange()
 
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$[0].key").isEqualTo("1")
-                .jsonPath("$[1].key").isEqualTo("2");
+                .jsonPath("$[0].userId").isEqualTo("1")
+                .jsonPath("$[1].userId").isEqualTo("2");
 
 
         //then
-        Mockito.verify(userService,Mockito.times(1)).findAll();
+        Mockito.verify(userService, Mockito.times(1)).findAll();
 
     }
 
     @Test
     @DisplayName("unit test-API test 유저를 삭제할 수 있어야한다.")
-    public void test4(){
+    public void test4() {
+
         //given
-        String key="1";
-        Long reval=1L;
-
-        Mockito.when(userService.deleteById(key)).thenReturn(Mono.just(reval));
+        String userId = "1";
+        Long reval = 1L;
+        Mockito.when(userService.deleteById(userId)).thenReturn(Mono.just(reval));
         //when
-
         webTestClient.delete()
                 .uri("/user/1")
                 .exchange()
-
                 .expectStatus().isOk()
                 .expectBody(String.class)
                 .isEqualTo("1");
-
         //then
-        Mockito.verify(userService,Mockito.times(1)).deleteById(key);
-
-
+        Mockito.verify(userService, Mockito.times(1)).deleteById(userId);
     }
 }

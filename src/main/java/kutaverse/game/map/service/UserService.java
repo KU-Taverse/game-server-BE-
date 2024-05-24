@@ -16,9 +16,9 @@ public interface UserService {
 
     Flux<User> findAllByTime(long length);
 
-    Mono<User> findOne(String key);
+    Mono<User> findOne(String userId);
 
-    Mono<Long> deleteById(String key);
+    Mono<Long> deleteById(String userId);
 
     Mono<User> update(UserRequestDto userRequestDto);
 

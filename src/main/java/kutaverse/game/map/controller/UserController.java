@@ -16,5 +16,5 @@ public interface UserController {
     Mono<User> getUser(String id);
 
 
-    Mono<Long> deleteUser(String key);
+    Mono<Long> deleteUser(String userId);
 }
