@@ -1,5 +1,6 @@
 package kutaverse.game.map.controller;
 
+import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class RedisUserController implements UserController{
     @Override
     public Mono<User> addUser(@RequestBody User user) {
         return userService.create(user);
-    }
+}
 
     @GetMapping()
     @Override
@@ -27,14 +28,19 @@ public class RedisUserController implements UserController{
         return userService.findAll();
     }
 
-    @GetMapping("{key}")
+    @GetMapping("{userId}")
     @Override
-    public Mono<User> getUser(@PathVariable(value = "key") String key) {
-        return userService.findOne(key);
+    public Mono<User> getUser(@PathVariable(value = "userId") String userId) {
+        return userService.findOne(userId);
     }
 
-    @DeleteMapping("{key}")
-    public Mono<Long> deleteUser(@PathVariable(value = "key") String key) {
-        return userService.deleteById(key);
+    @DeleteMapping("{userId}")
+    public Mono<Long> deleteUser(@PathVariable(value = "userId") String userId) {
+        return userService.deleteById(userId);
     }
+
+
+    @PostMapping("/state/{userId}")
+    public Mono<User> changeState(@PathVariable(value = "userId") String userId, @RequestParam("state")Status status) { return userService.changeState(userId,status); }
+
 }

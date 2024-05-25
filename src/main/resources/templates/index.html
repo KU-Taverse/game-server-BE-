@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commeow Chat</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="chat-container">
+    <div id="nickname-input">
+        <input type="text" id="username" placeholder="id를 입력하세요...">
+        <!--<button id="confirmUsername" onclick="confirmUsername()">완료</button>-->
+    </div>
+    <div class="chat-box">
+        <ul id="message-list"></ul>
+        <div id="message-input1">
+            <input type="text" id="inputMessage1" placeholder="PositionX를 입력하세요...">
+        </div>
+        <div id="message-input2">
+            <input type="text" id="inputMessage2" placeholder="PositionY를  입력하세요...">
+        </div>
+        <div id="message-input3">
+            <input type="text" id="inputMessage3" placeholder="PositionZ를 입력하세요...">
+        </div>
+        <div id="message-input4">
+            <input type="text" id="inputMessage4" placeholder="rotationPitch를 입력하세요...">
+        </div>
+        <div id="message-input5">
+            <input type="text" id="inputMessage5" placeholder="rotationYaw를 입력하세요...">
+        </div>
+        <div id="message-input6">
+            <input type="text" id="inputMessage6" placeholder="rotationRoll 입력하세요...">
+        </div>
+        <div id="message-input7">
+            <select id="inputMessage7">
+                <option value="STAND">STAND</option>
+                <option value="JUMP">JUMP</option>
+                <option value="NOTUSE">NOTUSE</option>
+            </select>
+        <br>
+            <button onclick="saveRequest()">저장</button>
+        </div>
+    </div>
+    <div>
+        <div>
+            현제 맵위 사람 정보
+        </div>
+        <ul id="output-list">
+
+        </ul>
+    </div>
+
+    <div id="delete-input">
+        <input type="text" id="delete-username-input" placeholder="id를 입력하세요...">
+        <button onclick="deleteRequest()">삭제</button>
+        <!--<button id="confirmUsername" onclick="confirmUsername()">완료</button>-->
+    </div>
+    <div id="duration">
+        <div id="current-duration" th:text="${currentDuration}">
+            <!-- 타임리프 표현식을 통해 현재 시간을 표시합니다. -->
+        </div>
+        <div id="duration-input">
+            <input type="text" id="post-duration-input" placeholder="제한 시간을 입력하세요...">
+            <!-- 변경 버튼 클릭 시 something() 함수를 호출합니다. -->
+            <button onclick="changeDuration()">변경</button>
+        </div>
+    </div>
+</div>
+<script>
+    const chatWebSocket = new WebSocket('ws://' + location.host + '/map');
+    //user 저장 데이터
+    const userId=document.getElementById('username');
+    const positionX=document.getElementById('inputMessage1');
+    const positionY=document.getElementById('inputMessage2');
+    const positionZ=document.getElementById('inputMessage3');
+    const rotationPitch=document.getElementById('inputMessage4');
+    const rotationYaw=document.getElementById('inputMessage5');
+    const rotationRoll=document.getElementById('inputMessage6');
+    const status=document.getElementById('inputMessage7');
+    //user 삭제 데이터
+    const delete_username=document.getElementById('delete-username-input')
+
+    const messageList = document.getElementById('output-list');
+
+    chatWebSocket.onmessage = function(event) {
+        const outputChildren = document.getElementsByClassName("output-child");
+        // HTMLCollection의 모든 요소를 제거
+        while(outputChildren.length > 0) {
+            outputChildren[0].remove();
+        }
+
+        messageList.innerHTML = '';
+
+        // 받은 텍스트 데이터를 파싱하여 사용자 정보를 추출
+        console.log("respose",event.data)
+
+        const userData = extractUserData(event.data);
+
+        // 사용자 정보를 화면에 출력
+        userData.forEach(function(user) {
+
+            const li = document.createElement('li');
+
+            li.classList.add('output-child');
+            li.innerText = `UserID: ${user.userId}, Position: (${user.positionX}, ${user.positionY}, ${user.positionZ}), Euler Angles: (${user.rotationPitch}, ${user.rotationYaw}, ${user.rotationRoll}), Status: ${user.status}`;
+            messageList.appendChild(li);
+        });
+    };
+
+    chatWebSocket.onclose = function(event) {
+        alert('웹소켓이 닫혔습니다! 다시 연결하려면 페이지를 새로고침 해주세요.');
+    };
+    function saveRequest() {
+        /*if (inputMessage.value.trim() === '') {
+            return;
+        }*/
+
+        // chatWebSocket.send(inputMessage.value);
+        //const username = document.getElementById("username").value.trim();
+        console.log(userId.value)
+        const messageObject = {
+            mapRequestType: "SAVE",
+            userId: userId.value,
+            positionX: positionX.value,
+            positionY: positionY.value,
+            positionZ: positionZ.value,
+            rotationPitch: rotationPitch.value,
+            rotationYaw: rotationYaw.value,
+            rotationRoll: rotationRoll.value,
+            status: status.value
+        };
+
+        console.log("request",messageObject)
+        chatWebSocket.send(JSON.stringify(messageObject));
+        resetMessage()
+    };
+    function deleteRequest() {
+        const messageObject = {
+            mapRequestType: "DELETE",
+            userId: delete_username.value,
+        };
+
+        chatWebSocket.send(JSON.stringify(messageObject));
+        resetMessage()
+    };
+    function resetMessage(){
+        this.mapRequestType='';
+        this.userId = '';
+        this.positionX = '';
+        this.positionY = '';
+        this.positionZ = '';
+        this.rotationPitch = '';
+        this.rotationYaw = '';
+        this.rotationRoll = '';
+        this.status = '';
+    }
+
+    function confirmUsername() {
+        const usernameInput = document.getElementById("username");
+        const confirmButton = document.getElementById("confirmUsername");
+
+        if (usernameInput.value.trim() !== '') {
+            usernameInput.disabled = true;
+            confirmButton.disabled = true;
+            confirmButton.style.backgroundColor = "gray";
+        }
+    }
+    function extractUserData(text) {
+        // 정규식 패턴을 사용하여 사용자 정보를 추출
+        const pattern = /{([^}]+)}/g;
+        const matches = text.match(pattern);
+
+        // 추출된 사용자 정보를 객체로 변환
+        const userData = matches.map(match => {
+            const data = match.split(',');
+            const user = {};
+
+            data.forEach(item => {
+                const cleanedItem = item.trim().replace(/[{}"]/g, ''); // 작은따옴표('), 큰따옴표(") 제거
+                const [key, value] = cleanedItem.split(':');
+                user[key.trim()] = value.trim(); // 작은따옴표(') 제거
+            });
+            return user;
+        });
+
+        return userData;
+    }
+    function changeDuration() {
+        // 입력된 값을 가져옴
+        const inputTime = document.getElementById('post-duration-input').value;
+
+        // POST 요청을 보냄
+        fetch(`/map/time?time=${inputTime}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버로부터 받은 값을 current-duration 요소에 업데이트
+                console.log(data)
+                document.getElementById('current-duration').innerText = "현재 제한 시간: "+data;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    window.onload = function() {
+        // GET 요청 보내기
+        fetch('/map/time')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                // 서버로부터 받은 값을 current-duration 요소에 업데이트
+                document.getElementById('current-duration').innerText = "현재 제한 시간: "+data;
+            })
+            .catch(error => console.error('Error:', error));
+    };
+</script>
+</body>
+</html>

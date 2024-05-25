@@ -1,8 +1,12 @@
 package kutaverse.game.map.service;
 
+import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
+import kutaverse.game.map.dto.UserRequestDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 public interface UserService {
 
@@ -10,7 +14,13 @@ public interface UserService {
 
     Flux<User> findAll();
 
-    Mono<User> findOne(String key);
+    Flux<User> findAllByTime(long length);
 
-    Mono<Long> deleteById(String key);
+    Mono<User> findOne(String userId);
+
+    Mono<Long> deleteById(String userId);
+
+    Mono<User> update(UserRequestDto userRequestDto);
+
+    Mono<User> changeState(String id, Status status);
 }
