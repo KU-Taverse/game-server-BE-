@@ -1,10 +1,9 @@
-package kutaverse.game.map.websocket.handler;
+package kutaverse.game.websocket.handler;
 
 import jakarta.annotation.PostConstruct;
 import kutaverse.game.map.dto.MapRequestType;
 import kutaverse.game.map.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

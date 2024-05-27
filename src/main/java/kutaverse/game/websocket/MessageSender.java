@@ -1,23 +1,10 @@
-package kutaverse.game.map.websocket;
+package kutaverse.game.websocket;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kutaverse.game.map.domain.User;
-import kutaverse.game.map.dto.UserRequestDto;
-import kutaverse.game.map.dto.UserResponseDto;
-import kutaverse.game.map.service.RedisUserService;
 import kutaverse.game.map.service.UserService;
-import kutaverse.game.map.websocket.util.JsonUtil;
-import lombok.RequiredArgsConstructor;
-import org.reactivestreams.Publisher;
+import kutaverse.game.websocket.util.JsonUtil;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component
 public class MessageSender {

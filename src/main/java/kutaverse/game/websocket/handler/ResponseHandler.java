@@ -1,4 +1,4 @@
-package kutaverse.game.map.websocket.handler;
+package kutaverse.game.websocket.handler;
 
 import kutaverse.game.map.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;

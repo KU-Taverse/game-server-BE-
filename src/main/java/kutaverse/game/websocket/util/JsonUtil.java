@@ -1,4 +1,4 @@
-package kutaverse.game.map.websocket.util;
+package kutaverse.game.websocket.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

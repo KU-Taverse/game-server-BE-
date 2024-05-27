@@ -1,10 +1,7 @@
 package kutaverse.game.map.controller;
 
-import kutaverse.game.map.domain.User;
-import kutaverse.game.map.websocket.MessageSender;
-import lombok.Getter;
+import kutaverse.game.websocket.MessageSender;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
