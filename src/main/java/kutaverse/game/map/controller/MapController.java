@@ -1,6 +1,6 @@
 package kutaverse.game.map.controller;
 
-import kutaverse.game.websocket.MessageSender;
+import kutaverse.game.websocket.map.MessageSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

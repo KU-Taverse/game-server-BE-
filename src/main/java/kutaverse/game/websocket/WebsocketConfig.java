@@ -1,5 +1,6 @@
 package kutaverse.game.websocket;
 
+import kutaverse.game.websocket.map.MapWebSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;

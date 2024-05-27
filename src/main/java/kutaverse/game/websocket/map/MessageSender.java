@@ -1,7 +1,7 @@
-package kutaverse.game.websocket;
+package kutaverse.game.websocket.map;
 
 import kutaverse.game.map.service.UserService;
-import kutaverse.game.websocket.util.JsonUtil;
+import kutaverse.game.websocket.map.util.JsonUtil;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

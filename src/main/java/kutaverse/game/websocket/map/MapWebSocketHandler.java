@@ -1,9 +1,9 @@
-package kutaverse.game.websocket;
+package kutaverse.game.websocket.map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.map.dto.UserRequestDto;
-import kutaverse.game.websocket.handler.WebSocketHandler;
-import kutaverse.game.websocket.handler.WebSocketHandlerMapping;
+import kutaverse.game.websocket.map.handler.WebSocketHandler;
+import kutaverse.game.websocket.map.handler.WebSocketHandlerMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
