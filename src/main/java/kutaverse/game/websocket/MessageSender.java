@@ -9,13 +9,13 @@ import reactor.core.publisher.Mono;
 @Component
 public class MessageSender {
 
-    private final CustomWebSocketHandler webSocketHandler;
+    private final MapWebSocketHandler webSocketHandler;
 
     private final UserService userService;
 
     private Long durationTime; //맵 유지 기간 N 초에 대해서
 
-    public MessageSender(CustomWebSocketHandler webSocketHandler, UserService userService) {
+    public MessageSender(MapWebSocketHandler webSocketHandler, UserService userService) {
         this.webSocketHandler = webSocketHandler;
         this.userService = userService;
         this.durationTime = 10L;

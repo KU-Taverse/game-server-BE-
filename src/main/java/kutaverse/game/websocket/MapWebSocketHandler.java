@@ -14,11 +14,11 @@ import reactor.core.publisher.Sinks;
 
 @Component
 @Slf4j
-public class CustomWebSocketHandler implements org.springframework.web.reactive.socket.WebSocketHandler {
+public class MapWebSocketHandler implements org.springframework.web.reactive.socket.WebSocketHandler {
 
 	private final Sinks.Many<String> sink;
 
-	public CustomWebSocketHandler(Sinks.Many<String> sink) {
+	public MapWebSocketHandler(Sinks.Many<String> sink) {
 		this.sink = sink;
 	}
 	public Mono<Void> sendMessageToAllClients(String message) {

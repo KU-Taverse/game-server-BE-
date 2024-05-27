@@ -3,7 +3,6 @@ package kutaverse.game.websocket;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 import reactor.core.publisher.Sinks;
 
@@ -13,7 +12,7 @@ import java.util.Map;
 public class WebsocketConfig {
 
 	@Bean
-	public SimpleUrlHandlerMapping handlerMapping(WebSocketHandler wsh) {
+	public SimpleUrlHandlerMapping handlerMapping(MapWebSocketHandler wsh) {
 		return new SimpleUrlHandlerMapping(Map.of("/map", wsh), 1);
 	}
 
