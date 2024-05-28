@@ -19,7 +19,7 @@ public class MatchingQueue {
         queueing.offer(new AbstractMap.SimpleEntry<>(userId,webSocketSession));
     }
 
-    public static void getPlayer(String userId){
+    public static void getPlayer(){
         queueing.poll();
     }
 
