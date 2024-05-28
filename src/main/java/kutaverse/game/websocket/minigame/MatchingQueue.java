@@ -19,8 +19,8 @@ public class MatchingQueue {
         queueing.offer(new AbstractMap.SimpleEntry<>(userId,webSocketSession));
     }
 
-    public static void getPlayer(){
-        queueing.poll();
+    public static Map.Entry<String, WebSocketSession> getPlayer(){
+        return queueing.poll();
     }
 
     public static int queueingSize(){
