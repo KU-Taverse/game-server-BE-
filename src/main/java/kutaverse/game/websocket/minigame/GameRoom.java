@@ -1,12 +1,13 @@
 package kutaverse.game.websocket.minigame;
 
-import org.springframework.stereotype.Component;
+import lombok.Getter;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Getter
 public class GameRoom {
     private final String roomId;
 
@@ -19,6 +20,7 @@ public class GameRoom {
     public void addPlayer(String userId, WebSocketSession webSocketSession){
         players.put(userId,webSocketSession);
     }
+
 
     public void removePlayer(String userId){
         players.remove(userId);
