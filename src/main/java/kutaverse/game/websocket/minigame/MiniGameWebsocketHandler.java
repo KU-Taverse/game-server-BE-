@@ -3,6 +3,7 @@ package kutaverse.game.websocket.minigame;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.map.dto.UserRequestDto;
 import kutaverse.game.minigame.dto.MiniGameRequest;
+import kutaverse.game.minigame.dto.MiniGameRequestType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
@@ -28,7 +29,7 @@ public class MiniGameWebsocketHandler implements org.springframework.web.reactiv
                     }
                 })
                 .flatMap(miniGameRequest ->{
-                    if(miniGameRequest.getRoomId() == 0){
+                    if(miniGameRequest.getMiniGameRequestType() == MiniGameRequestType.WAIT){
                         MatchingQueue.addPlayer(miniGameRequest.getUserId(),session);
                         return Mono.empty();
                     }
