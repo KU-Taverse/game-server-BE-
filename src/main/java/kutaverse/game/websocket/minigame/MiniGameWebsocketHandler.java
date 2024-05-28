@@ -22,7 +22,7 @@ public class MiniGameWebsocketHandler implements org.springframework.web.reactiv
                 .map(WebSocketMessage::getPayloadAsText)
                 .map(data -> {
                     try {
-                        MiniGameRequest miniGameRequest = objectMapper.readValue(data, MiniGameRequest.class);  // JSON을 RoomDto로 변환
+                        MiniGameRequest miniGameRequest = objectMapper.readValue(data, MiniGameRequest.class);
                         return miniGameRequest;
                     } catch (Exception e) {
                         throw new RuntimeException(e);
@@ -31,9 +31,14 @@ public class MiniGameWebsocketHandler implements org.springframework.web.reactiv
                 .flatMap(miniGameRequest ->{
                     if(miniGameRequest.getMiniGameRequestType() == MiniGameRequestType.WAIT){
                         MatchingQueue.addPlayer(miniGameRequest.getUserId(),session);
-                        return Mono.empty();
                     }
                     // 여기는 나중에 만약 방 번호가 있으면 다른 유저에게 해당 값 전달
+                    else if(miniGameRequest.getMiniGameRequestType() == MiniGameRequestType.RUNNING){
+                        GameRoomManager.sendPlayerData(miniGameRequest.getRoomId(),miniGameRequest.getUserId(),miniGameRequest);
+                    }
+                    else{
+                        GameRoomManager.removeGameRoom(miniGameRequest.getRoomId());
+                    }
                     return Mono.empty();
                 })
                 .then();

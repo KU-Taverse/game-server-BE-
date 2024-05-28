@@ -1,5 +1,8 @@
 package kutaverse.game.websocket.minigame;
 
+import kutaverse.game.minigame.dto.MiniGameRequest;
+import reactor.core.publisher.Mono;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,5 +19,10 @@ public class GameRoomManager {
 
     public static void removeGameRoom(String roomId) {
         gameRooms.remove(roomId);
+    }
+
+    public static void sendPlayerData(String roomId, String userId, MiniGameRequest data) {
+        GameRoom gameRoom = getGameRoom(roomId);
+        gameRoom.sendDataToOther(userId,data);
     }
 }
