@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @ToString
 public class MiniGameRequest {
-    int roomId;
+    String roomId;
     String userId;
     List<LevelDto> levelDtoList;
 
