@@ -1,5 +1,6 @@
 package kutaverse.game.websocket.minigame;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotNull;
 import kutaverse.game.minigame.dto.MiniGameRequest;
@@ -28,12 +29,16 @@ public class MiniGameWebsocketHandler implements org.springframework.web.reactiv
                     }
                 })
                 .subscribe(data -> {
-                    handleMiniGameRequest((MiniGameRequest) data,session);
+                    try {
+                        handleMiniGameRequest((MiniGameRequest) data,session);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
         return Mono.never();
     }
 
-    private Mono<Void> handleMiniGameRequest(MiniGameRequest miniGameRequest,WebSocketSession session) {
+    private Mono<Void> handleMiniGameRequest(MiniGameRequest miniGameRequest,WebSocketSession session) throws JsonProcessingException {
         if (miniGameRequest.getMiniGameRequestType() == MiniGameRequestType.WAIT) {
             MatchingQueue.addPlayer(miniGameRequest.getUserId(), session);
         } else if (miniGameRequest.getMiniGameRequestType() == MiniGameRequestType.RUNNING) {

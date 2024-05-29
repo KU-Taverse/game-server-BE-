@@ -1,5 +1,6 @@
 package kutaverse.game.websocket.minigame;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import kutaverse.game.minigame.dto.MiniGameRequest;
 import reactor.core.publisher.Mono;
 
@@ -21,7 +22,7 @@ public class GameRoomManager {
         gameRooms.remove(roomId);
     }
 
-    public static void sendPlayerData(String roomId, String userId, MiniGameRequest data) {
+    public static void sendPlayerData(String roomId, String userId, MiniGameRequest data) throws JsonProcessingException {
         GameRoom gameRoom = getGameRoom(roomId);
         gameRoom.sendDataToOther(userId,data);
     }

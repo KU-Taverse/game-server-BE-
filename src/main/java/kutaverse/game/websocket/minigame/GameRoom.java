@@ -1,5 +1,7 @@
 package kutaverse.game.websocket.minigame;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.minigame.dto.MiniGameRequest;
 import lombok.Getter;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -7,13 +9,15 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+
+
 
 @Getter
 public class GameRoom {
     private final String roomId;
 
     private final Map<String, WebSocketSession> players = new ConcurrentHashMap<>();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public GameRoom(String roomId) {
         this.roomId = roomId;
@@ -35,13 +39,13 @@ public class GameRoom {
         });
     }
 
-    public void sendDataToOther(String userId, MiniGameRequest data) {
-        String data1 = data.toString();
+    public void sendDataToOther(String userId, MiniGameRequest data) throws JsonProcessingException {
+        String dataJson = objectMapper.writeValueAsString(data);
         players.entrySet().stream()
                 .filter(entry -> !entry.getKey().equals(userId))
                 .forEach(entry -> {
                     WebSocketSession session = entry.getValue();
-                    session.send(Mono.just(session.textMessage(data1))).subscribe();
+                    session.send(Mono.just(session.textMessage(dataJson))).subscribe();
                 });
     }
 }
