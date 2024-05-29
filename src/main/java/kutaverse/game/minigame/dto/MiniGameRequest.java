@@ -13,4 +13,13 @@ public class MiniGameRequest {
     String userId;
     List<LevelDto> levelDtoList;
 
+    public MiniGameRequest() {
+    }
+
+    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, List<LevelDto> levelDtoList) {
+        this.miniGameRequestType = miniGameRequestType;
+        this.roomId = roomId;
+        this.userId = userId;
+        this.levelDtoList = levelDtoList;
+    }
 }

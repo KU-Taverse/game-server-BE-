@@ -8,6 +8,9 @@ public class PositionDto {
     private int z;
     private int rotation;
 
+    public PositionDto() {
+    }
+
     public PositionDto(int x, int z, int rotation) {
         this.x = x;
         this.z = z;

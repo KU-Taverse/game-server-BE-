@@ -9,6 +9,9 @@ public class LevelDto {
     private int level;
     private List<PositionDto> positions;
 
+    public LevelDto() {
+    }
+
     public LevelDto(int level, List<PositionDto> positions) {
         this.level = level;
         this.positions = positions;
