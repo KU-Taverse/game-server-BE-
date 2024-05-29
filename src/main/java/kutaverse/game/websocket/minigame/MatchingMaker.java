@@ -1,5 +1,6 @@
 package kutaverse.game.websocket.minigame;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -7,11 +8,13 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class MatchingMaker {
 
 
     @Scheduled(fixedRate = 1000)
     public void matchPlayers(){
+        log.info(String.valueOf(MatchingQueue.queueingSize()));
         while(MatchingQueue.queueingSize() >= 2){
             Map.Entry<String, WebSocketSession> player1 = MatchingQueue.getPlayer();
             Map.Entry<String, WebSocketSession> player2 = MatchingQueue.getPlayer();
@@ -31,6 +34,6 @@ public class MatchingMaker {
 
         GameRoomManager.addGameRoom(gameRoom);
 
-        gameRoom.sendMessage("성공 - " + roomId);
+        gameRoom.broadcastMessage("성공 - " + roomId);
     }
 }
