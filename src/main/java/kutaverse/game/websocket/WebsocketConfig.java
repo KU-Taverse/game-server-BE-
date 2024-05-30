@@ -1,9 +1,10 @@
-package kutaverse.game.map.websocket;
+package kutaverse.game.websocket;
 
+import kutaverse.game.websocket.map.MapWebSocketHandler;
+import kutaverse.game.websocket.minigame.MiniGameWebsocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 import reactor.core.publisher.Sinks;
 
@@ -13,9 +14,23 @@ import java.util.Map;
 public class WebsocketConfig {
 
 	@Bean
-	public SimpleUrlHandlerMapping handlerMapping(WebSocketHandler wsh) {
-		return new SimpleUrlHandlerMapping(Map.of("/map", wsh), 1);
+	public MapWebSocketHandler mapWebSocketHandler(Sinks.Many<String> sink) {
+		return new MapWebSocketHandler(sink);
 	}
+
+	@Bean
+	public MiniGameWebsocketHandler miniGameWebsocketHandler() {
+		return new MiniGameWebsocketHandler();
+	}
+
+	@Bean
+	public SimpleUrlHandlerMapping handlerMapping(MapWebSocketHandler mapWsh, MiniGameWebsocketHandler miniWsh) {
+		return new SimpleUrlHandlerMapping(Map.of(
+				"/map", mapWsh,
+				"/game", miniWsh
+		), 1);
+	}
+
 
 	@Bean
 	public WebSocketHandlerAdapter webSocketHandlerAdapter() {

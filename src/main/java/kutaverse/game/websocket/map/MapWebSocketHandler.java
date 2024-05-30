@@ -1,10 +1,9 @@
-package kutaverse.game.map.websocket;
+package kutaverse.game.websocket.map;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.map.dto.UserRequestDto;
-import kutaverse.game.map.websocket.handler.WebSocketHandler;
-import kutaverse.game.map.websocket.handler.WebSocketHandlerMapping;
+import kutaverse.game.websocket.map.handler.WebSocketHandler;
+import kutaverse.game.websocket.map.handler.WebSocketHandlerMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
@@ -12,16 +11,14 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
-import java.io.IOException;
-
 
 @Component
 @Slf4j
-public class CustomWebSocketHandler implements org.springframework.web.reactive.socket.WebSocketHandler {
+public class MapWebSocketHandler implements org.springframework.web.reactive.socket.WebSocketHandler {
 
 	private final Sinks.Many<String> sink;
 
-	public CustomWebSocketHandler(Sinks.Many<String> sink) {
+	public MapWebSocketHandler(Sinks.Many<String> sink) {
 		this.sink = sink;
 	}
 	public Mono<Void> sendMessageToAllClients(String message) {
