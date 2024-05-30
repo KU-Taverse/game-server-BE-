@@ -34,6 +34,6 @@ public class MatchingMaker {
 
         GameRoomManager.addGameRoom(gameRoom);
 
-        gameRoom.broadcastMessage("성공 - " + roomId);
+        gameRoom.broadcastMessage(roomId);
     }
 }
