@@ -2,7 +2,6 @@ package kutaverse.game.map.dto.response;
 
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
-import kutaverse.game.map.dto.request.PostMapUserRequest;
 import lombok.*;
 
 @Getter
@@ -11,7 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class PostMapUserResponse {
+@EqualsAndHashCode
+public class GetMapUserResponse {
 
     private String userId;
     private Double positionX;
@@ -22,7 +22,7 @@ public class PostMapUserResponse {
     private Double rotationRoll;
     private Status status;
 
-    public static PostMapUserResponse toDto(User user){
+    public static GetMapUserResponse toDto(User user){
         return builder()
                 .userId(user.getUserId())
                 .positionX(user.getPositionX())

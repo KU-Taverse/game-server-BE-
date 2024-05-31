@@ -3,6 +3,7 @@ package kutaverse.game.map.service;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
+import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import kutaverse.game.map.repository.UserRepository;
@@ -23,13 +24,14 @@ public class RedisUserService implements UserService {
 
     @Override
     public Mono<PostMapUserResponse> create(PostMapUserRequest postMapUserRequest) {
-        Mono<User> user = userRepository.save(postMapUserRequest.toEntity());
-        return user.map(PostMapUserResponse::toDto);
+        return userRepository.save(postMapUserRequest.toEntity())
+                .map(PostMapUserResponse::toDto);
     }
 
     @Override
-    public Flux<User> findAll() {
-        return userRepository.getAll();
+    public Flux<GetMapUserResponse> findAll() {
+        return userRepository.getAll()
+                .map(GetMapUserResponse::toDto);
     }
 
     /**
@@ -40,17 +42,17 @@ public class RedisUserService implements UserService {
     @Override
     public Flux<User> findAllByTime(long length) {
         if (length == RepositoryUtil.INFINITETIME)
-            return findAll().filter(user -> user.getStatus() != Status.NOTUSE);
-
-        return findAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus() != Status.NOTUSE);
+            return userRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
+        return userRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus() != Status.NOTUSE);
 
     }
 
     ;
 
     @Override
-    public Mono<User> findOne(String id) {
-        return userRepository.get(id);
+    public Mono<GetMapUserResponse> findOne(String id) {
+        return userRepository.get(id)
+                .map(GetMapUserResponse::toDto);
     }
 
     @Override
@@ -62,16 +64,12 @@ public class RedisUserService implements UserService {
 
     @Override
     public Mono<User> update(UserRequestDto userRequestDto) {
-        return null;
+        return userRepository.save(userRequestDto.toEntity());
     }
 
     @Override
     public Mono<User> changeState(String id, Status status) {
-        return findOne(id)
-                .map(user -> {
-                    user.setStatus(status);
-                    return user;
-                });
+        return null;
     }
 
 }
