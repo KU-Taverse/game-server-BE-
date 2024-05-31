@@ -19,9 +19,19 @@ public class MatchingMaker {
             Map.Entry<String, WebSocketSession> player1 = MatchingQueue.getPlayer();
             Map.Entry<String, WebSocketSession> player2 = MatchingQueue.getPlayer();
 
-            if (player1 != null && player2 != null) {
+            // 세션 값 확인 필요
+            if(player1.getValue().isOpen() && player2.getValue().isOpen()){
                 createGameRoom(player1, player2);
             }
+            else{
+                if(player1.getValue().isOpen()){
+                    MatchingQueue.requeue(player1);
+                }
+                if(player2.getValue().isOpen()){
+                    MatchingQueue.requeue(player2);
+                }
+            }
+
         }
     }
 
