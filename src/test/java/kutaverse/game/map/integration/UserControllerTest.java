@@ -6,6 +6,8 @@ import kutaverse.game.map.controller.RedisUserController;
 import kutaverse.game.map.controller.UserController;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
+import kutaverse.game.map.dto.request.PostMapUserRequest;
+import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +41,7 @@ public class UserControllerTest {
 
     User user1=new User("1",2.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP);
     User user2=new User("2",1.1,1.1,1.1,1.1,1.1,1.1, Status.STAND);
+    GetMapUserResponse userResponse1=GetMapUserResponse.toDto(user1);
 
     @PostConstruct
     public void initDB(){
@@ -61,8 +64,8 @@ public class UserControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(User.class)
-                .isEqualTo(user1);
+                .expectBody(GetMapUserResponse.class)
+                .isEqualTo(userResponse1);
     }
 
     /**
@@ -79,5 +82,20 @@ public class UserControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON);
+    }
+
+    @Test
+    @DisplayName("post 요청으로 db에 저장할 수 있다.")
+    public void test3(){
+        webTestClient = WebTestClient.bindToApplicationContext(applicationContext).configureClient().responseTimeout(Duration.ofHours(1)).build();
+        User user3=new User("3",1.234,2.345,3.4567,1.1,1.1,1.1, Status.NOTUSE);
+        PostMapUserRequest postMapUserRequest=PostMapUserRequest.toEntity(user3);
+        webTestClient.post()
+                .uri("/user")
+                .body(Mono.just(postMapUserRequest),PostMapUserRequest.class)
+                .exchange()
+                .expectStatus().isOk();
+                //.expectBody().json();
+
     }
 }
