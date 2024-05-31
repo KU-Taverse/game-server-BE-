@@ -2,6 +2,8 @@ package kutaverse.game.map.controller;
 
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
+import kutaverse.game.map.dto.request.PostMapUserRequest;
+import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -16,11 +18,12 @@ public class RedisUserController implements UserController{
 
     private final UserService userService;
 
-    @PostMapping(produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public Mono<User> addUser(@RequestBody User user) {
-        return userService.create(user);
-}
+    @PostMapping(produces= MediaType.APPLICATION_JSON_VALUE)
+    public Mono<PostMapUserResponse> addUser(@RequestBody PostMapUserRequest postMapUserRequest) {
+        return userService.create(postMapUserRequest);
+    }
+
 
     @GetMapping()
     @Override

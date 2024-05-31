@@ -1,4 +1,4 @@
-package kutaverse.game.map.dto;
+package kutaverse.game.websocket.map.dto.response;
 
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;

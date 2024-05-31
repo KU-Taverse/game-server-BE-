@@ -2,7 +2,9 @@ package kutaverse.game.map.service;
 
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
-import kutaverse.game.map.dto.UserRequestDto;
+import kutaverse.game.map.dto.request.PostMapUserRequest;
+import kutaverse.game.map.dto.response.PostMapUserResponse;
+import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import kutaverse.game.map.repository.UserRepository;
 import kutaverse.game.map.repository.util.RepositoryUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +22,9 @@ public class RedisUserService implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Mono<User> create(User user) {
-        return userRepository.save(user);
+    public Mono<PostMapUserResponse> create(PostMapUserRequest postMapUserRequest) {
+        Mono<User> user = userRepository.save(postMapUserRequest.toEntity());
+        return user.map(PostMapUserResponse::toDto);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class RedisUserService implements UserService {
 
     @Override
     public Mono<User> update(UserRequestDto userRequestDto) {
-        return create(userRequestDto.toEntity());
+        return null;
     }
 
     @Override
