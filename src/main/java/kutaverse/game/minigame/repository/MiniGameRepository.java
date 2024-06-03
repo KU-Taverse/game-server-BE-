@@ -1,6 +1,7 @@
 package kutaverse.game.minigame.repository;
 
 import kutaverse.game.minigame.domain.GameResult;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface MiniGameRepository {
@@ -14,7 +15,7 @@ public interface MiniGameRepository {
     Mono<GameResult> update(GameResult gameResult);
 
     // 해당 유저 게임 정보 가져오기
-    Mono<GameResult> findByUserId(String userId);
+    Flux<GameResult> findByUserId(String userId);
 
     // 해당 데이터 삭제
     Mono<Void> delete(Long id);

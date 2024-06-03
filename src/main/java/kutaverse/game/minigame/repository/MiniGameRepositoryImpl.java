@@ -3,6 +3,7 @@ package kutaverse.game.minigame.repository;
 import kutaverse.game.minigame.domain.GameResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -26,7 +27,7 @@ public class MiniGameRepositoryImpl implements MiniGameRepository{
     }
 
     @Override
-    public Mono<GameResult> findByUserId(String userId) {
+    public Flux<GameResult> findByUserId(String userId) {
         return mgrRepository.findByUserId(userId);
     }
 
