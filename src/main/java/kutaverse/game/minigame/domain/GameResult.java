@@ -1,9 +1,11 @@
 package kutaverse.game.minigame.domain;
 
 
+import kutaverse.game.websocket.minigame.dto.GameUpdateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -45,4 +47,11 @@ public class GameResult {
     @LastModifiedDate
     @Column("updated_at")
     private LocalDateTime updatedAt;
+
+
+    public void update(GameUpdateDTO gameUpdateDTO){
+        player1Score = gameUpdateDTO.getPlayer1Score();
+        player2Score = gameUpdateDTO.getPlayer2Score();
+        winnerId = gameUpdateDTO.getWinnerId();
+    }
 }
