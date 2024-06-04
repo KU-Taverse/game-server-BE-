@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono;
 
 public interface MiniGameReactiveRepository extends ReactiveCrudRepository<GameResult,Long> {
 
-    Flux<GameResult> findByUserId(String userId);
+    Flux<GameResult> findByPlayer1Id(String userId);
 }

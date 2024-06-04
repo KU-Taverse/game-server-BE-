@@ -27,8 +27,8 @@ public class MiniGameRepositoryImpl implements MiniGameRepository{
     }
 
     @Override
-    public Flux<GameResult> findByUserId(String userId) {
-        return mgrRepository.findByUserId(userId);
+    public Flux<GameResult> findByPlayerId(String userId) {
+        return mgrRepository.findByPlayer1Id(userId);
     }
 
     @Override

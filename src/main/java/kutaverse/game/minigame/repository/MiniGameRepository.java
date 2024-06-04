@@ -15,7 +15,7 @@ public interface MiniGameRepository {
     Mono<GameResult> update(GameResult gameResult);
 
     // 해당 유저 게임 정보 가져오기
-    Flux<GameResult> findByUserId(String userId);
+    Flux<GameResult> findByPlayerId(String userId);
 
     // 해당 데이터 삭제
     Mono<Void> delete(Long id);
