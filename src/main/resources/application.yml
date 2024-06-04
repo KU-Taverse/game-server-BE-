@@ -6,6 +6,11 @@ spring:
     group:
       "local": "localRedis"
       "prod": "prodRedis, prodPort, secret, web-mvc"
+  r2dbc:
+    url: r2dbc:pool:mysql://localhost:3306/webflux
+    username: root
+    password:
+    initialization-mode: always
 
 ---
 
@@ -19,6 +24,7 @@ spring:
       port: 6379
       password:
       timeout: 5000
+
 
 ---
 

@@ -48,4 +48,14 @@ public class GameRoom {
                     session.send(Mono.just(session.textMessage(dataJson))).subscribe();
                 });
     }
+
+    // 상대방이 나간 처리
+    public void handlePlayerLeft(String userId){
+        players.entrySet().stream()
+                .filter(entry -> !entry.getKey().equals(userId))
+                .forEach(entry -> {
+                    WebSocketSession session = entry.getValue();
+                    session.send(Mono.just(session.textMessage("상대방이 나갔습니다."))).subscribe();
+                });
+    }
 }

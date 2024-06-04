@@ -4,19 +4,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
 
 import java.util.AbstractMap;
+import java.util.ArrayDeque;
 import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentHashMap;
 
 // Queue를 통해 플레이어들을 저장해 둘 예정
 
 
 @Component
 public class MatchingQueue {
-    private static final Queue<Map.Entry<String, WebSocketSession>> queueing = new ConcurrentLinkedQueue<>();
+    private static final ArrayDeque<Map.Entry<String, WebSocketSession>> queueing = new ArrayDeque<>();
+    private static final Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
 
     public static void addPlayer(String userId, WebSocketSession webSocketSession){
-        queueing.offer(new AbstractMap.SimpleEntry<>(userId,webSocketSession));
+        if(!sessionMap.containsKey(userId)) {
+            queueing.offer(new AbstractMap.SimpleEntry<>(userId,webSocketSession));
+            sessionMap.put(userId,webSocketSession);
+        }
+
     }
 
     public static Map.Entry<String, WebSocketSession> getPlayer(){
@@ -25,6 +30,10 @@ public class MatchingQueue {
 
     public static int queueingSize(){
         return queueing.size();
+    }
+
+    public static void requeue(Map.Entry<String, WebSocketSession> player){
+        queueing.addFirst(player);
     }
 
 
