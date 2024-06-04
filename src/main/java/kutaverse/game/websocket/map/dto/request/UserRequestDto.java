@@ -1,7 +1,8 @@
-package kutaverse.game.map.dto;
+package kutaverse.game.websocket.map.dto.request;
 
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
+import kutaverse.game.map.domain.MapRequestType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

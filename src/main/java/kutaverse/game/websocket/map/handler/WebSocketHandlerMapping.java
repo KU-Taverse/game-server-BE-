@@ -1,8 +1,8 @@
 package kutaverse.game.websocket.map.handler;
 
 import jakarta.annotation.PostConstruct;
-import kutaverse.game.map.dto.MapRequestType;
-import kutaverse.game.map.dto.UserRequestDto;
+import kutaverse.game.map.domain.MapRequestType;
+import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

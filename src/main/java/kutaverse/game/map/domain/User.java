@@ -12,8 +12,11 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
@@ -39,6 +42,7 @@ public class User {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime localDateTime;
 
     @Builder
@@ -51,7 +55,7 @@ public class User {
         this.rotationYaw = Math.round(rotationYaw*1000.0)/1000.0;
         this.rotationRoll = Math.round(rotationRoll*1000.0)/1000.0;
         this.status = status;
-        this.localDateTime=LocalDateTime.now();
+        this.localDateTime = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     public void updateTime() {
@@ -60,5 +64,18 @@ public class User {
 
     public void setStatus(Status status){
         this.status=status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId) && Objects.equals(positionX, user.positionX) && Objects.equals(positionY, user.positionY) && Objects.equals(positionZ, user.positionZ) && Objects.equals(rotationPitch, user.rotationPitch) && Objects.equals(rotationYaw, user.rotationYaw) && Objects.equals(rotationRoll, user.rotationRoll) && status == user.status && Objects.equals(localDateTime, user.localDateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, positionX, positionY, positionZ, rotationPitch, rotationYaw, rotationRoll, status, localDateTime);
     }
 }

@@ -1,6 +1,6 @@
 package kutaverse.game.websocket.map.handler;
 
-import kutaverse.game.map.dto.UserRequestDto;
+import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import kutaverse.game.map.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
