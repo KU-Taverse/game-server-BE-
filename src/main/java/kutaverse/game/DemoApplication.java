@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableR2dbcRepositories
 public class DemoApplication {
 
 	public static void main(String[] args) {
