@@ -25,7 +25,7 @@ public class RedisUserController implements UserController{
      * @return Mono<PostMapUserResponse> 저장된 맵 유저 정보
      */
     @Override
-    @PostMapping(produces= MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public Mono<PostMapUserResponse> addUser(@RequestBody PostMapUserRequest postMapUserRequest) {
         return userService.create(postMapUserRequest);
     }
