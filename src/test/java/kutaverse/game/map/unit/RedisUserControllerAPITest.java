@@ -4,40 +4,41 @@ import kutaverse.game.map.controller.RedisUserController;
 import kutaverse.game.map.controller.UserController;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
+import kutaverse.game.map.dto.request.PostMapUserRequest;
+import kutaverse.game.map.dto.response.GetMapUserResponse;
+import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.service.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.reactive.server.EntityExchangeResult;
-import org.springframework.test.web.reactive.server.ExchangeResult;
-import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
+import static org.mockito.ArgumentMatchers.refEq;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
-@Import(RedisUserController.class)
 public class RedisUserControllerAPITest {
 
     @Autowired
-    WebTestClient webTestClient;
+    WebTestClient webTestClient;;
+
+    @Autowired
+    UserController userController;
 
     @MockBean
     UserService userService;
@@ -45,6 +46,13 @@ public class RedisUserControllerAPITest {
     User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
     User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
     User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
+    PostMapUserRequest postMapUserRequest=PostMapUserRequest.toEntity(user);
+    PostMapUserResponse postMapUserResponse=PostMapUserResponse.toDto(user);
+
+    GetMapUserResponse getMapUserResponse=GetMapUserResponse.toDto(user);
+
+    GetMapUserResponse getMapUserResponse1=GetMapUserResponse.toDto(user1);
+    GetMapUserResponse getMapUserResponse2=GetMapUserResponse.toDto(user2);
 
     @Test
     @DisplayName("unit test-API test user를 저장했을 때 user에 대한 return 값을 받아 와야 한다. " +
@@ -52,15 +60,19 @@ public class RedisUserControllerAPITest {
     public void test1() {
 
         //given
-        Mockito.when(userService.create(user)).thenReturn(Mono.just(user));
+        Mockito.when(userService.create(postMapUserRequest)).thenReturn(Mono.just(postMapUserResponse));
         //when
         webTestClient.post()
                 .uri("/user")
-                .body(Mono.just(user), User.class)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(postMapUserRequest), PostMapUserRequest.class)
                 .exchange()
-
                 .expectStatus().isOk()
-                .expectBody();
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(UserService.class);
+        //then
+        Mockito.verify(userService, Mockito.times(1)).create(refEq(postMapUserRequest));
     }
 
     @Test
@@ -68,16 +80,16 @@ public class RedisUserControllerAPITest {
     public void test2() {
 
         //given
-        String userId = "1";
-        Mockito.when(userService.findOne("1")).thenReturn(Mono.just(user));
+        String userId = getMapUserResponse.getUserId();
+        Mockito.when(userService.findOne(userId)).thenReturn(Mono.just(getMapUserResponse));
         //when
         webTestClient.get()
                 .uri("/user/1")
                 .exchange()
-
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$.userId").isEqualTo(userId);
+        //then
         Mockito.verify(userService, Mockito.times(1)).findOne(userId);
     }
 
@@ -86,7 +98,7 @@ public class RedisUserControllerAPITest {
     public void test3() {
 
         //given
-        Mockito.when(userService.findAll()).thenReturn(Flux.just(user1, user2));
+        Mockito.when(userService.findAll()).thenReturn(Flux.just(getMapUserResponse1, getMapUserResponse2));
         //when
         webTestClient.get()
                 .uri("/user")

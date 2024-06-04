@@ -3,7 +3,7 @@ package kutaverse.game.websocket.map.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.map.domain.User;
-import kutaverse.game.map.dto.UserResponseDto;
+import kutaverse.game.websocket.map.dto.response.UserResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

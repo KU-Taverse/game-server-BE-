@@ -1,7 +1,7 @@
 package kutaverse.game.websocket.map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kutaverse.game.map.dto.UserRequestDto;
+import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import kutaverse.game.websocket.map.handler.WebSocketHandler;
 import kutaverse.game.websocket.map.handler.WebSocketHandlerMapping;
 import lombok.extern.slf4j.Slf4j;

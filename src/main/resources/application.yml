@@ -1,4 +1,32 @@
+
+
+
 spring:
+  profiles:
+    group:
+      "local": "localRedis"
+      "prod": "prodRedis, prodPort, secret, web-mvc"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "localRed"
+  data:
+    redis:
+      host: local
+      port: 6379
+      password:
+      timeout: 5000
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "prodRedis"
+
   data:
     redis:
       host: redis
