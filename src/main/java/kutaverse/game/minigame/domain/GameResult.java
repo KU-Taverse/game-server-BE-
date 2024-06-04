@@ -35,6 +35,9 @@ public class GameResult {
     @Column("winner_id")
     private String winnerId;
 
+    @Column("room_id")
+    private String roomId;
+
     @CreatedDate
     @Column("created_at")
     private LocalDateTime createdAt;
