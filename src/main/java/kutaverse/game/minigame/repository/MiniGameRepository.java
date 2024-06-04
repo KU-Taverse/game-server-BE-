@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface MiniGameRepository {
     // 해당 방 게임 결과의 데이터 가져오기
-    Mono<GameResult> findByRoomId(Long id);
+    Mono<GameResult> findByRoomId(String id);
 
     // 방 생성 시 초기화
     Mono<GameResult> save(GameResult gameResult);

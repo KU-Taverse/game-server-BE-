@@ -12,8 +12,8 @@ public class MiniGameRepositoryImpl implements MiniGameRepository{
     private final MiniGameReactiveRepository mgrRepository;
 
     @Override
-    public Mono<GameResult> findByRoomId(Long id) {
-        return mgrRepository.findById(id);
+    public Mono<GameResult> findByRoomId(String id) {
+        return mgrRepository.findByRoomId(id);
     }
 
     @Override
