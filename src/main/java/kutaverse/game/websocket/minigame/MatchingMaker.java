@@ -14,7 +14,7 @@ public class MatchingMaker {
 
     @Scheduled(fixedRate = 1000)
     public void matchPlayers(){
-        log.info(String.valueOf(MatchingQueue.queueingSize()));
+        // log.info(String.valueOf(MatchingQueue.queueingSize()));
         while(MatchingQueue.queueingSize() >= 2){
             Map.Entry<String, WebSocketSession> player1 = MatchingQueue.getPlayer();
             Map.Entry<String, WebSocketSession> player2 = MatchingQueue.getPlayer();
