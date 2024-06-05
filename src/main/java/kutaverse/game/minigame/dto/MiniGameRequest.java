@@ -11,15 +11,16 @@ public class MiniGameRequest {
     MiniGameRequestType miniGameRequestType;
     String roomId;
     String userId;
-    List<LevelDto> levelDtoList;
+    int interrupt;
+    List<kutaverse.game.minigame.dto.ActorInfo> ActorInfo;
 
     public MiniGameRequest() {
     }
 
-    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, List<LevelDto> levelDtoList) {
+    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, List<kutaverse.game.minigame.dto.ActorInfo> ActorInfo) {
         this.miniGameRequestType = miniGameRequestType;
         this.roomId = roomId;
         this.userId = userId;
-        this.levelDtoList = levelDtoList;
+        this.ActorInfo = ActorInfo;
     }
 }
