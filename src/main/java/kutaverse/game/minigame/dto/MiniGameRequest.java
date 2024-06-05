@@ -12,12 +12,12 @@ public class MiniGameRequest {
     String roomId;
     String userId;
     int interrupt;
-    List<ActorInfo> actorInfo;
+    ActorInfo actorInfo;
 
     public MiniGameRequest() {
     }
 
-    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, int interrupt, List<ActorInfo> actorInfo) {
+    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, int interrupt, ActorInfo actorInfo) {
         this.miniGameRequestType = miniGameRequestType;
         this.roomId = roomId;
         this.userId = userId;
