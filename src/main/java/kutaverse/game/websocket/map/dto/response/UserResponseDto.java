@@ -2,13 +2,14 @@ package kutaverse.game.websocket.map.dto.response;
 
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
+@ToString
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class UserResponseDto {
 
     private String userId;
@@ -18,9 +19,9 @@ public class UserResponseDto {
     private Double rotationPitch;
     private Double rotationYaw;
     private Double rotationRoll;
-    private String status;
+    private Status status;
 
-    public UserResponseDto(User user) {
+    /*public UserResponseDto(User user) {
         this.userId = user.getUserId();
         this.positionX = user.getPositionX();
         this.positionY = user.getPositionY();
@@ -29,5 +30,18 @@ public class UserResponseDto {
         this.rotationYaw = user.getRotationYaw();
         this.rotationRoll = user.getRotationRoll();
         this.status = String.valueOf(user.getStatus());
+    }*/
+
+    public static UserResponseDto toDto(User user){
+        return builder()
+                .userId(user.getUserId())
+                .positionX(user.getPositionX())
+                .positionY(user.getPositionY())
+                .positionZ(user.getPositionZ())
+                .rotationPitch(user.getRotationPitch())
+                .rotationRoll(user.getRotationRoll())
+                .rotationYaw(user.getRotationYaw())
+                .status(user.getStatus())
+                .build();
     }
 }
