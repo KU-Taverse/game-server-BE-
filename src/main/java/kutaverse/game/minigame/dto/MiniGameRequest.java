@@ -12,15 +12,16 @@ public class MiniGameRequest {
     String roomId;
     String userId;
     int interrupt;
-    List<kutaverse.game.minigame.dto.ActorInfo> ActorInfo;
+    List<ActorInfo> actorInfo;
 
     public MiniGameRequest() {
     }
 
-    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, List<kutaverse.game.minigame.dto.ActorInfo> ActorInfo) {
+    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, int interrupt, List<ActorInfo> actorInfo) {
         this.miniGameRequestType = miniGameRequestType;
         this.roomId = roomId;
         this.userId = userId;
-        this.ActorInfo = ActorInfo;
+        this.interrupt = interrupt;
+        this.actorInfo = actorInfo;
     }
 }

@@ -6,7 +6,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ActorInfo {
-    private int level;
+    private String level;
     private int x;
     private int z;
 
@@ -14,7 +14,7 @@ public class ActorInfo {
     }
 
 
-    public ActorInfo(int level, int x, int z) {
+    public ActorInfo(String level, int x, int z) {
         this.level = level;
         this.x = x;
         this.z = z;
