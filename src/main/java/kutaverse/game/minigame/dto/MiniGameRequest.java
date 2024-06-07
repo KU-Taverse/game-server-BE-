@@ -11,15 +11,17 @@ public class MiniGameRequest {
     MiniGameRequestType miniGameRequestType;
     String roomId;
     String userId;
-    List<LevelDto> levelDtoList;
+    int interrupt;
+    ActorInfo actorInfo;
 
     public MiniGameRequest() {
     }
 
-    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, List<LevelDto> levelDtoList) {
+    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, int interrupt, ActorInfo actorInfo) {
         this.miniGameRequestType = miniGameRequestType;
         this.roomId = roomId;
         this.userId = userId;
-        this.levelDtoList = levelDtoList;
+        this.interrupt = interrupt;
+        this.actorInfo = actorInfo;
     }
 }
