@@ -20,7 +20,7 @@ spring:
       on-profile: "localDB"
   data:
     redis:
-      host: local
+      host: localhost
       port: 6379
       password:
       timeout: 5000
@@ -37,5 +37,5 @@ spring:
     redis:
       host: redis
       port: 6379
-      password: 12345678
+      password:
       timeout: 5000
