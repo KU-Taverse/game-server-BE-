@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
 public class PostMapUserResponse {
 
     private String userId;
@@ -20,6 +21,9 @@ public class PostMapUserResponse {
     private Double rotationPitch;
     private Double rotationYaw;
     private Double rotationRoll;
+    private Double velocityX;
+    private Double velocityY;
+    private Double velocityZ;
     private Status status;
 
     public static PostMapUserResponse toDto(User user){
@@ -31,6 +35,9 @@ public class PostMapUserResponse {
                 .rotationPitch(user.getRotationPitch())
                 .rotationRoll(user.getRotationRoll())
                 .rotationYaw(user.getRotationYaw())
+                .velocityX(user.getVelocityX())
+                .velocityY(user.getVelocityY())
+                .velocityZ(user.getVelocityZ())
                 .status(user.getStatus())
                 .build();
     }

@@ -95,4 +95,4 @@ jobs:
       - name: add label
         uses: actions-ecosystem/action-add-labels@v1
         with:
-          labels: 자동 배포
+          labels: ":satellite: 자동 배포"

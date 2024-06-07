@@ -35,7 +35,16 @@
             <input type="text" id="inputMessage6" placeholder="rotationRoll 입력하세요...">
         </div>
         <div id="message-input7">
-            <select id="inputMessage7">
+            <input type="text" id="inputMessage7" placeholder="velocityX 입력하세요...">
+        </div>
+        <div id="message-input8">
+            <input type="text" id="inputMessage8" placeholder="velocityY 입력하세요...">
+        </div>
+        <div id="message-input9">
+            <input type="text" id="inputMessage9" placeholder="velocityZ 입력하세요...">
+        </div>
+        <div id="message-input10">
+            <select id="inputMessage10">
                 <option value="STAND">STAND</option>
                 <option value="JUMP">JUMP</option>
                 <option value="NOTUSE">NOTUSE</option>
@@ -79,7 +88,10 @@
     const rotationPitch=document.getElementById('inputMessage4');
     const rotationYaw=document.getElementById('inputMessage5');
     const rotationRoll=document.getElementById('inputMessage6');
-    const status=document.getElementById('inputMessage7');
+    const velocityX=document.getElementById('inputMessage7');
+    const velocityY=document.getElementById('inputMessage8');
+    const velocityZ=document.getElementById('inputMessage9');
+    const status=document.getElementById('inputMessage10');
     //user 삭제 데이터
     const delete_username=document.getElementById('delete-username-input')
 
@@ -105,7 +117,7 @@
             const li = document.createElement('li');
 
             li.classList.add('output-child');
-            li.innerText = `UserID: ${user.userId}, Position: (${user.positionX}, ${user.positionY}, ${user.positionZ}), Euler Angles: (${user.rotationPitch}, ${user.rotationYaw}, ${user.rotationRoll}), Status: ${user.status}`;
+            li.innerText = `UserID: ${user.userId}, Position: (${user.positionX}, ${user.positionY}, ${user.positionZ}), Euler Angles: (${user.rotationPitch}, ${user.rotationYaw}, ${user.rotationRoll}), Velocity: (${user.velocityX}, ${user.velocityY}, ${user.velocityZ}), Status: ${user.status}`;
             messageList.appendChild(li);
         });
     };
@@ -130,6 +142,9 @@
             rotationPitch: rotationPitch.value,
             rotationYaw: rotationYaw.value,
             rotationRoll: rotationRoll.value,
+            velocityX:velocityX.value,
+            velocityY:velocityY.value,
+            velocityZ:velocityZ.value,
             status: status.value
         };
 
@@ -155,6 +170,9 @@
         this.rotationPitch = '';
         this.rotationYaw = '';
         this.rotationRoll = '';
+        this.velocityX='';
+        this.velocityY='';
+        this.velocityZ='';
         this.status = '';
     }
 

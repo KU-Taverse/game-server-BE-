@@ -21,4 +21,6 @@ services:
     depends_on:
       - redis
       - mysql
+    environment:
+      - SPRING_PROFILES_ACTIVE=prodDB
 

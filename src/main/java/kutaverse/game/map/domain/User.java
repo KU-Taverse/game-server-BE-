@@ -39,6 +39,12 @@ public class User {
 
     private Status status;
 
+    private Double velocityX;
+
+    private Double velocityY;
+
+    private Double velocityZ;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
@@ -46,7 +52,9 @@ public class User {
     private LocalDateTime localDateTime;
 
     @Builder
-    public User(String userId, Double positionX, Double positionY, Double positionZ, Double rotationPitch, Double rotationYaw, Double rotationRoll, Status status) {
+    public User(String userId, Double positionX, Double positionY, Double positionZ,
+                Double rotationPitch, Double rotationYaw, Double rotationRoll,
+                Double velocityX, Double velocityY, Double velocityZ, Status status) {
         this.userId = userId;
         this.positionX = Math.round(positionX*1000.0)/1000.0;
         this.positionY = Math.round(positionY*1000.0)/1000.0;;
@@ -55,7 +63,11 @@ public class User {
         this.rotationYaw = Math.round(rotationYaw*1000.0)/1000.0;
         this.rotationRoll = Math.round(rotationRoll*1000.0)/1000.0;
         this.status = status;
+        this.velocityX = Math.round(velocityX*1000.0)/1000.0;
+        this.velocityY = Math.round(velocityY*1000.0)/1000.0;;
+        this.velocityZ = Math.round(velocityZ*1000.0)/1000.0;
         this.localDateTime = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
     }
 
     public void updateTime() {
