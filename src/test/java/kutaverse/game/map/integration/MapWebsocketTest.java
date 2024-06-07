@@ -8,6 +8,7 @@ import kutaverse.game.map.domain.User;
 import kutaverse.game.map.repository.UserRepository;
 import kutaverse.game.websocket.map.dto.response.UserResponseDto;
 import kutaverse.game.websocket.map.util.JsonUtil;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,25 +64,47 @@ public class MapWebsocketTest {
     @DisplayName("[integration test] 저장된 map 유저 정보를 websocket로 받아야 한다.")
     @Test
     public void test1() throws URISyntaxException {
-        ObjectMapper objectMapper=new ObjectMapper();
         int connectionTimeSecond=1;
         AtomicInteger counter = new AtomicInteger(0);
-        Mono<Integer> counterMono=Mono.just(0);
 
         WebSocketClient client = new ReactorNettyWebSocketClient();
-        Exception exception = assertThrows(IllegalStateException.class, () -> {
-                    client.execute(getUrl("/map"), session -> session.receive()
-                            .doOnNext(data -> {
+        Exception exception = assertThrows(IllegalStateException.class, () -> client.execute(getUrl("/map"), session -> session.receive()
+                .doOnNext(data -> {
+                    List<UserResponseDto> userResponseDtos = JsonUtil.jsonToUserList(data.getPayloadAsText());
+                    assertTrue(verifyResponse(userResponseDtos,userResponseDtoList));
+                    counter.incrementAndGet();
 
-                                //System.out.println(JsonUtil.jsonToUserList(data.getPayloadAsText()));
-                                List<UserResponseDto> userResponseDtos = JsonUtil.jsonToUserList(data.getPayloadAsText());
-                                assertTrue(verifyResponse(userResponseDtos,userResponseDtoList));
-                                counter.incrementAndGet();
+                })
+                .then()).block(Duration.ofSeconds(connectionTimeSecond)
+        )
+        );
+        String expectedMessage = "Timeout on blocking read for 1";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 
-                            })
-                            .then()).block(Duration.ofSeconds(connectionTimeSecond)
-                    );
-                }
+    @DisplayName("[integration test] 저장된 map 유저 정보중 NOTUSE 유저는 websocket로 받을 수 없다.")
+    @Test
+    public void test2() throws URISyntaxException {
+        userRepository.delete(user1.getUserId()).block();
+        userRepository.delete(user2.getUserId()).block();
+        User notUseUser = new User("2", 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, Status.NOTUSE);
+        userRepository.save(notUseUser).block();
+
+        int connectionTimeSecond=1;
+        AtomicInteger counter = new AtomicInteger(0);
+
+
+        WebSocketClient client = new ReactorNettyWebSocketClient();
+        Exception exception = assertThrows(IllegalStateException.class, () -> client.execute(getUrl("/map"), session -> session.receive()
+                .doOnNext(data -> {
+                    System.out.println(JsonUtil.jsonToUserList(data.getPayloadAsText()));
+                    Assertions.assertThat(JsonUtil.jsonToUserList(data.getPayloadAsText()).size()).isEqualTo(0);
+                    counter.incrementAndGet();
+
+                })
+                .then()).block(Duration.ofSeconds(connectionTimeSecond)
+        )
         );
         String expectedMessage = "Timeout on blocking read for 1";
         String actualMessage = exception.getMessage();
