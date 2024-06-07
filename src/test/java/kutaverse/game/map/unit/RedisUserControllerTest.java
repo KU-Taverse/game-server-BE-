@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono;
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
 @Import(RedisUserController.class)//현재에는 필요 없는 것 같다
-@DisplayName("unit test-controller test")
+@DisplayName("[Unit test] -Controller test")
 public class RedisUserControllerTest {
 
     @MockBean

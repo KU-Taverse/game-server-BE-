@@ -32,6 +32,7 @@ import static org.mockito.ArgumentMatchers.refEq;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
+@DisplayName("[Unit Test] -API Test")
 public class RedisUserControllerAPITest {
 
     @Autowired
@@ -55,7 +56,7 @@ public class RedisUserControllerAPITest {
     GetMapUserResponse getMapUserResponse2 = GetMapUserResponse.toDto(user2);
 
     @Test
-    @DisplayName("unit test-API test user를 저장했을 때 user에 대한 return 값을 받아 와야 한다. " +
+    @DisplayName("user를 저장했을 때 user에 대한 return 값을 받아 와야 한다. " +
             "작업이 필요합니다")
     public void test1() {
 
@@ -76,7 +77,7 @@ public class RedisUserControllerAPITest {
     }
 
     @Test
-    @DisplayName("unit test-API test 저장된 유저를 찾아야한다.")
+    @DisplayName("저장된 유저를 찾아야한다.")
     public void test2() {
 
         //given
@@ -94,7 +95,7 @@ public class RedisUserControllerAPITest {
     }
 
     @Test
-    @DisplayName("unit test-API test 저장된 모든 유저를 찾을 수 있어야한다.")
+    @DisplayName("저장된 모든 유저를 찾을 수 있어야한다.")
     public void test3() {
 
         //given
@@ -116,7 +117,7 @@ public class RedisUserControllerAPITest {
     }
 
     @Test
-    @DisplayName("unit test-API test 유저를 삭제할 수 있어야한다.")
+    @DisplayName("유저를 삭제할 수 있어야한다.")
     public void test4() {
 
         //given

@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DisplayName("[Integration Test] -Map Websocket Test")
 public class MapWebsocketTest {
 
     @LocalServerPort
@@ -61,7 +62,7 @@ public class MapWebsocketTest {
                 .verifyComplete();
     }
 
-    @DisplayName("[integration test] 저장된 map 유저 정보를 websocket로 받아야 한다.")
+    @DisplayName("저장된 map 유저 정보를 websocket로 받아야 한다.")
     @Test
     public void test1() throws URISyntaxException {
         int connectionTimeSecond=1;
@@ -83,7 +84,7 @@ public class MapWebsocketTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    @DisplayName("[integration test] 저장된 map 유저 정보중 NOTUSE 유저는 websocket로 받을 수 없다.")
+    @DisplayName("저장된 map 유저 정보중 NOTUSE 유저는 websocket로 받을 수 없다.")
     @Test
     public void test2() throws URISyntaxException {
         userRepository.delete(user1.getUserId()).block();
