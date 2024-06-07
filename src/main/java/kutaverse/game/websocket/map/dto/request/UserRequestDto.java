@@ -19,6 +19,9 @@ public class UserRequestDto {
     private Double rotationPitch;
     private Double rotationYaw;
     private Double rotationRoll;
+    private Double velocityX;
+    private Double velocityY;
+    private Double velocityZ;
     private Status status;
 
     public User toEntity(){
@@ -30,6 +33,9 @@ public class UserRequestDto {
                 .rotationPitch(rotationPitch)
                 .rotationYaw(rotationYaw)
                 .rotationRoll(rotationRoll)
+                .velocityX(velocityX)
+                .velocityY(velocityZ)
+                .velocityZ(velocityZ)
                 .status(status)
                 .build();
     }

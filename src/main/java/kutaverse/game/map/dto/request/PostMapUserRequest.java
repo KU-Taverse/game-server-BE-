@@ -18,6 +18,9 @@ public class PostMapUserRequest {
     private Double rotationPitch;
     private Double rotationYaw;
     private Double rotationRoll;
+    private Double velocityX;
+    private Double velocityY;
+    private Double velocityZ;
     private Status status;
 
     /**
@@ -33,6 +36,9 @@ public class PostMapUserRequest {
                 .rotationPitch(rotationPitch)
                 .rotationYaw(rotationYaw)
                 .rotationRoll(rotationRoll)
+                .velocityX(velocityX)
+                .velocityY(velocityY)
+                .velocityZ(velocityZ)
                 .status(status)
                 .build();
     }
@@ -51,6 +57,9 @@ public class PostMapUserRequest {
                 .rotationPitch(user.getRotationPitch())
                 .rotationRoll(user.getRotationRoll())
                 .rotationYaw(user.getRotationYaw())
+                .velocityX(user.getVelocityX())
+                .velocityY(user.getVelocityY())
+                .velocityZ(user.getVelocityZ())
                 .status(user.getStatus())
                 .build();
     }

@@ -18,7 +18,10 @@ public class UserResponseDto {
     private Double rotationPitch;
     private Double rotationYaw;
     private Double rotationRoll;
-    private String status;
+    private Double velocityX;
+    private Double velocityY;
+    private Double velocityZ;
+    private Status status;
 
     public UserResponseDto(User user) {
         this.userId = user.getUserId();
@@ -28,6 +31,9 @@ public class UserResponseDto {
         this.rotationPitch = user.getRotationPitch();
         this.rotationYaw = user.getRotationYaw();
         this.rotationRoll = user.getRotationRoll();
-        this.status = String.valueOf(user.getStatus());
+        this.status = user.getStatus();
+        this.velocityX=user.getVelocityX();
+        this.velocityY=user.getVelocityY();
+        this.velocityZ=user.getVelocityZ();
     }
 }

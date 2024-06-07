@@ -35,7 +35,7 @@ import static org.mockito.ArgumentMatchers.refEq;
 public class RedisUserControllerAPITest {
 
     @Autowired
-    WebTestClient webTestClient;;
+    WebTestClient webTestClient;
 
     @Autowired
     UserController userController;
@@ -43,16 +43,16 @@ public class RedisUserControllerAPITest {
     @MockBean
     UserService userService;
 
-    User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
-    User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
-    User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, Status.STAND);
-    PostMapUserRequest postMapUserRequest=PostMapUserRequest.toEntity(user);
-    PostMapUserResponse postMapUserResponse=PostMapUserResponse.toDto(user);
+    User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
+    User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
+    User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
+    PostMapUserRequest postMapUserRequest = PostMapUserRequest.toEntity(user);
+    PostMapUserResponse postMapUserResponse = PostMapUserResponse.toDto(user);
 
-    GetMapUserResponse getMapUserResponse=GetMapUserResponse.toDto(user);
+    GetMapUserResponse getMapUserResponse = GetMapUserResponse.toDto(user);
 
-    GetMapUserResponse getMapUserResponse1=GetMapUserResponse.toDto(user1);
-    GetMapUserResponse getMapUserResponse2=GetMapUserResponse.toDto(user2);
+    GetMapUserResponse getMapUserResponse1 = GetMapUserResponse.toDto(user1);
+    GetMapUserResponse getMapUserResponse2 = GetMapUserResponse.toDto(user2);
 
     @Test
     @DisplayName("unit test-API test user를 저장했을 때 user에 대한 return 값을 받아 와야 한다. " +

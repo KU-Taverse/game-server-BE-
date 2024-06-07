@@ -24,6 +24,7 @@ import reactor.core.publisher.Mono;
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
 @Import(RedisUserController.class)//현재에는 필요 없는 것 같다
+@DisplayName("unit test-controller test")
 public class RedisUserControllerTest {
 
     @MockBean
@@ -32,28 +33,27 @@ public class RedisUserControllerTest {
     @Autowired
     UserController userController;
 
-    User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
+    User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1,7.1,8.1,9.1, Status.STAND);
     PostMapUserRequest postMapUserRequest=PostMapUserRequest.toEntity(user);
     PostMapUserResponse postMapUserResponse=PostMapUserResponse.toDto(user);
 
     GetMapUserResponse getMapUserResponse=GetMapUserResponse.toDto(user);
     //validation이 필요하다
     @Test
-    @DisplayName("unit test-controller test user를 저장했을 때 user에 대한 return 값을 받아 와야 한다.")
+    @DisplayName("user를 저장했을 때 user에 대한 return 값을 받아 와야 한다.")
     public void test1(){
         //given
-        User user=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
         Mockito.when(userService.create(postMapUserRequest)).thenReturn(Mono.just(postMapUserResponse));
         //when
 
         PostMapUserResponse saveUser=userController.addUser(postMapUserRequest).block();
         //then
         Mockito.verify(userService,Mockito.times(1)).create(postMapUserRequest);
-        Assertions.assertThat(user.getUserId()).isEqualTo(saveUser.getUserId());
+        Assertions.assertThat(postMapUserResponse).isEqualTo(saveUser);
     }
 
     @Test
-    @DisplayName("unit test-controller test 저장된 유저를 찾아야한다.")
+    @DisplayName("저장된 유저를 찾아야한다.")
     public void test2(){
         //given
         String userId=user.getUserId();
@@ -65,15 +65,16 @@ public class RedisUserControllerTest {
         //then
         Mockito.verify(userService,Mockito.times(1)).findOne(userId);
         Assertions.assertThat(user.getUserId()).isEqualTo(findUser.getUserId());
+        Assertions.assertThat(findUser).isEqualTo(getMapUserResponse);
     }
 
     @Test
-    @DisplayName("unit test-controller test 저장된 모든 유저를 찾을 수 있어야한다.")
+    @DisplayName("저장된 모든 유저를 찾을 수 있어야한다.(크기만 확인하는 테스트이다)")
     public void test3(){
         //given
 
-        User user1=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
-        User user2=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1, Status.STAND);
+        User user1=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1,7.1,8.1,9.1, Status.STAND);
+        User user2=new User("1", 1.1, 2.1, 3.1, 4.1,5.1,6.1,7.1,8.1,9.1, Status.STAND);
         GetMapUserResponse getMapUserResponse1=GetMapUserResponse.toDto(user1);
         GetMapUserResponse getMapUserResponse2=GetMapUserResponse.toDto(user2);
 
@@ -89,7 +90,7 @@ public class RedisUserControllerTest {
     }
 
     @Test
-    @DisplayName("unit test-controller test 유저를 삭제할 수 있어야한다.")
+    @DisplayName("유저를 삭제할 수 있어야한다.")
     public void test4(){
         //given
         String userId="1";
