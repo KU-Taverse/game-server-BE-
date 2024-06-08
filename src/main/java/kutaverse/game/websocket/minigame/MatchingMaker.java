@@ -12,7 +12,7 @@ import java.util.Map;
 public class MatchingMaker {
 
     //초당 50번
-    @Scheduled(fixedRate = 200)
+    @Scheduled(fixedRate = 10000)
     public void matchPlayers(){
         // log.info(String.valueOf(MatchingQueue.queueingSize()));
         while(MatchingQueue.queueingSize() >= 2){
