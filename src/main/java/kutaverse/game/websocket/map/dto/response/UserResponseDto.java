@@ -50,6 +50,9 @@ public class UserResponseDto {
                 .rotationPitch(user.getRotationPitch())
                 .rotationRoll(user.getRotationRoll())
                 .rotationYaw(user.getRotationYaw())
+                .velocityX(user.getVelocityX())
+                .velocityY(user.getVelocityY())
+                .velocityZ(user.getVelocityZ())
                 .status(user.getStatus())
                 .build();
     }
