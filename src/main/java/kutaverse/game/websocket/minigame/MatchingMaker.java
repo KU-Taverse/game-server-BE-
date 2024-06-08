@@ -11,8 +11,8 @@ import java.util.Map;
 @Slf4j
 public class MatchingMaker {
 
-
-    @Scheduled(fixedRate = 1000)
+    //초당 50번
+    @Scheduled(fixedRate = 200)
     public void matchPlayers(){
         // log.info(String.valueOf(MatchingQueue.queueingSize()));
         while(MatchingQueue.queueingSize() >= 2){
