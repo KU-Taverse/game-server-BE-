@@ -28,6 +28,7 @@ import reactor.test.StepVerifier;
 import java.time.Duration;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DisplayName("[Integration Test] -Map Controller Test")
 public class UserControllerTest {
 
     @Autowired
