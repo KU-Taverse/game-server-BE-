@@ -49,12 +49,14 @@ public class RedisUserControllerAPITest {
     User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
     PostMapUserRequest postMapUserRequest = PostMapUserRequest.toEntity(user);
     PostMapUserResponse postMapUserResponse = PostMapUserResponse.toDto(user);
-
     GetMapUserResponse getMapUserResponse = GetMapUserResponse.toDto(user);
-
     GetMapUserResponse getMapUserResponse1 = GetMapUserResponse.toDto(user1);
     GetMapUserResponse getMapUserResponse2 = GetMapUserResponse.toDto(user2);
 
+    /**
+     * TODO
+     * 문제가 있다. 단위 테스트에서 Webclient가 문제 있다
+     */
     @Test
     @DisplayName("user를 저장했을 때 user에 대한 return 값을 받아 와야 한다. " +
             "작업이 필요합니다")
@@ -104,13 +106,10 @@ public class RedisUserControllerAPITest {
         webTestClient.get()
                 .uri("/user")
                 .exchange()
-
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$[0].userId").isEqualTo("1")
                 .jsonPath("$[1].userId").isEqualTo("2");
-
-
         //then
         Mockito.verify(userService, Mockito.times(1)).findAll();
 

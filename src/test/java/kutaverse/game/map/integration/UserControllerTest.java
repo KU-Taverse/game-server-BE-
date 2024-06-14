@@ -8,6 +8,7 @@ import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
+import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -91,12 +92,14 @@ public class UserControllerTest {
         webTestClient = WebTestClient.bindToApplicationContext(applicationContext).configureClient().responseTimeout(Duration.ofHours(1)).build();
         User user3=new User("3",1.234,2.345,3.4567,1.1,1.1,1.1,1.1,1.1,1.1, Status.NOTUSE);
         PostMapUserRequest postMapUserRequest=PostMapUserRequest.toEntity(user3);
+        PostMapUserResponse postMapUserResponse=PostMapUserResponse.toDto(user3);
         webTestClient.post()
                 .uri("/user")
                 .body(Mono.just(postMapUserRequest),PostMapUserRequest.class)
                 .exchange()
-                .expectStatus().isOk();
-                //.expectBody().json();
+                .expectStatus().isOk()
+                .expectBody(PostMapUserResponse.class)
+                .isEqualTo(postMapUserResponse);
 
     }
 }
