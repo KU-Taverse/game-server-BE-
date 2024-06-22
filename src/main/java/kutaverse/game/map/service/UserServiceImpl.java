@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
-public class RedisUserService implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
