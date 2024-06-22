@@ -1,27 +1,18 @@
 package kutaverse.game.map.integration;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import kutaverse.game.map.controller.RedisUserController;
-import kutaverse.game.map.controller.UserController;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 

@@ -1,6 +1,6 @@
 package kutaverse.game.map.unit;
 
-import kutaverse.game.map.controller.RedisUserController;
+import kutaverse.game.map.controller.UserControllerImpl;
 import kutaverse.game.map.controller.UserController;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
@@ -23,9 +23,9 @@ import reactor.core.publisher.Mono;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
-@Import(RedisUserController.class)//현재에는 필요 없는 것 같다
+@Import(UserControllerImpl.class)//현재에는 필요 없는 것 같다
 @DisplayName("[Unit test] -Controller test")
-public class RedisUserControllerTest {
+public class UserControllerImplTest {
 
     @MockBean
     UserService userService;
