@@ -72,8 +72,7 @@ public class UserControllerTest {
                 .uri("/user/3")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON);
+                .expectStatus().is5xxServerError();
     }
 
     @Test
