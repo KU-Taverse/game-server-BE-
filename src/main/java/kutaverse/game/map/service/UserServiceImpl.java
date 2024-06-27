@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Flux<User> findAllByTime(long length) {
-        if (length == RepositoryUtil.INFINITETIME)
+        if (length == RepositoryUtil.INFINITE_TIME)
             return userRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
         return userRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus() != Status.NOTUSE);
 
