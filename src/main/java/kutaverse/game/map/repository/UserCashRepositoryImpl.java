@@ -6,14 +6,11 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class HashMapUserRepository implements UserCashRepository {
+public class UserCashRepositoryImpl implements UserCashRepository {
 
     public final Map<String, User> userMap;
 
