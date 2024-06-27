@@ -5,6 +5,7 @@ import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
+import kutaverse.game.map.repository.UserCashRepository;
 import kutaverse.game.map.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ public class UserControllerTest {
     WebTestClient webTestClient;
 
     @Autowired
-    UserRepository userRepository;
+    UserCashRepository userCashRepository;
 
     User user1=new User("1",2.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP);
     User user2=new User("2",1.1,1.1,1.1,1.1,1.1,1.1,2.2,2.2,2.2, Status.STAND);
@@ -37,8 +38,8 @@ public class UserControllerTest {
 
     @PostConstruct
     public void initDB(){
-        Mono<Void> saveUsers = userRepository.save(user1)
-                .then(userRepository.save(user2))
+        Mono<Void> saveUsers = userCashRepository.add(user1)
+                .then(userCashRepository.add(user2))
                 .then();
         StepVerifier.create(saveUsers)
                 .expectSubscription()

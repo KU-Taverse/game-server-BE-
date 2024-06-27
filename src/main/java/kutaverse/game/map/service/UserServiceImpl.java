@@ -5,6 +5,7 @@ import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
+import kutaverse.game.map.repository.UserCashRepository;
 import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import kutaverse.game.map.repository.UserRepository;
 import kutaverse.game.map.repository.util.RepositoryUtil;
@@ -20,17 +21,17 @@ import java.time.LocalDateTime;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserCashRepository userCashRepository;
 
     @Override
     public Mono<PostMapUserResponse> create(PostMapUserRequest postMapUserRequest) {
-        return userRepository.save(postMapUserRequest.toEntity())
+        return userCashRepository.add(postMapUserRequest.toEntity())
                 .map(PostMapUserResponse::toDto);
     }
 
     @Override
     public Flux<GetMapUserResponse> findAll() {
-        return userRepository.getAll()
+        return userCashRepository.getAll()
                 .map(GetMapUserResponse::toDto);
     }
 
@@ -42,8 +43,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Flux<User> findAllByTime(long length) {
         if (length == RepositoryUtil.INFINITE_TIME)
-            return userRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
-        return userRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus() != Status.NOTUSE);
+            return userCashRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
+        return userCashRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus() != Status.NOTUSE);
 
     }
 
@@ -51,20 +52,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<GetMapUserResponse> findOne(String id) {
-        return userRepository.get(id)
+        return userCashRepository.get(id)
                 .map(GetMapUserResponse::toDto);
     }
 
     @Override
     public Mono<Long> deleteById(String userId) {
-        return userRepository.delete(userId)
+        return userCashRepository.delete(userId)
                 .thenReturn(1L)
                 .onErrorReturn(0L);
     }
 
     @Override
     public Mono<User> update(UserRequestDto userRequestDto) {
-        return userRepository.save(userRequestDto.toEntity());
+        return userCashRepository.add(userRequestDto.toEntity());
     }
 
     @Override

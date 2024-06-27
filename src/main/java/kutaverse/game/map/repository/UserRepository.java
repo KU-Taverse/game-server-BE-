@@ -14,5 +14,5 @@ public interface UserRepository {
 
     Mono<Long> delete(String userId);
 
-    Mono<User>update(User user);
+    Mono<User> update(User user);
 }
