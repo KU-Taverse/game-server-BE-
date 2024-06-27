@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
+import kutaverse.game.map.repository.UserCashRepository;
 import kutaverse.game.map.repository.UserRepository;
 import kutaverse.game.websocket.map.dto.response.UserResponseDto;
 import kutaverse.game.websocket.map.util.JsonUtil;
@@ -43,7 +44,7 @@ public class MapWebsocketTest {
     private String port;
 
     @Autowired
-    UserRepository userRepository;
+    UserCashRepository userCashRepository;
 
     User user1=new User("1",2.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP);
     User user2=new User("2",1.1,1.1,1.1,1.1,1.1,1.1,2.2,2.2,2.2, Status.STAND);
@@ -54,8 +55,8 @@ public class MapWebsocketTest {
 
     @PostConstruct
     public void initDB() {
-        Mono<Void> saveUsers = userRepository.save(user1)
-                .then(userRepository.save(user2))
+        Mono<Void> saveUsers = userCashRepository.add(user1)
+                .then(userCashRepository.add(user2))
                 .then();
         StepVerifier.create(saveUsers)
                 .expectSubscription()
@@ -87,10 +88,10 @@ public class MapWebsocketTest {
     @DisplayName("저장된 map 유저 정보중 NOTUSE 유저는 websocket로 받을 수 없다.")
     @Test
     public void test2() throws URISyntaxException {
-        userRepository.delete(user1.getUserId()).block();
-        userRepository.delete(user2.getUserId()).block();
+        userCashRepository.delete(user1.getUserId()).block();
+        userCashRepository.delete(user2.getUserId()).block();
         User notUseUser = new User("2", 1.1, 1.1, 1.1, 1.1, 1.1, 1.1,1.1,1.1,1.1, Status.NOTUSE);
-        userRepository.save(notUseUser).block();
+        userCashRepository.add(notUseUser).block();
 
         int connectionTimeSecond=1;
         AtomicInteger counter = new AtomicInteger(0);

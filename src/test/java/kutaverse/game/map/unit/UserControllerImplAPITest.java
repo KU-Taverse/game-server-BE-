@@ -1,6 +1,5 @@
 package kutaverse.game.map.unit;
 
-import kutaverse.game.map.controller.RedisUserController;
 import kutaverse.game.map.controller.UserController;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
@@ -8,7 +7,6 @@ import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.service.UserService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
@@ -16,10 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -33,7 +28,7 @@ import static org.mockito.ArgumentMatchers.refEq;
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
 @DisplayName("[Unit Test] -API Test")
-public class RedisUserControllerAPITest {
+public class UserControllerImplAPITest {
 
     @Autowired
     WebTestClient webTestClient;
