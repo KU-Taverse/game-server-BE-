@@ -12,6 +12,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
+@Table(name = "MapUser")
 public class User {
 
     @Id

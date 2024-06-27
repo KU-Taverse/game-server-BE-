@@ -22,13 +22,23 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
 
     private final UserCashRepository userCashRepository;
+    private final UserRepository userRepository;
 
+    /**
+     * 유저 추가
+     * @param postMapUserRequest
+     * @return Mono<PostMapUserResponse>
+     */
     @Override
     public Mono<PostMapUserResponse> create(PostMapUserRequest postMapUserRequest) {
         return userCashRepository.add(postMapUserRequest.toEntity())
                 .map(PostMapUserResponse::toDto);
     }
 
+    /**
+     * 유저 전부 조회
+     * @return Flux<GetMapUserResponse>
+     */
     @Override
     public Flux<GetMapUserResponse> findAll() {
         return userCashRepository.getAll()
@@ -36,9 +46,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
+     * 시간 범위에 해당하는 NOTUSE가 아닌 유저를 반환
      * @param length 시간의 길이 단위 초)
-     * @return 시간 범위에 해당하는 NOTUSE가 아닌 유저를 반환
+     * @return Flux<User>
      */
     @Override
     public Flux<User> findAllByTime(long length) {

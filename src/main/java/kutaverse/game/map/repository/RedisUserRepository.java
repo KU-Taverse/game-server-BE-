@@ -11,34 +11,34 @@ import reactor.core.scheduler.Schedulers;
 
 
 @RequiredArgsConstructor
-public class RedisUserRepository implements UserRepository {
+public class RedisUserRepository  {
 
     private final ReactiveRedisOperations<String, User> redisOperations;
 
-    @Override
+
     public Mono<User> save(User user) {
         return redisOperations.opsForValue()
                 .set(user.getUserId(), user)
                 .then(Mono.just(user));
     }
 
-    @Override
+
     public Mono<User> get(String userId) {
         return redisOperations.opsForValue().get(userId);
     }
 
-    @Override
+
     public Flux<User> getAll() {
         return redisOperations.keys("*")
                 .flatMap(value -> redisOperations.opsForValue().get(value));
     }
 
-    @Override
+
     public Mono<Long> delete(String userId) {
         return redisOperations.delete(userId);
     }
 
-    @Override
+
     public Mono<User> update(User user) {
         return Mono.just(user);
     }
