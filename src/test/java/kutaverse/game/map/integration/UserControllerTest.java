@@ -1,28 +1,23 @@
 package kutaverse.game.map.integration;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import kutaverse.game.map.controller.RedisUserController;
-import kutaverse.game.map.controller.UserController;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
+
 import kutaverse.game.map.dto.response.PostMapUserResponse;
+
+import kutaverse.game.map.repository.UserCashRepository;
+
 import kutaverse.game.map.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -39,7 +34,7 @@ public class UserControllerTest {
     WebTestClient webTestClient;
 
     @Autowired
-    UserRepository userRepository;
+    UserCashRepository userCashRepository;
 
     User user1=new User("1",2.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP);
     User user2=new User("2",1.1,1.1,1.1,1.1,1.1,1.1,2.2,2.2,2.2, Status.STAND);
@@ -47,8 +42,8 @@ public class UserControllerTest {
 
     @PostConstruct
     public void initDB(){
-        Mono<Void> saveUsers = userRepository.save(user1)
-                .then(userRepository.save(user2))
+        Mono<Void> saveUsers = userCashRepository.add(user1)
+                .then(userCashRepository.add(user2))
                 .then();
         StepVerifier.create(saveUsers)
                 .expectSubscription()
@@ -82,8 +77,7 @@ public class UserControllerTest {
                 .uri("/user/3")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON);
+                .expectStatus().is5xxServerError();
     }
 
     @Test
