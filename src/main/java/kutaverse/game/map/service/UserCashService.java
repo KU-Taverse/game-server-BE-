@@ -9,18 +9,21 @@ import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface UserService {
-    Mono<User> create(User user);
+public interface UserCashService {
 
-    Flux<User> findAll();
+    Mono<PostMapUserResponse> create(PostMapUserRequest postMapUserRequest);
+
+    Flux<GetMapUserResponse> findAll();
 
     Flux<User> findAllByTime(long length);
 
-    Mono<User> findOne(String userId);
+    Mono<GetMapUserResponse> findOne(String userId);
 
     Mono<Long> deleteById(String userId);
 
-    Mono<User> update(User user);
+    Mono<User> update(UserRequestDto userRequestDto);
 
     Mono<User> changeState(String id, Status status);
+
+    Mono<Void> flushAll();
 }

@@ -46,16 +46,19 @@ public class UserCashRepositoryImpl implements UserCashRepository {
     }
 
     /**
-     * 캐시 전부 flush
+     * 캐시 전부 flush(캐시 값을 지우지 않는다)
      * @return flush 성공 여부
      */
     @Override
     public Mono<Boolean> flush() {
-        return null;
+        return Flux.fromIterable(userMap.values())
+                .flatMap(userRepository::save)
+                .then(Mono.just(true))
+                .onErrorReturn(false);
     }
 
     /**
-     * 특정 user flush
+     * 특정 user flush(캐시 값을 지운다)
      * @param userId
      * @return 성공 여부
      */

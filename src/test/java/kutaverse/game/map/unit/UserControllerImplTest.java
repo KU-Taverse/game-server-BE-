@@ -7,8 +7,7 @@ import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
-import kutaverse.game.map.service.UserService;
-import org.assertj.core.api.Assertions;
+import kutaverse.game.map.service.UserCashService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,7 @@ import reactor.test.StepVerifier;
 public class UserControllerImplTest {
 
     @MockBean
-    UserService userService;
+    UserCashService userService;
 
     @Autowired
     UserController userController;

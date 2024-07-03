@@ -1,6 +1,6 @@
 package kutaverse.game.websocket.map;
 
-import kutaverse.game.map.service.UserService;
+import kutaverse.game.map.service.UserCashService;
 import kutaverse.game.websocket.map.util.JsonUtil;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -11,11 +11,11 @@ public class MessageSender {
 
     private final MapWebSocketHandler webSocketHandler;
 
-    private final UserService userService;
+    private final UserCashService userService;
 
     private Long durationTime; //맵 유지 기간 N 초에 대해서
 
-    public MessageSender(MapWebSocketHandler webSocketHandler, UserService userService) {
+    public MessageSender(MapWebSocketHandler webSocketHandler, UserCashService userService) {
         this.webSocketHandler = webSocketHandler;
         this.userService = userService;
         this.durationTime = 10L;

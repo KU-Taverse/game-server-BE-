@@ -6,7 +6,7 @@ import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
-import kutaverse.game.map.service.UserService;
+import kutaverse.game.map.service.UserCashService;
 import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class UserControllerImplAPITest {
     UserController userController;
 
     @MockBean
-    UserService userService;
+    UserCashService userService;
 
     User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
     User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
@@ -68,7 +68,7 @@ public class UserControllerImplAPITest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(UserService.class);
+                .expectBody(UserCashService.class);
         //then
         Mockito.verify(userService, Mockito.times(1)).create(refEq(postMapUserRequest));
     }
