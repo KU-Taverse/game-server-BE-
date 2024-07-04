@@ -4,10 +4,14 @@ package kutaverse.game.websocket.minigame.dto;
 import kutaverse.game.minigame.domain.GameResult;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 public class GameUpdateDTO {
     private String player1Id;
 
