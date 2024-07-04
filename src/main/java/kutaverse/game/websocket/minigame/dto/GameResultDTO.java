@@ -2,7 +2,6 @@ package kutaverse.game.websocket.minigame.dto;
 
 import kutaverse.game.minigame.domain.GameResult;
 import lombok.AllArgsConstructor;
-import org.springframework.data.relational.core.mapping.Column;
 
 @AllArgsConstructor
 public class GameResultDTO {
