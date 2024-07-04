@@ -5,13 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -20,6 +18,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
+@Table(name = "map_user")
 public class User {
 
     @Id
@@ -83,11 +82,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(positionX, user.positionX) && Objects.equals(positionY, user.positionY) && Objects.equals(positionZ, user.positionZ) && Objects.equals(rotationPitch, user.rotationPitch) && Objects.equals(rotationYaw, user.rotationYaw) && Objects.equals(rotationRoll, user.rotationRoll) && status == user.status && Objects.equals(localDateTime, user.localDateTime);
+        return Objects.equals(getUserId(), user.getUserId()) && Objects.equals(getPositionX(), user.getPositionX()) && Objects.equals(getPositionY(), user.getPositionY()) && Objects.equals(getPositionZ(), user.getPositionZ()) && Objects.equals(getRotationPitch(), user.getRotationPitch()) && Objects.equals(getRotationYaw(), user.getRotationYaw()) && Objects.equals(getRotationRoll(), user.getRotationRoll()) && getStatus() == user.getStatus() && Objects.equals(getVelocityX(), user.getVelocityX()) && Objects.equals(getVelocityY(), user.getVelocityY()) && Objects.equals(getVelocityZ(), user.getVelocityZ());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, positionX, positionY, positionZ, rotationPitch, rotationYaw, rotationRoll, status, localDateTime);
+        return Objects.hash(getUserId(), getPositionX(), getPositionY(), getPositionZ(), getRotationPitch(), getRotationYaw(), getRotationRoll(), getStatus(), getVelocityX(), getVelocityY(), getVelocityZ());
     }
 }

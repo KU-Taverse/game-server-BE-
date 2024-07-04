@@ -5,9 +5,8 @@ import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
-import kutaverse.game.map.service.UserService;
+import kutaverse.game.map.service.UserCashService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,9 +14,9 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("user")
-public class RedisUserController implements UserController{
+public class UserControllerImpl implements UserController{
 
-    private final UserService userService;
+    private final UserCashService userService;
 
     /**
      * 맵 유저 저장
