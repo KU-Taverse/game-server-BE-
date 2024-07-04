@@ -7,14 +7,14 @@ import lombok.ToString;
 @ToString
 public class ActorInfo {
     private String level;
-    private int x;
-    private int z;
+    private double x;
+    private double z;
 
     public ActorInfo() {
     }
 
 
-    public ActorInfo(String level, int x, int z) {
+    public ActorInfo(String level, double x, double z) {
         this.level = level;
         this.x = x;
         this.z = z;
