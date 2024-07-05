@@ -18,11 +18,9 @@ public class MiniGameWebsocketHandler implements org.springframework.web.reactiv
     public Mono<Void> handle(WebSocketSession session) {
         ObjectMapper objectMapper = new ObjectMapper();
         session.receive()
-                .doOnNext(message -> log.info("Received raw message: " + message.getPayloadAsText()))
                 .map(WebSocketMessage::getPayloadAsText)
                 .map(data -> {
                     try {
-                        log.info("test");
                         return objectMapper.readValue(data, MiniGameRequest.class);
                     } catch (Exception e) {
                         log.error("Error handling MiniGameRequest", e);
@@ -30,7 +28,6 @@ public class MiniGameWebsocketHandler implements org.springframework.web.reactiv
                     }
                 })
                 .subscribe(data -> {
-                    log.info("test2");
                     try {
                         handleMiniGameRequest((MiniGameRequest) data,session);
                     } catch (JsonProcessingException e) {
