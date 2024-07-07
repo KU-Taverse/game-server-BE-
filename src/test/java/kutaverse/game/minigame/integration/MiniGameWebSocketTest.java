@@ -86,7 +86,7 @@ public class MiniGameWebSocketTest {
         WebSocketSession test2Session = createMockWebSocketSession("test2");
 
         String roomId = "1";
-        GameRoom gameRoom = new GameRoom(roomId);
+        GameRoom gameRoom = new GameRoom(roomId,null);
 
         gameRoom.addPlayer("test1", test1Session);
         gameRoom.addPlayer("test2", test2Session);
