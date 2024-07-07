@@ -3,8 +3,10 @@ package kutaverse.game.websocket.minigame;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.minigame.dto.MiniGameRequest;
+import kutaverse.game.minigame.service.MiniGameService;
 import kutaverse.game.websocket.minigame.dto.GameUpdateDTO;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 
@@ -19,15 +21,18 @@ import java.util.concurrent.ConcurrentHashMap;
 * 해당 방에는 player들을 저장(해당 유저의 아이디, 접속한 websocket session)
 * */
 @Getter
+@Component
 public class GameRoom {
     private final String roomId;
 
     private final Map<String, WebSocketSession> players = new ConcurrentHashMap<>();
     private final Map<String, Integer> playerScores = new ConcurrentHashMap<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final MiniGameService miniGameService;
 
-    public GameRoom(String roomId) {
+    public GameRoom(String roomId, MiniGameService miniGameService) {
         this.roomId = roomId;
+        this.miniGameService = miniGameService;
     }
 
     /**
@@ -145,5 +150,7 @@ public class GameRoom {
     private void saveGameData(GameUpdateDTO gameUpdateDTO) {
         // 게임 데이터를 저장하는 로직을 여기에 추가합니다.
         // 예를 들어, 데이터베이스에 저장하거나 파일에 기록하는 등의 작업을 수행합니다.
+
+
     }
 }
