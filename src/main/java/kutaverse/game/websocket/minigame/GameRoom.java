@@ -4,14 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.minigame.dto.MiniGameRequest;
 import kutaverse.game.minigame.service.MiniGameService;
-import kutaverse.game.websocket.minigame.dto.GameUpdateDTO;
+import kutaverse.game.websocket.minigame.dto.GameResultDTO;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -21,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 * 해당 방에는 player들을 저장(해당 유저의 아이디, 접속한 websocket session)
 * */
 @Getter
-@Component
 public class GameRoom {
     private final String roomId;
 
@@ -114,22 +111,22 @@ public class GameRoom {
         // 어떤 형식으로 데이터를 보낼 것인가?
         // 유저1, 유저2, 점수1, 점수2, 누구 승
 
-        GameUpdateDTO gameUpdateDTO = new GameUpdateDTO();
+        GameResultDTO gameResultDTO = new GameResultDTO();
 
         Map.Entry<String, WebSocketSession> firstEntry = players.entrySet().iterator().next();
-        gameUpdateDTO.setPlayer1Id(firstEntry.getKey());
-        gameUpdateDTO.setPlayer1Score(getPlayerScore(firstEntry.getKey()));
+        gameResultDTO.setPlayer1Id(firstEntry.getKey());
+        gameResultDTO.setPlayer1Score(getPlayerScore(firstEntry.getKey()));
 
         Map.Entry<String, WebSocketSession> secondEntry = players.entrySet().iterator().next();
-        gameUpdateDTO.setPlayer2Id(secondEntry.getKey());
-        gameUpdateDTO.setPlayer2Score(getPlayerScore(secondEntry.getKey()));
+        gameResultDTO.setPlayer2Id(secondEntry.getKey());
+        gameResultDTO.setPlayer2Score(getPlayerScore(secondEntry.getKey()));
 
         String winnerId = miniGameRequest.getUserId().equals(firstEntry.getKey()) ? secondEntry.getKey() : firstEntry.getKey();
-        gameUpdateDTO.setWinnerId(winnerId);
+        gameResultDTO.setWinnerId(winnerId);
 
-        gameUpdateDTO.setRoomId(miniGameRequest.getRoomId());
+        gameResultDTO.setRoomId(miniGameRequest.getRoomId());
 
-        String gameDataJson = objectMapper.writeValueAsString(gameUpdateDTO);
+        String gameDataJson = objectMapper.writeValueAsString(gameResultDTO);
 
         // 각 유저에게 게임 종료 알림을 보낸다.
         players.values().forEach(session -> {
@@ -137,7 +134,7 @@ public class GameRoom {
         });
 
         // 게임 데이터를 저장합니다.
-        saveGameData(gameUpdateDTO);
+        saveGameData(gameResultDTO);
     }
 
 
@@ -145,12 +142,11 @@ public class GameRoom {
     /**
      * 게임 데이터를 저장
      *
-     * @param gameUpdateDTO 저장할 게임 데이터
+     * @param gameResultDTO 저장할 게임 데이터
      */
-    private void saveGameData(GameUpdateDTO gameUpdateDTO) {
-        // 게임 데이터를 저장하는 로직을 여기에 추가합니다.
-        // 예를 들어, 데이터베이스에 저장하거나 파일에 기록하는 등의 작업을 수행합니다.
-
+    private void saveGameData(GameResultDTO gameResultDTO) {
+        // 현재 서버 이슈로 잠시 해당 기능은 주석 처리 함
+        // miniGameService.createGameResult(gameResultDTO).subscribe();
 
     }
 }
