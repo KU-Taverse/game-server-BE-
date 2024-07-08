@@ -7,10 +7,18 @@ services:
   mysql:
     image: mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
+      MYSQL_DATABASE: webflux
+      MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: 12345678
       TZ: Asia/Seoul
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+    networks:
+      - test_network
   springbootapp:
     image: ji0513ji/game-server:latest
 #    build:
@@ -23,4 +31,8 @@ services:
       - mysql
     environment:
       - SPRING_PROFILES_ACTIVE=prodDB
-
+      - DB_PASSWORD=12345678
+    networks:
+      - test_network
+networks:
+  test_network:
