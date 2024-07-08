@@ -1,7 +1,9 @@
 package kutaverse.game.websocket.minigame;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
+import reactor.core.publisher.Mono;
 
 import java.util.AbstractMap;
 import java.util.ArrayDeque;
@@ -12,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 @Component
+@Slf4j
 public class MatchingQueue {
     private static final ArrayDeque<Map.Entry<String, WebSocketSession>> queueing = new ArrayDeque<>();
     private static final Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
@@ -20,6 +23,7 @@ public class MatchingQueue {
         if(!sessionMap.containsKey(userId)) {
             queueing.offer(new AbstractMap.SimpleEntry<>(userId,webSocketSession));
             sessionMap.put(userId,webSocketSession);
+            webSocketSession.send(Mono.just(webSocketSession.textMessage("매칭 대기 중 입니다."))).subscribe();
         }
 
     }
