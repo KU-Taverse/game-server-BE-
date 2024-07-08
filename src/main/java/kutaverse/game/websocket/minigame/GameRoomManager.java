@@ -5,7 +5,6 @@ import kutaverse.game.minigame.dto.MiniGameRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
-import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,6 +23,16 @@ public class GameRoomManager {
 
     public static void removeGameRoom(String roomId) {
         gameRooms.remove(roomId);
+    }
+
+    public static void updateGameRoom(String roomId, MiniGameRequest miniGameRequest){
+        GameRoom gameRoom = gameRooms.get(roomId);
+        gameRoom.updatePlayerScore(miniGameRequest.getUserId(),miniGameRequest.getScore());
+    }
+
+    public static void endGameAndNotifyRoom(MiniGameRequest miniGameRequest) throws JsonProcessingException {
+        GameRoom gameRoom = gameRooms.get(miniGameRequest.getRoomId());
+        gameRoom.endGameAndNotifyPlayers(miniGameRequest);
     }
 
     public static void sendPlayerData(String roomId, String userId, MiniGameRequest data) throws JsonProcessingException {
