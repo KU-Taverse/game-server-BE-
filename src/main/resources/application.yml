@@ -4,11 +4,7 @@ spring:
     group:
       "local": "localDB"
       "prod": "prodDB"
-  r2dbc:
-    url: r2dbc:pool:mysql://localhost:3306/webflux
-    username: root
-    password:
-    initialization-mode: always
+
 
 ---
 
@@ -22,7 +18,11 @@ spring:
       port: 6379
       password:
       timeout: 5000
-
+  r2dbc:
+    url: r2dbc:pool:mysql://localhost:3306/webflux
+    username: root
+    password: ${DB_PASSWORD}
+    initialization-mode: always
 
 ---
 
@@ -37,3 +37,8 @@ spring:
       port: 6379
       password:
       timeout: 5000
+  r2dbc:
+    url: r2dbc:pool:mysql://localhost:3307/webflux
+    username: root
+    password: ${DB_PASSWORD}
+    initialization-mode: always
