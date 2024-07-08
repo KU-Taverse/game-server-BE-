@@ -8,6 +8,7 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @EnableR2dbcRepositories
@@ -16,6 +17,6 @@ public class MapUserConfiguration {
 
     @Bean
     public Map<String, User> mapUserMap(){
-        return new HashMap<>();
+        return new ConcurrentHashMap<>();
     }
 }
