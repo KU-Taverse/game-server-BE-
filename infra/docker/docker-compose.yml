@@ -5,12 +5,11 @@ services:
     ports:
       - "6379:6379"
   mysql:
-    image: mysql
+    image: mysql:8.0.28
     ports:
       - "3307:3306"
     environment:
       MYSQL_DATABASE: webflux
-      MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: 12345678
       TZ: Asia/Seoul
     command:
@@ -19,6 +18,10 @@ services:
       - "--collation-server=utf8mb4_unicode_ci"
     networks:
       - test_network
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
   springbootapp:
     image: ji0513ji/game-server:latest
 #    build:
@@ -26,6 +29,8 @@ services:
 #      dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    links:
+      - mysql
     depends_on:
       - redis
       - mysql
