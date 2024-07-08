@@ -4,16 +4,6 @@ spring:
     group:
       "local": "localDB"
       "prod": "prodDB"
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    metrics:
-      enabled: true
-
-
 ---
 
 spring:
