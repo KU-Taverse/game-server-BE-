@@ -5,12 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.minigame.dto.ActorInfo;
 import kutaverse.game.minigame.dto.MiniGameRequest;
 import kutaverse.game.minigame.dto.MiniGameRequestType;
-import kutaverse.game.websocket.map.util.JsonUtil;
 import kutaverse.game.websocket.minigame.GameRoom;
 import kutaverse.game.websocket.minigame.GameRoomManager;
-import kutaverse.game.websocket.minigame.MatchingQueue;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,6 +22,8 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,8 +40,10 @@ public class MiniGameWebSocketTest {
         WebSocketClient client = new ReactorNettyWebSocketClient();
         ObjectMapper objectMapper = new ObjectMapper();
 
-        ActorInfo actorInfo = new ActorInfo("",0,0);
-        MiniGameRequest request = new MiniGameRequest(MiniGameRequestType.WAIT,"","test1",0,0,actorInfo);
+        List<ActorInfo> actorInfoList = new ArrayList<>();
+        ActorInfo actorInfo = new ActorInfo("1",0,0,0);
+        actorInfoList.add(actorInfo);
+        MiniGameRequest request = new MiniGameRequest(MiniGameRequestType.WAIT,"","test1",0,0,actorInfoList);
 
         String jsonRequest = objectMapper.writeValueAsString(request);
         Exception exception = assertThrows(IllegalStateException.class, () ->
@@ -78,8 +79,10 @@ public class MiniGameWebSocketTest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         // User Setting
-        ActorInfo actorInfo = new ActorInfo("1",0,0);
-        MiniGameRequest request = new MiniGameRequest(MiniGameRequestType.RUNNING,"1","test1",0,0,actorInfo);
+        List<ActorInfo> actorInfoList =new ArrayList<>();
+        ActorInfo actorInfo = new ActorInfo("1",0,0,0);
+        actorInfoList.add(actorInfo);
+        MiniGameRequest request = new MiniGameRequest(MiniGameRequestType.RUNNING,"1","test1",0,0,actorInfoList);
 
         // GameRoom Setting
         WebSocketSession test1Session = createMockWebSocketSession("test1");
@@ -115,7 +118,12 @@ public class MiniGameWebSocketTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    // @DisplayName("Status == OVER 이면 종료 메시지가 넘어간다.")
+    @Test
+    @DisplayName("Status == OVER 이면 종료 메시지가 넘어간다.")
+    public void testStatusOver() throws Exception {
+
+    }
+
 
     private URI getUrl(String path) throws URISyntaxException {
         return new URI("ws://localhost:" + port + path);
@@ -129,8 +137,10 @@ public class MiniGameWebSocketTest {
         Mockito.when(mockSession.close()).thenReturn(Mono.empty());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ActorInfo actorInfo = new ActorInfo("1",0,0);
-        MiniGameRequest request = new MiniGameRequest(MiniGameRequestType.RUNNING,"1","test1",0,0,actorInfo);
+        List<ActorInfo> actorInfoList =new ArrayList<>();
+        ActorInfo actorInfo = new ActorInfo("1",0,0,0);
+        actorInfoList.add(actorInfo);
+        MiniGameRequest request = new MiniGameRequest(MiniGameRequestType.RUNNING,"1","test1",0,0,actorInfoList);
         String dataJson = objectMapper.writeValueAsString(request);
 
         WebSocketMessage mockMessage = Mockito.mock(WebSocketMessage.class);
