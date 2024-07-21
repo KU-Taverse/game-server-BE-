@@ -13,17 +13,17 @@ public class MiniGameRequest {
     String userId;
     int interrupt;
     int score;
-    ActorInfo actorInfo;
+    List<ActorInfo> actorInfoArray;
 
     public MiniGameRequest() {
     }
 
-    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, int interrupt, int score, ActorInfo actorInfo) {
+    public MiniGameRequest(MiniGameRequestType miniGameRequestType, String roomId, String userId, int interrupt, int score, List<ActorInfo> actorInfo) {
         this.miniGameRequestType = miniGameRequestType;
         this.roomId = roomId;
         this.userId = userId;
         this.interrupt = interrupt;
         this.score = score;
-        this.actorInfo = actorInfo;
+        this.actorInfoArray = actorInfo;
     }
 }
