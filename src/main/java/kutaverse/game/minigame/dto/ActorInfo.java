@@ -7,17 +7,19 @@ import lombok.ToString;
 @ToString
 public class ActorInfo {
     private String level;
-    private double x;
-    private double z;
+    private float x;
+    private float z;
+    private float yaw;
 
     public ActorInfo() {
     }
 
 
-    public ActorInfo(String level, double x, double z) {
+    public ActorInfo(String level, float x, float z, float yaw) {
         this.level = level;
         this.x = x;
         this.z = z;
+        this.yaw = yaw;
     }
 
 }

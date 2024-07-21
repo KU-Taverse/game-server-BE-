@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,15 +44,24 @@ public class GameRoomManager {
 
     @Scheduled(fixedDelay = 5000) // 5초마다 실행
     public void checkPlayerStatus() {
+        List<String> roomsToRemove = new ArrayList<>();
         for (Map.Entry<String, GameRoom> entry : gameRooms.entrySet()) {
+            String roomId = entry.getKey();
             GameRoom gameRoom = entry.getValue();
+            boolean playerLeft =false;
             for (Map.Entry<String, WebSocketSession> playerEntry : gameRoom.getPlayers().entrySet()) {
                 String userId = playerEntry.getKey();
                 WebSocketSession session = playerEntry.getValue();
+
                 if (!session.isOpen()) { // WebSocket 연결이 닫혔는지 확인
                     gameRoom.handlePlayerLeft(userId);
+                    playerLeft = true;
                 }
             }
+            if (playerLeft && gameRoom.getPlayers().isEmpty()) {
+                gameRooms.remove(roomId);
+            }
         }
+
     }
 }
