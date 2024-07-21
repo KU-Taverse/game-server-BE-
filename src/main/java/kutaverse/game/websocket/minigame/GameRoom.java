@@ -78,6 +78,10 @@ public class GameRoom {
                     WebSocketSession session = entry.getValue();
                     session.send(Mono.just(session.textMessage("상대방이 나갔습니다."))).subscribe();
                 });
+
+        players.forEach((id, session) -> {
+            players.remove(id);
+        });
     }
 
     /**
