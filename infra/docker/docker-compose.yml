@@ -23,4 +23,3 @@ services:
       - mysql
     environment:
       - SPRING_PROFILES_ACTIVE=prodDB
-
