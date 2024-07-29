@@ -4,6 +4,7 @@ services:
     image: redis
     ports:
       - "6379:6379"
+
   mysql:
     image: mysql
     ports:
@@ -11,6 +12,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
       TZ: Asia/Seoul
+    volumes:
+      - mysql-data:/var/lib/mysql
+
   springbootapp:
     image: ji0513ji/game-server:latest
 #    build:
@@ -24,3 +28,5 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prodDB
 
+volumes:
+  mysql-data:
