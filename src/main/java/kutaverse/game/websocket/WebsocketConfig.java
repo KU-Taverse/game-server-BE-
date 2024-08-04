@@ -1,5 +1,7 @@
 package kutaverse.game.websocket;
 
+import kutaverse.game.chat.repository.ChatRepository;
+import kutaverse.game.chat.service.ChatService;
 import kutaverse.game.websocket.chat.ChatWebSocketHandler;
 import kutaverse.game.websocket.map.MapWebSocketHandler;
 import kutaverse.game.websocket.minigame.MiniGameWebsocketHandler;
@@ -25,8 +27,12 @@ public class WebsocketConfig {
 	}
 
 	@Bean
-	public ChatWebSocketHandler chatWebSocketHandler() {
-		return new ChatWebSocketHandler();
+	public ChatWebSocketHandler chatWebSocketHandler(ChatService chatService) {
+		return new ChatWebSocketHandler(chatService);
+	}
+	@Bean
+	public ChatService chatService(ChatRepository chatRepository) {
+		return new ChatService(chatRepository);
 	}
 
 	@Bean
