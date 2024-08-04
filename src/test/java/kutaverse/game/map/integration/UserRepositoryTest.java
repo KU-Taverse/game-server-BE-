@@ -26,12 +26,12 @@ public class UserRepositoryTest {
     User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
     User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
 
-/*
+
     @Test
     @DisplayName("user를 데이터베이스에 저장한다.")
     public void test1(){
         //given
-        userRepository.save(user);
+        userRepository.save(user).block();
         //when
         Mono<User> findMonoUser = userRepository.get(user.getUserId());
         //then
@@ -40,7 +40,7 @@ public class UserRepositoryTest {
                 .verifyComplete();
         //왜 localDateTime 문제가 생기지?
     }
-*/
+
 
 /*    @Test
     public void test2(){
