@@ -1,5 +1,6 @@
 CREATE TABLE map_user (
-                      user_id VARCHAR(255) NOT NULL PRIMARY KEY,
+                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                      user_id VARCHAR(255) NOT NULL ,
                       position_x DOUBLE NOT NULL,
                       position_y DOUBLE NOT NULL,
                       position_z DOUBLE NOT NULL,

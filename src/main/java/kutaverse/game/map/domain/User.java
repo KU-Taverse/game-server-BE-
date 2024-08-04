@@ -18,10 +18,12 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "map_user")
+@Table(name = "user")
 public class User {
 
     @Id
+    private Long id;
+
     private String userId;
 
     private Double positionX;
