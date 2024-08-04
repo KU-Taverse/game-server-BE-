@@ -1,5 +1,6 @@
 package kutaverse.game.websocket;
 
+import kutaverse.game.websocket.chat.ChatWebSocketHandler;
 import kutaverse.game.websocket.map.MapWebSocketHandler;
 import kutaverse.game.websocket.minigame.MiniGameWebsocketHandler;
 import org.springframework.context.annotation.Bean;
@@ -24,10 +25,16 @@ public class WebsocketConfig {
 	}
 
 	@Bean
-	public SimpleUrlHandlerMapping handlerMapping(MapWebSocketHandler mapWsh, MiniGameWebsocketHandler miniWsh) {
+	public ChatWebSocketHandler chatWebSocketHandler() {
+		return new ChatWebSocketHandler();
+	}
+
+	@Bean
+	public SimpleUrlHandlerMapping handlerMapping(MapWebSocketHandler mapWsh, MiniGameWebsocketHandler miniWsh, ChatWebSocketHandler chatWsh) {
 		return new SimpleUrlHandlerMapping(Map.of(
 				"/map", mapWsh,
-				"/game", miniWsh
+				"/game", miniWsh,
+				"/chat", chatWsh
 		), 1);
 	}
 
