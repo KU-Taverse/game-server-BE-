@@ -51,7 +51,7 @@ jobs:
       # SQL 스크립트 실행
       - name: Run MySQL Init Script
         run: |
-          mysql -h 127.0.0.1 -u root -ptestdb testdb < ./path/to/your/init_script.sql
+          mysql -h 127.0.0.1 -u root -ptestdb testdb < ./infra/sql/user.sql
 
       - name: Build with Gradle Wrapper
         env:
