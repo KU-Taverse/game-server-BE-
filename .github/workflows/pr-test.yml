@@ -18,6 +18,19 @@ jobs:
     permissions:
       write-all
     #contents: read
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: testdb
+          MYSQL_ROOT_PASSWORD: testdb
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -36,6 +49,9 @@ jobs:
         uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
 
       - name: Build with Gradle Wrapper
+        env:
+          SPRING_R2DBC_URL: r2dbc:pool:mysql://localhost:3306/testdb
+          SPRING_R2DBC_PASSWORD: testdb
         run: ./gradlew build
 
       # Gradle Test를 실행한다
