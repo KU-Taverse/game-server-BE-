@@ -1,15 +1,9 @@
 package kutaverse.game.map.repository;
 
-import io.micrometer.observation.annotation.Observed;
 import kutaverse.game.map.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
-import org.springframework.data.redis.core.ReactiveRedisOperations;
-import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
-import org.springframework.data.relational.core.query.Update;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
