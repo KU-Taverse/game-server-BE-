@@ -21,6 +21,6 @@ public class ChatService {
                 .content(chatRequestDto.getContent())
                 .createdAt(LocalDateTime.now())
                 .build();
-        return chatRepository.save(chat);
+        return chatRepository.insert(chat);
     }
 }
