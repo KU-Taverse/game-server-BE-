@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "map_user")
 public class User {
 
     @Id
