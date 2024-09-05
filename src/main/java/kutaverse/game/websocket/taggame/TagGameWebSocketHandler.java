@@ -23,17 +23,15 @@ public class TagGameWebSocketHandler implements WebSocketHandler {
      */
     @Override
     public Mono<Void> handle(WebSocketSession session) {
-        Flux<WebSocketMessage> output = session.receive()
-                .map(message -> {
-                    String payloadAsText = message.getPayloadAsText();
-                    return TagGameRequestUtil.fromWebsocketMessage(payloadAsText);
-                })
-                .map(tagGameRequest->{
-                    CustomHandler customHandler = CustomHandlerMapping.getHandler(tagGameRequest.getTagGameStatus());
-                    return customHandler.handler(tagGameRequest);
-                })
-                .map(value -> session.textMessage("Echo " + value));
-
-        return session.send(output);
+        session.receive()
+            .map(message -> {
+                String payloadAsText = message.getPayloadAsText();
+                return TagGameRequestUtil.fromWebsocketMessage(payloadAsText);
+            })
+            .doOnNext(tagGameRequest->{
+                CustomHandler customHandler = CustomHandlerMapping.getHandler(tagGameRequest.getTagGameStatus());
+                customHandler.handler(tagGameRequest,session);
+            }).subscribe();
+        return Mono.never();
     }
 }

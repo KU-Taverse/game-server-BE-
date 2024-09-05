@@ -11,9 +11,9 @@ public class CustomHandlerMapping {
 
     private static final Map<TagGameStatus, CustomHandler> map=new HashMap<>();
 
-    @PostConstruct
-    private void putWebSocketHandler() {
-        map.put(TagGameStatus.WAITING_FOR_PLAYERS,null);
+
+    static {
+        map.put(TagGameStatus.WAITING_FOR_PLAYERS,new TagGameMatchingHandler());
     }
 
     public static CustomHandler getHandler(TagGameStatus tagGameStatus){
