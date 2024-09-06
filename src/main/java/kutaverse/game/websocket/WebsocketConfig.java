@@ -1,5 +1,8 @@
 package kutaverse.game.websocket;
 
+import kutaverse.game.chat.repository.ChatRepository;
+import kutaverse.game.chat.service.ChatService;
+import kutaverse.game.websocket.chat.ChatWebSocketHandler;
 import kutaverse.game.websocket.map.MapWebSocketHandler;
 import kutaverse.game.websocket.minigame.MiniGameWebsocketHandler;
 import kutaverse.game.websocket.taggame.TagGameWebSocketHandler;
@@ -25,15 +28,29 @@ public class WebsocketConfig {
 	}
 
 	@Bean
-	public TagGameWebSocketHandler tagGameWebSocketHandler() { return new TagGameWebSocketHandler(); }
+	public ChatWebSocketHandler chatWebSocketHandler(ChatService chatService) {
+		return new ChatWebSocketHandler(chatService);
+	}
+
+	@Bean
+	public TagGameWebSocketHandler tagGameWebSocketHandler() {
+		return new TagGameWebSocketHandler();
+	}
+
+	@Bean
+	public ChatService chatService(ChatRepository chatRepository) {
+		return new ChatService(chatRepository);
+	}
 
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping(MapWebSocketHandler mapWsh,
 												  MiniGameWebsocketHandler miniWsh,
+												  ChatWebSocketHandler chatWsh,
 												  TagGameWebSocketHandler tagGameWsh) {
 		return new SimpleUrlHandlerMapping(Map.of(
 				"/map", mapWsh,
 				"/game", miniWsh,
+				"/chat", chatWsh,
 				"/taggame", tagGameWsh
 		), 1);
 	}

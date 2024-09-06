@@ -38,7 +38,8 @@ dependencies {
 
 	implementation "org.springframework.boot:spring-boot-starter-data-r2dbc"
 	implementation "com.github.jasync-sql:jasync-r2dbc-mysql:2.2.0"
-
+	//mongodb
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	//JUnit4 추가
 	/*testImplementation("org.junit.vintage:junit-vintage-engine") {
 		exclude group: "org.hamcrest", module: "hamcrest-core"

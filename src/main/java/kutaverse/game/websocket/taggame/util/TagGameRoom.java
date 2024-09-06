@@ -1,6 +1,5 @@
 package kutaverse.game.websocket.taggame.util;
 
-import kutaverse.game.taggame.service.TagGameService;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;

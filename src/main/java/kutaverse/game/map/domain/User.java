@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "map_user")
 public class User {
 
     @Id
@@ -88,5 +88,20 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(getUserId(), getPositionX(), getPositionY(), getPositionZ(), getRotationPitch(), getRotationYaw(), getRotationRoll(), getStatus(), getVelocityX(), getVelocityY(), getVelocityZ());
+    }
+
+    public void updateUser(User user){
+        this.userId = user.getUserId();
+        this.positionX = user.getPositionX();
+        this.positionY = user.getPositionY();
+        this.positionZ = user.getPositionZ();
+        this.rotationPitch = user.getRotationPitch();
+        this.rotationYaw = user.getRotationYaw();
+        this.rotationRoll = user.getRotationRoll();
+        this.status = user.getStatus();
+        this.velocityX = user.getVelocityX();
+        this.velocityY = user.getVelocityY();
+        this.velocityZ = getVelocityZ();
+        this.localDateTime = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

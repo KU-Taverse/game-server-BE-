@@ -2,7 +2,6 @@ package kutaverse.game.map.integration;
 
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
-import kutaverse.game.map.repository.MysqlUserRepository;
 import kutaverse.game.map.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -31,12 +29,12 @@ public class UserRepositoryTest {
     @DisplayName("user를 데이터베이스에 저장한다.")
     public void test1(){
         //given
-        userRepository.save(user).block();
+        User saveUser = userRepository.save(user).block();
         //when
-        Mono<User> findMonoUser = userRepository.get(user.getUserId());
+        Mono<User> findMonoUser = userRepository.getByUserId(saveUser.getUserId());
         //then
         StepVerifier.create(findMonoUser)
-                .expectNext(user)
+                .expectNext(saveUser)
                 .verifyComplete();
         //왜 localDateTime 문제가 생기지?
     }

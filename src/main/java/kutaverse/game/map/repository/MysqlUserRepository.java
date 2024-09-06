@@ -19,13 +19,16 @@ public class MysqlUserRepository implements UserRepository {
 
     @Override
     public Mono<User> save(User user) {
-        return get(user.getUserId())
-                .flatMap(user1 -> update(user))
+        return getByUserId(user.getUserId())
+                .flatMap(existingUser -> {
+                    existingUser.updateUser(user);
+                    return update(existingUser);
+                })
                 .switchIfEmpty(r2dbcEntityTemplate.insert(user));
     }
 
     @Override
-    public Mono<User> get(String userId) {
+    public Mono<User> getByUserId(String userId) {
         return r2dbcEntityTemplate.select(Query.query(where("user_id").is(userId)), User.class)
                 .single()
                 .onErrorResume(e -> Mono.empty());
