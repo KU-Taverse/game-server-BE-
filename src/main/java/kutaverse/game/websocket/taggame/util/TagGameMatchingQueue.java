@@ -34,6 +34,10 @@ public class TagGameMatchingQueue {
         return queueing.poll();
     }
 
+    public static int getQueuePlayers(){
+        return queueing.size();
+    }
+
     private String createGameRoom(List<Map.Entry<String, WebSocketSession>> players) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<String, WebSocketSession> player : players) {
