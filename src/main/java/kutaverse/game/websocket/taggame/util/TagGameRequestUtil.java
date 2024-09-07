@@ -12,13 +12,10 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-@RequiredArgsConstructor
-@Component
 public class TagGameRequestUtil {
     private static final Map<TagGameStatus, Class<?>> STATUS_TO_REQUEST_MAP =new HashMap<>();
 
-    @PostConstruct
-    private void putWebSocketHandler() {
+    static {
         STATUS_TO_REQUEST_MAP.put(TagGameStatus.WAITING_FOR_PLAYERS, TagGameMatchRequest.class);
     }
 
