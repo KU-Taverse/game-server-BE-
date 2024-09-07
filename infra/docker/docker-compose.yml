@@ -10,6 +10,8 @@ services:
       TZ: Asia/Seoul
     volumes:
       - ../sql/user:/docker-entrypoint-initdb.d
+    networks:
+      - test_network
 
   springbootapp:
     restart: on-failure
@@ -20,12 +22,13 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - redis
       - mysql
     environment:
       SPRING_PROFILES_ACTIVE: prodDB
       SPRING_DATA_MONGODB_URI: ${MONGODB_URL}
       SPRING_R2DBC_PASSWORD: 12345678
+    networks:
+      - test_network
 
-volumes:
-  mysql-data:
+networks:
+  test_network:
