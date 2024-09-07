@@ -19,13 +19,6 @@ spring:
   config:
     activate:
       on-profile: "localDB"
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      password:
-      timeout: 5000
-
 
 ---
 
@@ -33,10 +26,3 @@ spring:
   config:
     activate:
       on-profile: "prodDB"
-
-  data:
-    redis:
-      host: redis
-      port: 6379
-      password:
-      timeout: 5000

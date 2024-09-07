@@ -16,6 +16,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   springbootapp:
+    restart: on-failure
     image: ji0513ji/game-server:latest
 #    build:
 #      context: .
@@ -26,7 +27,9 @@ services:
       - redis
       - mysql
     environment:
-      - SPRING_PROFILES_ACTIVE=prodDB
+      SPRING_PROFILES_ACTIVE: prodDB
+      SPRING_DATA_MONGODB_URI: ${MONGODB_URL}
+      SPRING_R2DBC_PASSWORD: 12345678
 
 volumes:
   mysql-data:
