@@ -85,6 +85,10 @@ jobs:
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             echo ${{secrets.PROJECT_PATH}}
             cd ${{secrets.PROJECT_PATH}}
+            cd ..
+            cd ..
+            git pull origin main
+            cd ${{secrets.PROJECT_PATH}}
             sudo docker-compose stop
             
             sudo docker rm $(sudo docker ps -a -q)
