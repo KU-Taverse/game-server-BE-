@@ -10,6 +10,7 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,18 +26,17 @@ public class TagGameRunningScheduler {
     public void sendMessageToClients() {
         TagGameRoomManager.gameRooms.values()
                 .forEach(tagGameRoom -> {
-                    List<Map.Entry<String, WebSocketSession>> players = tagGameRoom.getPlayers();
-
-                    tagGameUserRepository.getAll()
-                            .collectList()   // 전체 유저 목록을 가져옴
-                            .map(JsonUtil::userListToJson)  // JSON 변환
-                            .flatMapMany(json -> Flux.fromIterable(players)
+                    Flux.fromIterable(tagGameRoom.getPlayers())
+                            .flatMap(player -> tagGameUserRepository.get(player.getKey()))
+                            .collectList()
+                            .map(JsonUtil::userListToJson)
+                            .flatMapMany(json -> Flux.fromIterable(tagGameRoom.getPlayers())
                                     .flatMap(player -> {
                                         WebSocketMessage webSocketMessage = player.getValue().textMessage(json);
                                         return player.getValue().send(Mono.just(webSocketMessage));
                                     }))
                             .then() // 모든 작업이 완료될 때까지 대기
-                            .subscribe();
-                });
+                            .subscribe();// JSON 변환
+
     }
 }
