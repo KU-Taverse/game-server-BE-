@@ -13,6 +13,7 @@ import lombok.*;
 public class TagGameUserResponse {
 
     private String userId;
+    private int userObjectNumber;
     private Double positionX;
     private Double positionY;
     private Double positionZ;
@@ -28,6 +29,7 @@ public class TagGameUserResponse {
     public static TagGameUserResponse toDto(TagGameUser tagGameUser){
         return builder()
                 .userId(tagGameUser.getUserId())
+                .userObjectNumber(tagGameUser.getUserObjectNumber())
                 .positionX(tagGameUser.getPositionX())
                 .positionY(tagGameUser.getPositionY())
                 .positionZ(tagGameUser.getPositionZ())

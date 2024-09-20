@@ -19,6 +19,8 @@ public class TagGameUser {
 
     private String userId;
 
+    private int userObjectNumber;
+
     private Double positionX;
 
     private Double positionY;
@@ -46,15 +48,17 @@ public class TagGameUser {
 
     public void confirmTagged() { this.lifeStatus = LifeStatus.TAGGED; }
 
-    public static TagGameUser initTagGameUser(String userId, Role role) {
+    public static TagGameUser initTagGameUser(String userId, Role role, int userObjectNumber) {
         return TagGameUser.builder()
                 .userId(userId)
                 .role(role)
+                .userObjectNumber(userObjectNumber)
                 .build();
     }
 
 
     public TagGameUser update(TagGameUser tagGameUser) {
+        this.userObjectNumber=tagGameUser.getUserObjectNumber();
         this.positionX = tagGameUser.getPositionX();
         this.positionY = tagGameUser.getPositionY();
         this.positionZ = tagGameUser.getPositionZ();

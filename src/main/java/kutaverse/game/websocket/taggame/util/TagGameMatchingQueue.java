@@ -69,16 +69,19 @@ public class TagGameMatchingQueue {
 
                 Map.Entry<String, WebSocketSession> tagger = selectTagger(players);
                 String gameRoom = confirmGameRoomName(players);
-                //플레이어들에게 gamerood 공지
+                //플레이어들에게 gameRoom 공지
+                Integer counter = 1;
+                List<Integer> integerList = new ArrayList<>();
                 for (Map.Entry<String, WebSocketSession> player : players) {
                     WebSocketSession webSocketSession = player.getValue();
-                    TagGameMatchResponse tagGameMatchResponse = TagGameMatchResponse.toDto(gameRoom, tagger);
+                    integerList.add(counter);
+                    TagGameMatchResponse tagGameMatchResponse = TagGameMatchResponse.toDto(gameRoom, tagger, counter++);
 
                     WebSocketMessage webSocketMessage = webSocketSession.textMessage(tagGameMatchResponse.toString());
                     webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
                 }
                 Thread.sleep(5000);
-                tagGameUserService.initialize(players,tagger);
+                tagGameUserService.initialize(players,tagger,integerList);
                 createGameRoom(gameRoom, players);
 
             }

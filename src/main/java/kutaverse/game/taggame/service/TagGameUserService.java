@@ -25,16 +25,17 @@ public class TagGameUserService {
         return Mono.never();
     }
 
-    public Mono<Void> initialize(List<Map.Entry<String, WebSocketSession>> players, Map.Entry<String, WebSocketSession> tagger) {
-        players.forEach(player -> {
+    public Mono<Void> initialize(List<Map.Entry<String, WebSocketSession>> players, Map.Entry<String, WebSocketSession> tagger,List<Integer> integerList) {
+        int counter = 0;
+        for (Map.Entry<String, WebSocketSession> player : players) {
             Role role = Role.PLAYER;
-
             if (player.getKey().equals(tagger.getKey()))
                 role = Role.TAGGER;
 
-            TagGameUser tagGameUser = TagGameUser.initTagGameUser(player.getKey(), role);
+            TagGameUser tagGameUser = TagGameUser.initTagGameUser(player.getKey(), role, integerList.get(counter));
+            counter++;
             tagGameUserRepository.add(tagGameUser).subscribe();
-        });
+        }
         return Mono.never();
     }
 
