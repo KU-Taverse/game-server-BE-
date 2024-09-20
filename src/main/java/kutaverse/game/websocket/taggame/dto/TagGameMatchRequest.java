@@ -12,6 +12,4 @@ import lombok.ToString;
 public class TagGameMatchRequest {
 
     private String userId;
-
-    private String text;
 }
