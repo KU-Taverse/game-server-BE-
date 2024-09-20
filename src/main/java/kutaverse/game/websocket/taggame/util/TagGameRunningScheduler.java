@@ -22,7 +22,7 @@ public class TagGameRunningScheduler {
     /**
      * 멀티게임 이동 함수
      */
-    @Scheduled(fixedRate = 3300)
+    @Scheduled(fixedRate = 33)
     public void sendMessageToClients() {
         TagGameRoomManager.gameRooms.values()
                 .forEach(tagGameRoom -> {
