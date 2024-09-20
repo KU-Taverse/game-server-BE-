@@ -11,6 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class TagGameTaggingRequest {
 
+    //방이름
+    private String roomId;
     //술래 id
     private String taggerId;
     //잡힌 플레이어 id

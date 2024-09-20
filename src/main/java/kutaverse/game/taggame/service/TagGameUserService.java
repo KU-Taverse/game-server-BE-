@@ -19,7 +19,8 @@ public class TagGameUserService {
     private final TagGameUserRepository tagGameUserRepository;
 
     public Mono<Void> taggingUser(String roomName, String taggerId, String taggedPlayerId) {
-        //tagGameUserRepository.
+        tagGameUserRepository.get(taggerId)
+                .subscribe(TagGameUser::confirmTagged);
         return Mono.never();
     }
 

@@ -44,9 +44,7 @@ public class TagGameUser {
 
     private Double velocityZ;
 
-    public void confirmTagger() {
-        this.role = Role.TAGGER;
-    }
+    public void confirmTagged() { this.lifeStatus = LifeStatus.TAGGED; }
 
     public static TagGameUser initTagGameUser(String userId, Role role) {
         return TagGameUser.builder()
