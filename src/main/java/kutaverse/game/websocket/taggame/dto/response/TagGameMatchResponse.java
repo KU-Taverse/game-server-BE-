@@ -26,10 +26,10 @@ public class TagGameMatchResponse {
 
     @Override
     public String toString() {
-        return "TagGameMatchResponse{" +
-                "roomId='" + roomId + '\'' +
-                ", taggerId='" + taggerId + '\'' +
-                ", userObjectNumber=" + userObjectNumber +
-                '}';
+        return "{" +
+                "\"roomId\": \"" + roomId + "\", " +
+                "\"taggerId\": \"" + taggerId + "\", " +
+                "\"userObjectNumber\": " + userObjectNumber +
+                "}";
     }
 }
