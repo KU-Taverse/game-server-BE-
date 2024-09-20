@@ -21,7 +21,7 @@ public class CustomHandlerMapping {
     static {
         map.put(TagGameStatus.TAG_GAME_WAITING_FOR_PLAYERS, TagGameMatchingHandler.class);
         map.put(TagGameStatus.TAG_GAME_PLAYING_MOVING, TagGameMovingHandler.class);
-        map.put(TagGameStatus.TAG_GAME_TAGGING, TagGameMovingHandler.class);
+        map.put(TagGameStatus.TAG_GAME_TAGGING, TagGameTaggingHandler.class);
     }
     public CustomHandler getHandler(TagGameStatus tagGameStatus) {
         Class<? extends CustomHandler> handlerClass = map.get(tagGameStatus);
