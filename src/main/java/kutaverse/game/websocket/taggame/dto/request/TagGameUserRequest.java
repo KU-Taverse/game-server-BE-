@@ -7,8 +7,6 @@ import lombok.*;
 @Getter
 @ToString
 @NoArgsConstructor
-@Builder
-@AllArgsConstructor
 public class TagGameUserRequest {
 
     private String userId;
@@ -23,19 +21,19 @@ public class TagGameUserRequest {
     private Double velocityZ;
     private Status status;
 
-    public static TagGameUserRequest toDto(TagGameUser tagGameUser){
-        return builder()
-                .userId(tagGameUser.getUserId())
-                .positionX(tagGameUser.getPositionX())
-                .positionY(tagGameUser.getPositionY())
-                .positionZ(tagGameUser.getPositionZ())
-                .rotationPitch(tagGameUser.getRotationPitch())
-                .rotationRoll(tagGameUser.getRotationRoll())
-                .rotationYaw(tagGameUser.getRotationYaw())
-                .velocityX(tagGameUser.getVelocityX())
-                .velocityY(tagGameUser.getVelocityY())
-                .velocityZ(tagGameUser.getVelocityZ())
-                .status(tagGameUser.getStatus())
+    public static TagGameUser toEntity(TagGameUserRequest tagGameUserRequest){
+        return TagGameUser.builder()
+                .userId(tagGameUserRequest.getUserId())
+                .positionX(Math.round(tagGameUserRequest.getPositionX()*1000.0)/1000.0)
+                .positionY(Math.round(tagGameUserRequest.getPositionY()*1000.0)/1000.0)
+                .positionZ(Math.round(tagGameUserRequest.getPositionZ()*1000.0)/1000.0)
+                .rotationPitch(Math.round(tagGameUserRequest.getRotationPitch()*1000.0)/1000.0)
+                .rotationRoll(Math.round(tagGameUserRequest.getRotationRoll()*1000.0)/1000.0)
+                .rotationYaw(Math.round(tagGameUserRequest.getRotationYaw()*1000.0)/1000.0)
+                .status(tagGameUserRequest.getStatus())
+                .velocityX(Math.round(tagGameUserRequest.getVelocityX()*1000.0)/1000.0)
+                .velocityY(Math.round(tagGameUserRequest.getVelocityY()*1000.0)/1000.0)
+                .velocityZ(Math.round(tagGameUserRequest.getVelocityZ()*1000.0)/1000.0)
                 .build();
     }
 }

@@ -4,9 +4,11 @@ import kutaverse.game.websocket.taggame.dto.request.TagGameMatchRequest;
 import kutaverse.game.websocket.taggame.dto.request.TagGameRequest;
 import kutaverse.game.websocket.taggame.util.TagGameMatchingQueue;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
 
 @RequiredArgsConstructor
+@Component
 public class TagGameMatchingHandler implements CustomHandler{
 
     @Override

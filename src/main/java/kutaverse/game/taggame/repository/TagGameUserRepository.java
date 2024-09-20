@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
-public class TagGameUserRepositoryImpl {
+public class TagGameUserRepository {
 
     private final Map<String, TagGameUser> tagGameUserMap;
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.taggame.domain.TagGameUser;
 import kutaverse.game.websocket.taggame.dto.request.TagGameUserRequest;
+import kutaverse.game.websocket.taggame.dto.response.TagGameUserResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class JsonUtil {
     public static String userListToJson(List<TagGameUser> userList) {
         try {
             return objectMapper.writeValueAsString(userList.stream()
-                            .map(TagGameUserRequest::toDto)
+                            .map(TagGameUserResponse::toDto)
                             .collect(Collectors.toList()));
 
         } catch (JsonProcessingException e) {
