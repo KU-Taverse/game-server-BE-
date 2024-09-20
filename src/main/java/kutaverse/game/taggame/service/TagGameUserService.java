@@ -3,6 +3,7 @@ package kutaverse.game.taggame.service;
 import kutaverse.game.taggame.domain.Role;
 import kutaverse.game.taggame.domain.TagGameUser;
 import kutaverse.game.taggame.repository.TagGameUserRepository;
+import kutaverse.game.websocket.taggame.dto.request.TagGameResultStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,10 @@ public class TagGameUserService {
             if (player.getKey().equals(tagger.getKey()))
                 role = Role.TAGGER;
 
-            TagGameUser tagGameUser = TagGameUser.initTagGameUser(player.getKey(),role);
+            TagGameUser tagGameUser = TagGameUser.initTagGameUser(player.getKey(), role);
             tagGameUserRepository.add(tagGameUser).subscribe();
         });
         return Mono.never();
     }
+
 }

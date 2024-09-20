@@ -9,5 +9,5 @@ public enum TagGameStatus {
     //플레이어 잡기
     TAG_GAME_TAGGING,
     //게임 종료
-    FINISHED
+    TAG_GAME_END
 }

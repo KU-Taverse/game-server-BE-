@@ -13,5 +13,9 @@ public class TagGameRoomManager {
         gameRooms.put(tagGameRoom.getRoomId(), tagGameRoom);
     }
 
+    public static TagGameRoom getGameRoom(String roomId) { return gameRooms.get(roomId); }
+
+    public static void deleteGameRoom(String roomId) { gameRooms.remove(roomId); }
+
 
 }
