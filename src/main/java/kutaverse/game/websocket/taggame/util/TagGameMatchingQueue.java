@@ -1,9 +1,7 @@
 package kutaverse.game.websocket.taggame.util;
 
-import kutaverse.game.websocket.minigame.GameRoom;
-import kutaverse.game.websocket.minigame.GameRoomManager;
 import kutaverse.game.websocket.minigame.MatchingQueue;
-import kutaverse.game.websocket.taggame.dto.TagGameMatchResponse;
+import kutaverse.game.websocket.taggame.dto.response.TagGameMatchResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,7 +11,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @Slf4j

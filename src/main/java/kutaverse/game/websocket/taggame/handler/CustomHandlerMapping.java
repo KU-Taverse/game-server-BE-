@@ -1,7 +1,5 @@
 package kutaverse.game.websocket.taggame.handler;
 
-import jakarta.annotation.PostConstruct;
-import kutaverse.game.websocket.map.handler.WebSocketHandler;
 import kutaverse.game.websocket.taggame.dto.TagGameStatus;
 
 import java.util.HashMap;
@@ -13,7 +11,8 @@ public class CustomHandlerMapping {
 
 
     static {
-        map.put(TagGameStatus.WAITING_FOR_PLAYERS,new TagGameMatchingHandler());
+        map.put(TagGameStatus.TAG_GAME_WAITING_FOR_PLAYERS,new TagGameMatchingHandler());
+        map.put(TagGameStatus.TAG_GAME_PLAYING_MOVING,new TagGameMovingHandler());
     }
 
     public static CustomHandler getHandler(TagGameStatus tagGameStatus){

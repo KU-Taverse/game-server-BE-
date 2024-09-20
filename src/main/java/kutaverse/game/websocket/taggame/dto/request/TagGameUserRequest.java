@@ -1,6 +1,5 @@
-package kutaverse.game.websocket.taggame.dto;
+package kutaverse.game.websocket.taggame.dto.request;
 import kutaverse.game.map.domain.Status;
-import kutaverse.game.map.domain.User;
 import kutaverse.game.taggame.domain.TagGameUser;
 import lombok.*;
 
@@ -10,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class TagGameUserResponse {
+public class TagGameUserRequest {
 
     private String userId;
     private Double positionX;
@@ -24,24 +23,7 @@ public class TagGameUserResponse {
     private Double velocityZ;
     private Status status;
 
-    /*public UserResponseDto(User user) {
-        this.userId = user.getUserId();
-        this.positionX = user.getPositionX();
-        this.positionY = user.getPositionY();
-        this.positionZ = user.getPositionZ();
-        this.rotationPitch = user.getRotationPitch();
-        this.rotationYaw = user.getRotationYaw();
-        this.rotationRoll = user.getRotationRoll();
-<<<<<<< HEAD
-        this.status = user.getStatus();
-        this.velocityX=user.getVelocityX();
-        this.velocityY=user.getVelocityY();
-        this.velocityZ=user.getVelocityZ();
-=======
-        this.status = String.valueOf(user.getStatus());
-    }*/
-
-    public static TagGameUserResponse toDto(TagGameUser tagGameUser){
+    public static TagGameUserRequest toDto(TagGameUser tagGameUser){
         return builder()
                 .userId(tagGameUser.getUserId())
                 .positionX(tagGameUser.getPositionX())

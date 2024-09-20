@@ -4,8 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.taggame.domain.TagGameUser;
-import kutaverse.game.websocket.map.dto.response.UserResponseDto;
-import kutaverse.game.websocket.taggame.dto.TagGameUserResponse;
+import kutaverse.game.websocket.taggame.dto.request.TagGameUserRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +21,7 @@ public class JsonUtil {
     public static String userListToJson(List<TagGameUser> userList) {
         try {
             return objectMapper.writeValueAsString(userList.stream()
-                            .map(TagGameUserResponse::toDto)
+                            .map(TagGameUserRequest::toDto)
                             .collect(Collectors.toList()));
 
         } catch (JsonProcessingException e) {
@@ -31,9 +30,9 @@ public class JsonUtil {
         }
     }
     // 역직렬화
-    public static List<TagGameUserResponse> jsonToUserList(String json) {
+    public static List<TagGameUserRequest> jsonToUserList(String json) {
         try {
-            List<TagGameUserResponse> tagGameUserResponseList = objectMapper.readValue(json, new TypeReference<>() {
+            List<TagGameUserRequest> tagGameUserResponseList = objectMapper.readValue(json, new TypeReference<>() {
             });
             return tagGameUserResponseList;
 

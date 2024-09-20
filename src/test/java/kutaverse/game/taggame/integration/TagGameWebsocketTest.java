@@ -3,8 +3,8 @@ package kutaverse.game.taggame.integration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
-import kutaverse.game.websocket.taggame.dto.TagGameMatchRequest;
-import kutaverse.game.websocket.taggame.dto.TagGameRequest;
+import kutaverse.game.websocket.taggame.dto.request.TagGameMatchRequest;
+import kutaverse.game.websocket.taggame.dto.request.TagGameRequest;
 import kutaverse.game.websocket.taggame.dto.TagGameStatus;
 import kutaverse.game.websocket.taggame.util.TagGameMatchingQueue;
 import org.assertj.core.api.Assertions;
@@ -18,7 +18,6 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
 import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -68,7 +67,7 @@ public class TagGameWebsocketTest {
 
         WebSocketClient client = new ReactorNettyWebSocketClient();
         TagGameMatchRequest tagGameMatchRequest = new TagGameMatchRequest("testUser1","message");
-        TagGameRequest<TagGameMatchRequest> tagGameRequest = new TagGameRequest<>(TagGameStatus.WAITING_FOR_PLAYERS,tagGameMatchRequest);
+        TagGameRequest<TagGameMatchRequest> tagGameRequest = new TagGameRequest<>(TagGameStatus.TAG_GAME_WAITING_FOR_PLAYERS,tagGameMatchRequest);
         String jsonRequest = objectMapper.writeValueAsString(tagGameRequest);
 
         // WebSocket 연결 및 메시지 송수신
