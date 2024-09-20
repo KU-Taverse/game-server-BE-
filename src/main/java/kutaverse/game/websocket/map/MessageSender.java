@@ -20,7 +20,7 @@ public class MessageSender {
         this.userService = userService;
         this.durationTime = 10L;
     }
-    @Scheduled(fixedRate = 10) // 0.1초마다 실행
+    @Scheduled(fixedRate = 33) // 0.033초마다 실행
     public void sendMessageToClients() {
         userService.findAllByTime(durationTime)
                 .collectList()
