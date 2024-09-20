@@ -33,6 +33,9 @@ public class TagGameUser {
 
     private Status status;
 
+    @Builder.Default
+    private LifeStatus lifeStatus = LifeStatus.NOT_TAGGED;
+
     private Role role;
 
     private Double velocityX;

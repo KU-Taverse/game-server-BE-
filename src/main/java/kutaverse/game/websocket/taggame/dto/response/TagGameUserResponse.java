@@ -1,5 +1,6 @@
 package kutaverse.game.websocket.taggame.dto.response;
 import kutaverse.game.map.domain.Status;
+import kutaverse.game.taggame.domain.LifeStatus;
 import kutaverse.game.taggame.domain.TagGameUser;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class TagGameUserResponse {
     private Double velocityY;
     private Double velocityZ;
     private Status status;
+    private LifeStatus lifeStatus;
 
     public static TagGameUserResponse toDto(TagGameUser tagGameUser){
         return builder()
@@ -36,6 +38,7 @@ public class TagGameUserResponse {
                 .velocityY(tagGameUser.getVelocityY())
                 .velocityZ(tagGameUser.getVelocityZ())
                 .status(tagGameUser.getStatus())
+                .lifeStatus(tagGameUser.getLifeStatus())
                 .build();
     }
 }
