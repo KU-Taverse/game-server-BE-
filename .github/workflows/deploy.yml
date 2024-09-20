@@ -18,7 +18,19 @@ jobs:
     permissions:
       write-all
     #contents: read
-
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: testdb
+          MYSQL_ROOT_PASSWORD: testdb
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
       - uses: actions/checkout@v4
 
@@ -28,14 +40,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Setup Redis
-      - name: Setup Redis
-        uses: shogo82148/actions-setup-redis@v1.30.1
-        with:
-          redis-version: 6.2.0
-          redis-port: 6379
-          auto-start: true
-
         # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
         # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
       - name: Grant execute permission for gradlew
@@ -44,7 +48,16 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
 
+      # SQL 스크립트 실행
+      - name: Run MySQL Init Script
+        run: |
+          mysql -h 127.0.0.1 -u root -ptestdb testdb < ./infra/sql/user.sql
+
       - name: Build with Gradle Wrapper
+        env:
+          SPRING_R2DBC_URL: r2dbc:pool:mysql://localhost:3306/testdb
+          SPRING_R2DBC_PASSWORD: testdb
+          MONGO_URL: ${{ secrets.MONGO_URL }}
         run: ./gradlew build
 
         # dockerfile을 통해 이미지를 빌드하고, 이를 docker repo로 push
@@ -72,10 +85,14 @@ jobs:
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             echo ${{secrets.PROJECT_PATH}}
             cd ${{secrets.PROJECT_PATH}}
+            cd ..
+            cd ..
+            git pull origin main
+            cd ${{secrets.PROJECT_PATH}}
             sudo docker-compose stop
             
-            sudo docker rm $(docker ps -a -q)
-            sudo docker rmi ${{ secrets.DOCKER_REPO }}
+            sudo docker rm $(sudo docker ps -a -q)
+            sudo docker rmi $(sudo docker images -q )
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             
             sudo docker-compose up --build -d
