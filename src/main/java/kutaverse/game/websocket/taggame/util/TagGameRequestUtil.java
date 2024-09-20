@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.websocket.taggame.dto.request.TagGameRequest;
 import kutaverse.game.websocket.taggame.dto.request.TagGameMatchRequest;
 import kutaverse.game.websocket.taggame.dto.TagGameStatus;
+import kutaverse.game.websocket.taggame.dto.request.TagGameTaggingRequest;
 import kutaverse.game.websocket.taggame.dto.request.TagGameUserRequest;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class TagGameRequestUtil {
     static {
         STATUS_TO_REQUEST_MAP.put(TagGameStatus.TAG_GAME_WAITING_FOR_PLAYERS, TagGameMatchRequest.class);
         STATUS_TO_REQUEST_MAP.put(TagGameStatus.TAG_GAME_PLAYING_MOVING, TagGameUserRequest.class);
+        STATUS_TO_REQUEST_MAP.put(TagGameStatus.TAG_GAME_TAGGING, TagGameTaggingRequest.class);
     }
 
     /**

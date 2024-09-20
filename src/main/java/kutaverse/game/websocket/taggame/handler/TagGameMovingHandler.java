@@ -21,6 +21,6 @@ public class TagGameMovingHandler implements CustomHandler{
         TagGameRequest tagGameRequest =(TagGameRequest) object;
         TagGameUserRequest tagGameUserRequest = (TagGameUserRequest) tagGameRequest.getRequest();
         TagGameUser tagGameUser = TagGameUserRequest.toEntity(tagGameUserRequest);
-        tagGameUserRepository.add(tagGameUser).subscribe();
+        tagGameUserRepository.update(tagGameUser).subscribe();
     }
 }

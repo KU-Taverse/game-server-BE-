@@ -33,27 +33,38 @@ public class TagGameUser {
 
     private Status status;
 
+    private Role role;
+
     private Double velocityX;
 
     private Double velocityY;
 
     private Double velocityZ;
 
-    @Builder
-    public TagGameUser(String userId, Double positionX, Double positionY, Double positionZ,
-                Double rotationPitch, Double rotationYaw, Double rotationRoll,
-                Double velocityX, Double velocityY, Double velocityZ, Status status) {
-        this.userId = userId;
-        this.positionX = Math.round(positionX*1000.0)/1000.0;
-        this.positionY = Math.round(positionY*1000.0)/1000.0;;
-        this.positionZ = Math.round(positionZ*1000.0)/1000.0;
-        this.rotationPitch = Math.round(rotationPitch*1000.0)/1000.0;
-        this.rotationYaw = Math.round(rotationYaw*1000.0)/1000.0;
-        this.rotationRoll = Math.round(rotationRoll*1000.0)/1000.0;
-        this.status = status;
-        this.velocityX = Math.round(velocityX*1000.0)/1000.0;
-        this.velocityY = Math.round(velocityY*1000.0)/1000.0;;
-        this.velocityZ = Math.round(velocityZ*1000.0)/1000.0;
+    public void confirmTagger() {
+        this.role = Role.TAGGER;
+    }
+
+    public static TagGameUser initTagGameUser(String userId, Role role) {
+        return TagGameUser.builder()
+                .userId(userId)
+                .role(role)
+                .build();
+    }
+
+
+    public TagGameUser update(TagGameUser tagGameUser) {
+        this.positionX = tagGameUser.getPositionX();
+        this.positionY = tagGameUser.getPositionY();
+        this.positionZ = tagGameUser.getPositionZ();
+        this.rotationPitch = tagGameUser.getRotationPitch();
+        this.rotationYaw = tagGameUser.getRotationYaw();
+        this.rotationRoll = tagGameUser.getRotationRoll();
+        this.status = tagGameUser.getStatus();
+        this.velocityX = tagGameUser.getVelocityX();
+        this.velocityY = tagGameUser.getVelocityY();
+        this.velocityZ = tagGameUser.getVelocityZ();
+        return this;
     }
 }
 

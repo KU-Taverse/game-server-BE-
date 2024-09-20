@@ -66,7 +66,7 @@ public class TagGameWebsocketTest {
         AtomicInteger counter = new AtomicInteger(0);
 
         WebSocketClient client = new ReactorNettyWebSocketClient();
-        TagGameMatchRequest tagGameMatchRequest = new TagGameMatchRequest("testUser1","message");
+        TagGameMatchRequest tagGameMatchRequest = new TagGameMatchRequest("testUser1");
         TagGameRequest<TagGameMatchRequest> tagGameRequest = new TagGameRequest<>(TagGameStatus.TAG_GAME_WAITING_FOR_PLAYERS,tagGameMatchRequest);
         String jsonRequest = objectMapper.writeValueAsString(tagGameRequest);
 

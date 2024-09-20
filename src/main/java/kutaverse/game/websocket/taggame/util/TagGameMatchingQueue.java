@@ -1,7 +1,9 @@
 package kutaverse.game.websocket.taggame.util;
 
+import kutaverse.game.taggame.service.TagGameUserService;
 import kutaverse.game.websocket.minigame.MatchingQueue;
 import kutaverse.game.websocket.taggame.dto.response.TagGameMatchResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,11 +15,14 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class TagGameMatchingQueue {
     private static final ArrayDeque<Map.Entry<String, WebSocketSession>> queueing = new ArrayDeque<>();
     private static final Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
     private static final Random random = new Random();
+    private final TagGameUserService tagGameUserService;
+
     public static void addPlayer(String userId, WebSocketSession webSocketSession){
         if(!sessionMap.containsKey(userId)) {
             queueing.offer(new AbstractMap.SimpleEntry<>(userId,webSocketSession));
@@ -35,20 +40,22 @@ public class TagGameMatchingQueue {
         return queueing.size();
     }
 
-    private String createGameRoom(List<Map.Entry<String, WebSocketSession>> players) {
+    private void createGameRoom(String roomId, List<Map.Entry<String, WebSocketSession>> players) {
+        TagGameRoom tagGameRoom = new TagGameRoom(roomId,players);
+        TagGameRoomManager.addGameRoom(tagGameRoom);
+    }
+
+    private String confirmGameRoomName(List<Map.Entry<String, WebSocketSession>> players) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<String, WebSocketSession> player : players) {
             stringBuilder.append(player.getKey());
             stringBuilder.append(" ");
         }
-        String roomId = stringBuilder.toString();
-        TagGameRoom tagGameRoom = new TagGameRoom(roomId,players);
-        TagGameRoomManager.addGameRoom(tagGameRoom);
-        return roomId;
+        return stringBuilder.toString();
     }
 
     @Scheduled(fixedRate = 1000)
-    public void matchPlayers(){
+    public void matchPlayers() throws InterruptedException {
         while(queueing.size() >= 4){
             Map.Entry<String, WebSocketSession> player1 = TagGameMatchingQueue.getPlayer();
             Map.Entry<String, WebSocketSession> player2 = TagGameMatchingQueue.getPlayer();
@@ -59,9 +66,9 @@ public class TagGameMatchingQueue {
             if(player1.getValue().isOpen() && player2.getValue().isOpen()
             && player3.getValue().isOpen() && player4.getValue().isOpen()){
                 List<Map.Entry<String, WebSocketSession>> players = List.of(player1, player2, player3, player4);
-                String gameRoom = createGameRoom(players);
-                Map.Entry<String, WebSocketSession> tagger = selectTagger(players);
 
+                Map.Entry<String, WebSocketSession> tagger = selectTagger(players);
+                String gameRoom = confirmGameRoomName(players);
                 //플레이어들에게 gamerood 공지
                 for (Map.Entry<String, WebSocketSession> player : players) {
                     WebSocketSession webSocketSession = player.getValue();
@@ -70,8 +77,9 @@ public class TagGameMatchingQueue {
                     WebSocketMessage webSocketMessage = webSocketSession.textMessage(tagGameMatchResponse.toString());
                     webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
                 }
-
-
+                Thread.sleep(5000);
+                tagGameUserService.initialize(players,tagger);
+                createGameRoom(gameRoom, players);
 
             }
             else{

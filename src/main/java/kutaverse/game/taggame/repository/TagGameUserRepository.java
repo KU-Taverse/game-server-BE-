@@ -24,7 +24,7 @@ public class TagGameUserRepository {
     }
 
     /**
-     * taggame 유저 추가 및 변경
+     *  taggame 유저 추가 및 변경
      * @param tagGameUser 유저
      * @return Mono<User> 이전 값또는 현재값(새로 추가된 경우)
      */
@@ -33,6 +33,14 @@ public class TagGameUserRepository {
                 .switchIfEmpty(Mono.just(tagGameUser));
     }
 
+    /**
+     * taggame 유저 변경(add보다 좋은 성능)
+     * @param tagGameUser
+     * @return Mono<User> 변경된 유저값
+     */
+    public Mono<TagGameUser> update(TagGameUser tagGameUser) {
+        return Mono.just(tagGameUserMap.get(tagGameUser.getUserId()).update(tagGameUser));
+    }
     /**
      * taggame 유저 전부 조회
      * @return Flux<User>
