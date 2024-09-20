@@ -15,7 +15,8 @@ public class TagGameRoomManager {
 
     public static TagGameRoom getGameRoom(String roomId) { return gameRooms.get(roomId); }
 
-    public static void deleteGameRoom(String roomId) { gameRooms.remove(roomId); }
+    public static void deleteGameRoom(String roomId) {
+        gameRooms.remove(roomId); }
 
 
 }

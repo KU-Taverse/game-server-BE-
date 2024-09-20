@@ -28,6 +28,7 @@ public class TagGameEndHandler implements CustomHandler {
         TagGameRoom tagGameRoom = TagGameRoomManager.gameRooms.get(tagGameEndRequest.getRoomId());
         if (tagGameEndRequest.getTagGameResultStatus() == TagGameResultStatus.TAGGER_WIN) {
             taggerWin(tagGameRoom);
+            TagGameRoomManager.deleteGameRoom(tagGameRoom.getRoomId());
             return;
         }
         playerWin(tagGameRoom);
