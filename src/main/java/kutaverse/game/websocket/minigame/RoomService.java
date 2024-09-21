@@ -11,7 +11,7 @@ public class RoomService {
     private RoundRobinAllocator roundRobinAllocator;
 
     public RoomService() {
-        List<String> roomServers = Arrays.asList("http://localhost:9001", "http://localhost:9002", "http://localhost:9003");
+        List<String> roomServers = Arrays.asList("ws://localhost:9001", "ws://localhost:9002", "ws://localhost:9003");
         this.roundRobinAllocator = new RoundRobinAllocator(roomServers);
     }
 
