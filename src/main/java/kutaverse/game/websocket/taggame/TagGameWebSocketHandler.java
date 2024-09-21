@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.websocket.taggame.handler.CustomHandler;
 import kutaverse.game.websocket.taggame.handler.CustomHandlerMapping;
 import kutaverse.game.websocket.taggame.util.TagGameRequestUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
@@ -12,9 +13,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
+@RequiredArgsConstructor
 public class TagGameWebSocketHandler implements WebSocketHandler {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final CustomHandlerMapping customHandlerMapping;
 
     /**
      * request로 반환후 handler를 실행한다.
@@ -29,7 +31,7 @@ public class TagGameWebSocketHandler implements WebSocketHandler {
                 return TagGameRequestUtil.fromWebsocketMessage(payloadAsText);
             })
             .doOnNext(tagGameRequest->{
-                CustomHandler customHandler = CustomHandlerMapping.getHandler(tagGameRequest.getTagGameStatus());
+                CustomHandler customHandler = customHandlerMapping.getHandler(tagGameRequest.getTagGameStatus());
                 customHandler.handler(tagGameRequest,session);
             }).subscribe();
         return Mono.never();

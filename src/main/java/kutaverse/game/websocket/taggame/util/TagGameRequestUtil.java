@@ -2,12 +2,8 @@ package kutaverse.game.websocket.taggame.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
-import kutaverse.game.websocket.taggame.dto.TagGameRequest;
-import kutaverse.game.websocket.taggame.dto.TagGameMatchRequest;
+import kutaverse.game.websocket.taggame.dto.request.*;
 import kutaverse.game.websocket.taggame.dto.TagGameStatus;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +12,10 @@ public class TagGameRequestUtil {
     private static final Map<TagGameStatus, Class<?>> STATUS_TO_REQUEST_MAP =new HashMap<>();
 
     static {
-        STATUS_TO_REQUEST_MAP.put(TagGameStatus.WAITING_FOR_PLAYERS, TagGameMatchRequest.class);
+        STATUS_TO_REQUEST_MAP.put(TagGameStatus.TAG_GAME_WAITING_FOR_PLAYERS, TagGameMatchRequest.class);
+        STATUS_TO_REQUEST_MAP.put(TagGameStatus.TAG_GAME_PLAYING_MOVING, TagGameUserRequest.class);
+        STATUS_TO_REQUEST_MAP.put(TagGameStatus.TAG_GAME_TAGGING, TagGameTaggingRequest.class);
+        STATUS_TO_REQUEST_MAP.put(TagGameStatus.TAG_GAME_END, TagGameEndRequest.class);
     }
 
     /**

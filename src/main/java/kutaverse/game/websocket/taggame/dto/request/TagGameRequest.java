@@ -1,5 +1,6 @@
-package kutaverse.game.websocket.taggame.dto;
+package kutaverse.game.websocket.taggame.dto.request;
 
+import kutaverse.game.websocket.taggame.dto.TagGameStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

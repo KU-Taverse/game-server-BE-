@@ -6,6 +6,8 @@ import kutaverse.game.websocket.chat.ChatWebSocketHandler;
 import kutaverse.game.websocket.map.MapWebSocketHandler;
 import kutaverse.game.websocket.minigame.MiniGameWebsocketHandler;
 import kutaverse.game.websocket.taggame.TagGameWebSocketHandler;
+import kutaverse.game.websocket.taggame.handler.CustomHandlerMapping;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
@@ -15,7 +17,10 @@ import reactor.core.publisher.Sinks;
 import java.util.Map;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebsocketConfig {
+
+	private final CustomHandlerMapping customHandlerMapping;
 
 	@Bean
 	public MapWebSocketHandler mapWebSocketHandler(Sinks.Many<String> sink) {
@@ -34,7 +39,7 @@ public class WebsocketConfig {
 
 	@Bean
 	public TagGameWebSocketHandler tagGameWebSocketHandler() {
-		return new TagGameWebSocketHandler();
+		return new TagGameWebSocketHandler(customHandlerMapping);
 	}
 
 	@Bean

@@ -1,4 +1,4 @@
-package kutaverse.game.websocket.taggame.dto;
+package kutaverse.game.websocket.taggame.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TagGameMatchRequest {
+public class TagGameEndRequest {
 
-    private String userId;
+    private String roomId;
 
-    private String text;
+    private TagGameResultStatus tagGameResultStatus;
 }

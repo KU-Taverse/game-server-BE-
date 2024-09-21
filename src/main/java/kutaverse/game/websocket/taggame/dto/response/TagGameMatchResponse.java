@@ -1,4 +1,4 @@
-package kutaverse.game.websocket.taggame.dto;
+package kutaverse.game.websocket.taggame.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,18 +14,22 @@ public class TagGameMatchResponse {
 
     private String taggerId;
 
-    public static TagGameMatchResponse toDto(String roomId, Map.Entry<String, WebSocketSession> tagger) {
+    private int userObjectNumber;
+
+    public static TagGameMatchResponse toDto(String roomId, Map.Entry<String, WebSocketSession> tagger, int userObjectNumber ) {
         return TagGameMatchResponse.builder()
                 .roomId(roomId)
                 .taggerId(tagger.getKey())
+                .userObjectNumber(userObjectNumber)
                 .build();
     }
 
     @Override
     public String toString() {
         return "{" +
-                "roomId='" + roomId + '\'' +
-                ", taggerId='" + taggerId + '\'' +
-                '}';
+                "\"roomId\": \"" + roomId + "\", " +
+                "\"taggerId\": \"" + taggerId + "\", " +
+                "\"userObjectNumber\": " + userObjectNumber +
+                "}";
     }
 }
