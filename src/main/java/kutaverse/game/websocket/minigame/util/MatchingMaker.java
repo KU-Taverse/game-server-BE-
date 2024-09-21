@@ -1,4 +1,4 @@
-package kutaverse.game.websocket.minigame;
+package kutaverse.game.websocket.minigame.util;
 
 import kutaverse.game.minigame.service.MiniGameService;
 import lombok.RequiredArgsConstructor;

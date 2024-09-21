@@ -1,4 +1,4 @@
-package kutaverse.game.websocket.minigame;
+package kutaverse.game.websocket.minigame.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kutaverse.game.minigame.dto.MiniGameRequest;
