@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.minigame.dto.MiniGameRequest;
 import kutaverse.game.minigame.dto.MiniGameRequestType;
+import kutaverse.game.websocket.minigame.util.GameRoomManager;
+import kutaverse.game.websocket.minigame.util.MatchingQueue;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
