@@ -16,4 +16,10 @@ public class TagGameRoom {
         this.players = players;
     }
 
+    public void delete(){
+        for (Map.Entry<String, WebSocketSession> player : players) {
+            player.getValue().close().subscribe();
+        }
+    }
+
 }
