@@ -1,4 +1,5 @@
-
+server:
+  port: 8080
 spring:
   profiles:
     group:
@@ -19,6 +20,19 @@ spring:
   config:
     activate:
       on-profile: "localDB"
+  application:
+    name: game-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: localhost
+    instance-id: ${spring.application.name}:${server.port}
 
 ---
 
