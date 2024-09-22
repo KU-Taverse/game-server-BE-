@@ -1,7 +1,7 @@
 package kutaverse.game.websocket.taggame.util;
 
 import kutaverse.game.taggame.service.TagGameUserService;
-import kutaverse.game.websocket.minigame.MatchingQueue;
+import kutaverse.game.websocket.minigame.util.MatchingQueue;
 import kutaverse.game.websocket.taggame.dto.response.TagGameMatchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
