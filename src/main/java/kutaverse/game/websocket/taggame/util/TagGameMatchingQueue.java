@@ -1,7 +1,6 @@
 package kutaverse.game.websocket.taggame.util;
 
 import kutaverse.game.taggame.service.TagGameUserService;
-import kutaverse.game.websocket.minigame.MatchingQueue;
 import kutaverse.game.websocket.taggame.dto.response.TagGameMatchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,20 +89,23 @@ public class TagGameMatchingQueue {
 
             } else {
                 if (player1.getValue().isOpen()) {
-                    MatchingQueue.requeue(player1);
+                    requeue(player1);
                 }
                 if (player2.getValue().isOpen()) {
-                    MatchingQueue.requeue(player2);
+                    requeue(player1);
                 }
                 if (player3.getValue().isOpen()) {
-                    MatchingQueue.requeue(player3);
+                    requeue(player1);
                 }
                 if (player4.getValue().isOpen()) {
-                    MatchingQueue.requeue(player4);
+                    requeue(player1);
                 }
             }
 
         }
+    }
+    public static void requeue(Map.Entry<String, WebSocketSession> player){
+        queueing.addFirst(player);
     }
 
     /**
