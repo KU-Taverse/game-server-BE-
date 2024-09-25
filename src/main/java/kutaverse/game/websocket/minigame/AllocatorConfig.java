@@ -2,6 +2,9 @@ package kutaverse.game.websocket.minigame;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.client.GameRoomClient;
+import kutaverse.game.client.GameRoomClient1;
+import kutaverse.game.client.GameRoomClient2;
+import kutaverse.game.client.GameRoomClient3;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,13 +15,14 @@ import java.util.List;
 public class AllocatorConfig {
 
     @Bean
-    public RoundRobinAllocator roundRobinAllocator(GameRoomClient gameRoomClient, ObjectMapper objectMapper) {
+    public RoundRobinAllocator roundRobinAllocator(GameRoomClient1 client1, GameRoomClient2 client2,
+                                                   GameRoomClient3 client3, ObjectMapper objectMapper) {
         // 서버 주소 리스트를 직접 정의
         List<String> roomServers = Arrays.asList(
-                "ws://localhost:9000/dis-game-service-1/game",
+                "ws://localhost:9000/dis-game-service/game",
                 "ws://localhost:9000/dis-game-service-2/game",
                 "ws://localhost:9000/dis-game-service-3/game"
         );
-        return new RoundRobinAllocator(roomServers, gameRoomClient, objectMapper);
+        return new RoundRobinAllocator(roomServers, client1, client2, client3, objectMapper);
     }
 }
