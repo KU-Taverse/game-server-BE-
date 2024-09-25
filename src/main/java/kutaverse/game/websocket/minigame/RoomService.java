@@ -2,29 +2,29 @@ package kutaverse.game.websocket.minigame;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kutaverse.game.client.GameRoomClient;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Map;
 
 @Service
 public class RoomService {
 
     private final RoundRobinAllocator roundRobinAllocator;
+    private final int[] weight = {0,0,0};
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    public RoomService(KafkaTemplate<String, String> kafkaTemplate) {
-        this.roundRobinAllocator = new RoundRobinAllocator(Arrays.asList(
-                "ws://localhost:9001/game-service/game",
-                "ws://localhost:9002/game-service/game",
-                "ws://localhost:9003/game-service/game"
-        ));
+    public RoomService(RoundRobinAllocator roundRobinAllocator,
+                       KafkaTemplate<String, String> kafkaTemplate) {
+        this.roundRobinAllocator = roundRobinAllocator;
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = new ObjectMapper();
     }
 
-    public String assignRoom(String player1, String player2, String roomId) {
+    public String assignRoom(String player1, String player2, String roomId) throws JsonProcessingException {
         String assignedRoomServer = roundRobinAllocator.getRoomServer();
         System.out.println("할당된 서버의 주소: " + assignedRoomServer);
 

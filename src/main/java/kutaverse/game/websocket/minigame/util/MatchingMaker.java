@@ -1,5 +1,6 @@
 package kutaverse.game.websocket.minigame.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import kutaverse.game.minigame.service.MiniGameService;
 import kutaverse.game.websocket.minigame.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class MatchingMaker {
     private final RoomService roomService;
 
     @Scheduled(fixedRate = 1000)
-    public void matchPlayers(){
+    public void matchPlayers() throws JsonProcessingException {
         while(MatchingQueue.queueingSize() >= 2){
             Map.Entry<String, WebSocketSession> player1 = MatchingQueue.getPlayer();
             Map.Entry<String, WebSocketSession> player2 = MatchingQueue.getPlayer();
@@ -50,7 +51,7 @@ public class MatchingMaker {
         }
     }
 
-    private void createGameRoom( Map.Entry<String, WebSocketSession> player1,  Map.Entry<String, WebSocketSession> player2){
+    private void createGameRoom( Map.Entry<String, WebSocketSession> player1,  Map.Entry<String, WebSocketSession> player2) throws JsonProcessingException {
         String roomId = player1.getKey() + "-" + player2.getKey();
         GameRoom gameRoom = new GameRoom(roomId,miniGameService);
 
