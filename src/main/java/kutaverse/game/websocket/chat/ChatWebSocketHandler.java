@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.chat.service.ChatService;
 import kutaverse.game.websocket.chat.dto.request.ChatRequestDto;
 import kutaverse.game.websocket.chat.dto.response.ChatResponseDto;
-import kutaverse.game.websocket.map.dto.request.UserRequestDto;
-import kutaverse.game.websocket.map.handler.WebSocketHandlerMapping;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -41,7 +38,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
                 .doOnNext(System.out::println)
                 .map(chatRequest -> {
                     chatService.save(chatRequest).subscribe();
-                    ChatResponseDto response = new ChatResponseDto(chatRequest.getUserId(), chatRequest.getContent());
+                    ChatResponseDto response = new ChatResponseDto(chatRequest.getUserId(), chatRequest.getNickname(), chatRequest.getContent());
                     try {
                         return objectMapper.writeValueAsString(response);
                     } catch (Exception e) {

@@ -10,6 +10,7 @@ import lombok.ToString;
 public class ChatRequestDto {
 
     private String userId;
+    private String nickname;
     private String content;
 
 }
