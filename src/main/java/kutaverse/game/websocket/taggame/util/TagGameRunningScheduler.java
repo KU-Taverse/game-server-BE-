@@ -48,6 +48,8 @@ public class TagGameRunningScheduler {
     private Flux<Void> sendMessagesToPlayers(TagGameRoom tagGameRoom, String json) {
         return Flux.fromIterable(tagGameRoom.getPlayers().entrySet())
                 .flatMap(player -> {
+                    if(!player.getValue().isOpen())
+                        return Mono.never();
                     WebSocketMessage webSocketMessage = player.getValue().textMessage(json);
                     return player.getValue().send(Mono.just(webSocketMessage));
                 });
