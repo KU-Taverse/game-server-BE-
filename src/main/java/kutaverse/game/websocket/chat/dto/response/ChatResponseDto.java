@@ -11,5 +11,6 @@ import lombok.ToString;
 public class ChatResponseDto {
 
     private String userId;
+    private String nickName;
     private String content;
 }
