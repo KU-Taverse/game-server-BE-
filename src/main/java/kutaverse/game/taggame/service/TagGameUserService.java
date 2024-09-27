@@ -39,4 +39,22 @@ public class TagGameUserService {
         return Mono.never();
     }
 
+    /**
+     * 유저가 접속이 끊기는 이벤트 처리
+     * @param userId 유저 id
+     * @return void
+     */
+    public Mono<Void> closedUser(String userId) {
+        return tagGameUserRepository
+                .get(userId)
+                .flatMap(tagGameUser -> {
+                    if(tagGameUser.getRole() == Role.TAGGER) {
+                        tagGameUser.confirmTaggerOut();
+                        return Mono.never();
+                    }
+                    tagGameUser.confirmTagged();
+                    return Mono.never();
+                });
+    }
+
 }

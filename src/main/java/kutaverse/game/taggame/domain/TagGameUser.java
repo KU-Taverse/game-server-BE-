@@ -46,7 +46,13 @@ public class TagGameUser {
 
     private Double velocityZ;
 
-    public void confirmTagged() { this.lifeStatus = LifeStatus.TAGGED; }
+    public void confirmTagged() {
+        this.lifeStatus = LifeStatus.TAGGED;
+    }
+
+    public void confirmTaggerOut() {
+        this.lifeStatus = LifeStatus.TAGGER_OUT;
+    }
 
     public static TagGameUser initTagGameUser(String userId, Role role, int userObjectNumber) {
         return TagGameUser.builder()
@@ -58,7 +64,7 @@ public class TagGameUser {
 
 
     public TagGameUser update(TagGameUser tagGameUser) {
-        this.userObjectNumber=tagGameUser.getUserObjectNumber();
+        this.userObjectNumber = tagGameUser.getUserObjectNumber();
         this.positionX = tagGameUser.getPositionX();
         this.positionY = tagGameUser.getPositionY();
         this.positionZ = tagGameUser.getPositionZ();

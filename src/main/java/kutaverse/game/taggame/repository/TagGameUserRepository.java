@@ -1,5 +1,6 @@
 package kutaverse.game.taggame.repository;
 
+import kutaverse.game.taggame.domain.Role;
 import kutaverse.game.taggame.domain.TagGameUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

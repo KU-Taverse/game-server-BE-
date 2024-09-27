@@ -17,16 +17,20 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 @Slf4j
 public class TagGameMatchingQueue {
+    //매칭큐
     private static final ArrayDeque<Map.Entry<String, WebSocketSession>> queueing = new ArrayDeque<>();
+    //동일 유저 동시 요청에 대한 저장 map
     private static final Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
     private static final Random random = new Random();
     private final TagGameUserService tagGameUserService;
 
     public static void addPlayer(String userId, WebSocketSession webSocketSession) {
+        //동일한 ID에 대한 요청이 세션 연결이 끊어진 상황인 경우 끊어진 요청을 제거한다.
         if (sessionMap.containsKey(userId)) {
-            if(!sessionMap.get(userId).isOpen())
+            if (!sessionMap.get(userId).isOpen())
                 sessionMap.remove(userId);
         }
+        //매칭에 넣는다.
         if (!sessionMap.containsKey(userId)) {
             queueing.offer(new AbstractMap.SimpleEntry<>(userId, webSocketSession));
             sessionMap.put(userId, webSocketSession);
@@ -104,7 +108,8 @@ public class TagGameMatchingQueue {
 
         }
     }
-    public static void requeue(Map.Entry<String, WebSocketSession> player){
+
+    public static void requeue(Map.Entry<String, WebSocketSession> player) {
         queueing.addFirst(player);
     }
 
@@ -119,5 +124,17 @@ public class TagGameMatchingQueue {
         int randomIndex = random.nextInt(players.size()); // 4는 상한값으로, 0~3 사이의 값이 생성됩니다.
 
         return players.get(randomIndex);
+    }
+
+    /**
+     * 연결이 끝어진 세션 회수 작업
+     */
+    @Scheduled(fixedRate = 10000)
+    public void cleanSessionIfClosed() {
+        queueing.removeIf(webSocketSessionEntry -> !webSocketSessionEntry.getValue().isOpen());
+        for (Map.Entry<String, WebSocketSession> webSocketSessionEntry : sessionMap.entrySet()) {
+            if(!webSocketSessionEntry.getValue().isOpen())
+                sessionMap.remove(webSocketSessionEntry.getKey());
+        }
     }
 }

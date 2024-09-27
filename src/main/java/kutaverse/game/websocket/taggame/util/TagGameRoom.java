@@ -6,20 +6,29 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public class TagGameRoom {
     private final String roomId;
-    private final List<Map.Entry<String, WebSocketSession>> players;
+    private final Map<String, WebSocketSession> players;
+    //private final List<Map.Entry<String, WebSocketSession>> players;
     public TagGameRoom(String roomId, List<Map.Entry<String, WebSocketSession>> players) {
         this.roomId = roomId;
-        this.players = players;
+        this.players = new ConcurrentHashMap<>();
+        for (Map.Entry<String, WebSocketSession> player : players) {
+            this.players.put(player.getKey(),player.getValue());
+        }
+
     }
 
     public void delete(){
-        for (Map.Entry<String, WebSocketSession> player : players) {
-            player.getValue().close().subscribe();
+        for (WebSocketSession webSocketSession : players.values()) {
+            webSocketSession.close().subscribe();
         }
     }
 
+    public void deleteUser(String userId){
+        players.remove(userId);
+    }
 }
