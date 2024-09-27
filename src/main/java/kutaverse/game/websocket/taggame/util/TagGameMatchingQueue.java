@@ -87,8 +87,9 @@ public class TagGameMatchingQueue {
                     WebSocketMessage webSocketMessage = webSocketSession.textMessage(tagGameMatchResponse.toString());
                     webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
                 }
-                Thread.sleep(5000);
                 tagGameUserService.initialize(players, tagger, integerList);
+                Thread.sleep(5000);
+
                 createGameRoom(gameRoom, players);
 
             } else {
