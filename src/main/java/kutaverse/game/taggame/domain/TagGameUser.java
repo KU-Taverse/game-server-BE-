@@ -46,11 +46,11 @@ public class TagGameUser {
         this.lifeStatus = LifeStatus.TAGGER_OUT;
     }
 
-    public static TagGameUser initTagGameUser(String userId, Role role, int userObjectNumber) {
+    public static TagGameUser initTagGameUser(String userId, Role role, int userObjectNumber,int counter) {
         return TagGameUser.builder()
                 .userId(userId)
                 .positionX(-9500D)
-                .positionY(13400D)
+                .positionY(13400D+(counter*100))
                 .positionZ(1000D)
                 .rotationPitch(0D)
                 .rotationYaw(0D)

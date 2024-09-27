@@ -32,7 +32,7 @@ public class TagGameUserService {
             if (player.getKey().equals(tagger.getKey()))
                 role = Role.TAGGER;
 
-            TagGameUser tagGameUser = TagGameUser.initTagGameUser(player.getKey(), role, integerList.get(counter));
+            TagGameUser tagGameUser = TagGameUser.initTagGameUser(player.getKey(), role, integerList.get(counter), counter);
             counter++;
             tagGameUserRepository.add(tagGameUser).subscribe();
         }
