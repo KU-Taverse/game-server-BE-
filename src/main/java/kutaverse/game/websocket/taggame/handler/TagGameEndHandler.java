@@ -36,7 +36,7 @@ public class TagGameEndHandler implements CustomHandler {
     }
 
     private void taggerWin(TagGameRoom tagGameRoom) {
-        tagGameRoom.getPlayers().forEach(player -> {
+        tagGameRoom.getPlayers().entrySet().forEach(player -> {
             tagGameUserRepository.get(player.getKey())
                     .doOnNext( tagGameUser -> {
                         if(tagGameUser.getRole() == Role.TAGGER){
@@ -50,7 +50,7 @@ public class TagGameEndHandler implements CustomHandler {
     }
 
     private void playerWin(TagGameRoom tagGameRoom) {
-        tagGameRoom.getPlayers().forEach(player -> {
+        tagGameRoom.getPlayers().entrySet().forEach(player -> {
             tagGameUserRepository.get(player.getKey())
                     .doOnNext( tagGameUser -> {
                         if(tagGameUser.getRole() == Role.PLAYER){

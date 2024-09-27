@@ -10,6 +10,7 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -35,10 +36,12 @@ public class TagGameRoomManager {
     @Scheduled(fixedRate = 10000)
     public void cleanMemberIfClosed(){
         for (TagGameRoom tagGameRoom : gameRooms.values()) {
-            List<Map.Entry<String, WebSocketSession>> players = tagGameRoom.getPlayers();
+            Set<Map.Entry<String, WebSocketSession>> players = tagGameRoom.getPlayers().entrySet();
             for (Map.Entry<String, WebSocketSession> player : players) {
                 if(!player.getValue().isOpen()){
-                    tagGameUserService.closedUser(player.getKey()).subscribe();
+                    String userId = player.getKey();
+                    tagGameRoom.deleteUser(userId);
+                    tagGameUserService.closedUser(userId).subscribe();
                 }
             }
         }

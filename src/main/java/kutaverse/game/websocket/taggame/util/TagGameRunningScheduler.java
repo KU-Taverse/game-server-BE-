@@ -28,7 +28,7 @@ public class TagGameRunningScheduler {
                 .forEach(tagGameRoom -> {
 
                     // 1. 플레이어 정보를 조회하고 리스트로 변환
-                    Flux<TagGameUser> usersFlux = Flux.fromIterable(tagGameRoom.getPlayers())
+                    Flux<TagGameUser> usersFlux = Flux.fromIterable(tagGameRoom.getPlayers().entrySet())
                             .flatMap(player -> tagGameUserRepository.get(player.getKey()));
 
                     // 2. 유저 정보를 JSON으로 변환
@@ -46,7 +46,7 @@ public class TagGameRunningScheduler {
      * 플레이어들에게 WebSocket 메시지 전송
      */
     private Flux<Void> sendMessagesToPlayers(TagGameRoom tagGameRoom, String json) {
-        return Flux.fromIterable(tagGameRoom.getPlayers())
+        return Flux.fromIterable(tagGameRoom.getPlayers().entrySet())
                 .flatMap(player -> {
                     WebSocketMessage webSocketMessage = player.getValue().textMessage(json);
                     return player.getValue().send(Mono.just(webSocketMessage));
