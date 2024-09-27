@@ -20,10 +20,6 @@ public class TagGameUserResponse {
     private Double rotationPitch;
     private Double rotationYaw;
     private Double rotationRoll;
-    private Double velocityX;
-    private Double velocityY;
-    private Double velocityZ;
-    private Status status;
     private LifeStatus lifeStatus;
 
     public static TagGameUserResponse toDto(TagGameUser tagGameUser){
@@ -36,10 +32,6 @@ public class TagGameUserResponse {
                 .rotationPitch(tagGameUser.getRotationPitch())
                 .rotationRoll(tagGameUser.getRotationRoll())
                 .rotationYaw(tagGameUser.getRotationYaw())
-                .velocityX(tagGameUser.getVelocityX())
-                .velocityY(tagGameUser.getVelocityY())
-                .velocityZ(tagGameUser.getVelocityZ())
-                .status(tagGameUser.getStatus())
                 .lifeStatus(tagGameUser.getLifeStatus())
                 .build();
     }

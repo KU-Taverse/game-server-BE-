@@ -33,18 +33,10 @@ public class TagGameUser {
 
     private Double rotationRoll;
 
-    private Status status;
-
     @Builder.Default
     private LifeStatus lifeStatus = LifeStatus.NOT_TAGGED;
 
     private Role role;
-
-    private Double velocityX;
-
-    private Double velocityY;
-
-    private Double velocityZ;
 
     public void confirmTagged() {
         this.lifeStatus = LifeStatus.TAGGED;
@@ -70,10 +62,6 @@ public class TagGameUser {
         this.rotationPitch = tagGameUser.getRotationPitch();
         this.rotationYaw = tagGameUser.getRotationYaw();
         this.rotationRoll = tagGameUser.getRotationRoll();
-        this.status = tagGameUser.getStatus();
-        this.velocityX = tagGameUser.getVelocityX();
-        this.velocityY = tagGameUser.getVelocityY();
-        this.velocityZ = tagGameUser.getVelocityZ();
         return this;
     }
 }

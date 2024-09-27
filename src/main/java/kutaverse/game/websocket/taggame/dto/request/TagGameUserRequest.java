@@ -16,10 +16,6 @@ public class TagGameUserRequest {
     private Double rotationPitch;
     private Double rotationYaw;
     private Double rotationRoll;
-    private Double velocityX;
-    private Double velocityY;
-    private Double velocityZ;
-    private Status status;
 
     public static TagGameUser toEntity(TagGameUserRequest tagGameUserRequest){
         return TagGameUser.builder()
@@ -30,10 +26,6 @@ public class TagGameUserRequest {
                 .rotationPitch(Math.round(tagGameUserRequest.getRotationPitch()*1000.0)/1000.0)
                 .rotationRoll(Math.round(tagGameUserRequest.getRotationRoll()*1000.0)/1000.0)
                 .rotationYaw(Math.round(tagGameUserRequest.getRotationYaw()*1000.0)/1000.0)
-                .status(tagGameUserRequest.getStatus())
-                .velocityX(Math.round(tagGameUserRequest.getVelocityX()*1000.0)/1000.0)
-                .velocityY(Math.round(tagGameUserRequest.getVelocityY()*1000.0)/1000.0)
-                .velocityZ(Math.round(tagGameUserRequest.getVelocityZ()*1000.0)/1000.0)
                 .build();
     }
 }
