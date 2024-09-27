@@ -49,6 +49,12 @@ public class TagGameUser {
     public static TagGameUser initTagGameUser(String userId, Role role, int userObjectNumber) {
         return TagGameUser.builder()
                 .userId(userId)
+                .positionX(-9500D)
+                .positionY(13400D)
+                .positionZ(1000D)
+                .rotationPitch(0D)
+                .rotationYaw(0D)
+                .rotationRoll(0D)
                 .role(role)
                 .userObjectNumber(userObjectNumber)
                 .build();
