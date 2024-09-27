@@ -64,7 +64,6 @@ public class TagGameUser {
 
 
     public TagGameUser update(TagGameUser tagGameUser) {
-        this.userObjectNumber = tagGameUser.getUserObjectNumber();
         this.positionX = tagGameUser.getPositionX();
         this.positionY = tagGameUser.getPositionY();
         this.positionZ = tagGameUser.getPositionZ();
