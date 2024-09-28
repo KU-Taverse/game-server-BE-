@@ -47,13 +47,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
                 })
                 .flatMap(data->{
                     Flux.fromIterable(sessions.values())
-                            .flatMap(wsSession -> {
-                                if (!wsSession.getId().equals(session.getId())) {
-                                    return wsSession.send(Mono.just(wsSession.textMessage(data)));
-                                } else {
-                                    return Mono.empty();
-                                }
-                            }).subscribe();
+                            .flatMap(wsSession -> wsSession.send(Mono.just(wsSession.textMessage(data)))).subscribe();
                     return Mono.never();
                 })
                 .subscribe();
