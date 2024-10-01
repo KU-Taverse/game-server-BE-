@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketSession;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -55,8 +56,8 @@ public class MatchingMaker {
         String roomId = player1.getKey() + "-" + player2.getKey();
         GameRoom gameRoom = new GameRoom(roomId,miniGameService);
 
-//        gameRoom.addPlayer(player1.getKey(), player1.getValue());
-//        gameRoom.addPlayer(player2.getKey(), player2.getValue());
+        gameRoom.addPlayer(player1.getKey(), player1.getValue());
+        gameRoom.addPlayer(player2.getKey(), player2.getValue());
 
 //        GameRoomManager.addGameRoom(gameRoom);
 
