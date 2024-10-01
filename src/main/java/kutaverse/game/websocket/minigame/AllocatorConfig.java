@@ -19,7 +19,7 @@ public class AllocatorConfig {
                                                    GameRoomClient3 client3, ObjectMapper objectMapper) {
         // 서버 주소 리스트를 직접 정의
         List<String> roomServers = Arrays.asList(
-                "ws://localhost:9000/dis-game-service/game",
+                "ws://localhost:9000/dis-game-service-1/game",
                 "ws://localhost:9000/dis-game-service-2/game",
                 "ws://localhost:9000/dis-game-service-3/game"
         );
