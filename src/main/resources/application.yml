@@ -4,7 +4,7 @@ spring:
   profiles:
     group:
       "local": "localDB"
-      "prod": "prodDB"
+      "prod": "prodDB2"
   r2dbc:
     url: r2dbc:pool:mysql://localhost:3306/webflux
     username: root
@@ -39,4 +39,4 @@ eureka:
 spring:
   config:
     activate:
-      on-profile: "prodDB"
+      on-profile: "prodDB2"
