@@ -3,6 +3,7 @@ package kutaverse.game.websocket.minigame.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kutaverse.game.minigame.service.MiniGameService;
 import kutaverse.game.websocket.minigame.RoomService;
+import kutaverse.game.websocket.minigame.dto.GameMatchingDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -61,10 +62,11 @@ public class MatchingMaker {
 
 //        GameRoomManager.addGameRoom(gameRoom);
 
-        gameRoom.broadcastMessage(roomId);
+        String url = roomService.assignRoom(player1.getKey(),player2.getKey(),roomId);
+        GameMatchingDTO gameMatchingDTO = new GameMatchingDTO(roomId,url);
 
         // 여기서 카프카 로직을 추가해서 넘겨주고 세션을 close 해야함
-        gameRoom.broadcastMessage(roomService.assignRoom(player1.getKey(),player2.getKey(),roomId));
+        gameRoom.broadcastMessage(String.valueOf(gameMatchingDTO));
 
     }
 }
