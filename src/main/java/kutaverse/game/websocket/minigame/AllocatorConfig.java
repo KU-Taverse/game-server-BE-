@@ -18,10 +18,11 @@ public class AllocatorConfig {
     public RoundRobinAllocator roundRobinAllocator(GameRoomClient1 client1, GameRoomClient2 client2,
                                                    GameRoomClient3 client3, ObjectMapper objectMapper) {
         // 서버 주소 리스트를 직접 정의
+        // 나중에 서버 도메인 주소로 바꾸어야함
         List<String> roomServers = Arrays.asList(
-                "ws://localhost:9000/dis-game-service-1/game",
-                "ws://localhost:9000/dis-game-service-2/game",
-                "ws://localhost:9000/dis-game-service-3/game"
+                "ws://kutaverse.xyz/dis-game-service-1/game",
+                "ws://kutaverse.xyz/dis-game-service-2/game",
+                "ws://kutaverse.xyz/dis-game-service-3/game"
         );
         return new RoundRobinAllocator(roomServers, client1, client2, client3, objectMapper);
     }
