@@ -91,8 +91,12 @@ jobs:
             cd ${{secrets.PROJECT_PATH}}
             sudo docker-compose stop
             
-            sudo docker rm $(sudo docker ps -a -q)
-            sudo docker rmi $(sudo docker images -q )
+            sudo docker stop user_app || true
+            sudo docker rm docker-springbootapp-1 || true
+            sudo docker rm docker-mysql-1 || true
+            sudo docker rmi mysql || true
+            sudo docker rmi ji0513ji/game-server || true
+            
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             
             sudo docker-compose up --build -d
