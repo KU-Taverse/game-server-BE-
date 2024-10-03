@@ -8,5 +8,5 @@ ARG JAR_FILE=../../build/libs/*.jar
 COPY ${JAR_FILE} app.jar
 
 # 운영 및 개발에서 사용되는 환경 설정을 분리
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.group=prod", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.group=prodDB", "/app.jar"]
 # docker build -f ./infra/docker/Dockerfile -t ji0513ji/game-server:latest .git
