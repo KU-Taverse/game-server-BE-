@@ -28,7 +28,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,properties = "spring.profiles.active=localDB")
 public class MiniGameWebSocketTest {
     @LocalServerPort
     private String port;
