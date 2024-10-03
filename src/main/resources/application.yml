@@ -1,9 +1,10 @@
-
+server:
+  port: 8080
 spring:
   profiles:
     group:
       "local": "localDB"
-      "prod": "prodDB"
+      "prod": "prodDB2"
   r2dbc:
     url: r2dbc:pool:mysql://localhost:3306/webflux
     username: root
@@ -19,10 +20,23 @@ spring:
   config:
     activate:
       on-profile: "localDB"
+  application:
+    name: game-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: localhost
+    instance-id: ${spring.application.name}:${server.port}
 
 ---
 
 spring:
   config:
     activate:
-      on-profile: "prodDB"
+      on-profile: "prodDB2"
