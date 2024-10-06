@@ -33,7 +33,7 @@ public class UserControllerImplTest {
     @Autowired
     UserController userController;
 
-    User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
+    User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND,1,1);
     PostMapUserRequest postMapUserRequest = PostMapUserRequest.toEntity(user);
     PostMapUserResponse postMapUserResponse = PostMapUserResponse.toDto(user);
     GetMapUserResponse getMapUserResponse = GetMapUserResponse.toDto(user);
@@ -81,8 +81,8 @@ public class UserControllerImplTest {
     public void test3() {
         //given
 
-        User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
-        User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND);
+        User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND,1,1);
+        User user2 = new User("2", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND,1,1);
         GetMapUserResponse getMapUserResponse1 = GetMapUserResponse.toDto(user1);
         GetMapUserResponse getMapUserResponse2 = GetMapUserResponse.toDto(user2);
 

@@ -23,6 +23,8 @@ public class UserResponseDto {
     private Double velocityY;
     private Double velocityZ;
     private Status status;
+    private int aurora; //오로라
+    private int title; //칭호
 
     /*public UserResponseDto(User user) {
         this.userId = user.getUserId();
@@ -54,6 +56,8 @@ public class UserResponseDto {
                 .velocityY(user.getVelocityY())
                 .velocityZ(user.getVelocityZ())
                 .status(user.getStatus())
+                .aurora(user.getAurora())
+                .title(user.getTitle())
                 .build();
     }
 }

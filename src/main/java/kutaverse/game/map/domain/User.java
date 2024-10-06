@@ -38,6 +38,10 @@ public class User {
 
     private Status status;
 
+    private int aurora; //오로라
+
+    private int title; //칭호
+
     private Double velocityX;
 
     private Double velocityY;
@@ -53,7 +57,8 @@ public class User {
     @Builder
     public User(String userId, Double positionX, Double positionY, Double positionZ,
                 Double rotationPitch, Double rotationYaw, Double rotationRoll,
-                Double velocityX, Double velocityY, Double velocityZ, Status status) {
+                Double velocityX, Double velocityY, Double velocityZ, Status status,
+                int aurora, int title) {
         this.userId = userId;
         this.positionX = Math.round(positionX*1000.0)/1000.0;
         this.positionY = Math.round(positionY*1000.0)/1000.0;;
@@ -62,6 +67,8 @@ public class User {
         this.rotationYaw = Math.round(rotationYaw*1000.0)/1000.0;
         this.rotationRoll = Math.round(rotationRoll*1000.0)/1000.0;
         this.status = status;
+        this.aurora=aurora;
+        this.title=title;
         this.velocityX = Math.round(velocityX*1000.0)/1000.0;
         this.velocityY = Math.round(velocityY*1000.0)/1000.0;;
         this.velocityZ = Math.round(velocityZ*1000.0)/1000.0;
