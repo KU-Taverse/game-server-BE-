@@ -8,6 +8,8 @@ CREATE TABLE map_user (
                       rotation_yaw DOUBLE NOT NULL,
                       rotation_roll DOUBLE NOT NULL,
                       status VARCHAR(50) NOT NULL,
+                      aurora INT NOT NULL,
+                      title INT NOT NULL,
                       velocity_x DOUBLE NOT NULL,
                       velocity_y DOUBLE NOT NULL,
                       velocity_z DOUBLE NOT NULL,
