@@ -82,24 +82,13 @@ jobs:
           key: ${{ secrets.KEY }}
           envs: GITHUB_SHA
           script: |
-            sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            echo ${{secrets.PROJECT_PATH}}
-            cd ${{secrets.PROJECT_PATH}}
-            cd ..
-            cd ..
-            git pull origin main
-            cd ${{secrets.PROJECT_PATH}}
-            sudo docker-compose stop
             
-            sudo docker stop user_app || true
-            sudo docker rm docker-springbootapp-1 || true
-            sudo docker rm docker-mysql-1 || true
-            sudo docker rmi mysql || true
-            sudo docker rmi ji0513ji/game-server || true
-            
-            sudo docker pull ${{ secrets.DOCKER_REPO }}
-            
-            sudo docker-compose up --build -d
+            sudo docker stop game-service || true
+            sudo docker rm game-service || true
+        
+            sudo docker pull  ${{ secrets.DOCKER_REPO }}
+            sudo docker run -d  --name game-service -p 8080:8080 \
+            ji0513ji/game-server:latest
 
       - name: Notify
         uses: actions/github-script@v5
