@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: "localDB"
+      on-profile: "prodDB"
   application:
     name: game-service
 
