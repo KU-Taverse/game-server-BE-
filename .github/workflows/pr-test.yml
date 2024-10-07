@@ -57,7 +57,7 @@ jobs:
         env:
           SPRING_R2DBC_URL: r2dbc:pool:mysql://localhost:3306/testdb
           SPRING_R2DBC_PASSWORD: testdb
-          SPRING_PROFILES_ACTIVE: prodDB
+          SPRING_R2DBC_USERNAME: testdb
           MONGO_URL: ${{ secrets.MONGO_URL }}
         run: ./gradlew build
 
