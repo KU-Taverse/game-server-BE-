@@ -44,6 +44,7 @@ public class RoomService {
 
         try {
             String jsonMessage = objectMapper.writeValueAsString(message);
+            log.info(jsonMessage);
             kafkaTemplate.send(String.valueOf(newPort), jsonMessage);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
