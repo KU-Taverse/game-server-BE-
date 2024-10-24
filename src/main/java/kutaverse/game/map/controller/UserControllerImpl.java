@@ -6,6 +6,7 @@ import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.service.UserCashService;
+import kutaverse.game.map.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 public class UserControllerImpl implements UserController{
 
     private final UserCashService userCashService;
+    private final UserService userService;
 
     /**
      * 맵 유저 저장
@@ -41,13 +43,14 @@ public class UserControllerImpl implements UserController{
 
     /**
      * 맵 유저 조회
+     * 저장된 유저를 조회한다
      * @param userId 유저 Id
      * @return Mono<GetMapUserResponse> 맵 유저 정보
      */
     @GetMapping("{userId}")
     @Override
     public Mono<GetMapUserResponse> getUser(@PathVariable(value = "userId") String userId) {
-        return userCashService.findOne(userId);
+        return userService.findOne(userId);
     }
 
     /**

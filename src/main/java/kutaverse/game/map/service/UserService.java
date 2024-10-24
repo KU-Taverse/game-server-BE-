@@ -16,7 +16,7 @@ public interface UserService {
 
     Flux<User> findAllByTime(long length);
 
-    Mono<User> findOne(String userId);
+    Mono<GetMapUserResponse> findOne(String userId);
 
     Mono<Long> deleteById(String userId);
 
