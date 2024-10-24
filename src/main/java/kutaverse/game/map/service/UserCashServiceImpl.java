@@ -1,5 +1,7 @@
 package kutaverse.game.map.service;
 
+import static kutaverse.game.map.repository.util.RepositoryUtil.DURATION_MINUTE;
+
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
@@ -47,13 +49,15 @@ public class UserCashServiceImpl implements UserCashService {
 
     /**
      * 시간 범위에 해당하는 NOTUSE가 아닌 유저를 반환
-     * @param length 시간의 길이 단위 초)
      * @return Flux<User>
      */
     @Override
-    public Flux<User> findAllByTime(long length) {
-        return userCashRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
+    public Flux<User> findAllByTime() {
+        return userCashRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toMinutes() < DURATION_MINUTE
+                && user.getStatus() != Status.NOTUSE);
     }
+
+    ;
 
     @Override
     public Mono<GetMapUserResponse> findOne(String id) {
