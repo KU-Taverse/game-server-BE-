@@ -8,7 +8,6 @@ import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.repository.UserCashRepository;
 import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import kutaverse.game.map.repository.UserRepository;
-import kutaverse.game.map.repository.util.RepositoryUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -53,13 +52,8 @@ public class UserCashServiceImpl implements UserCashService {
      */
     @Override
     public Flux<User> findAllByTime(long length) {
-        if (length == RepositoryUtil.INFINITE_TIME)
-            return userCashRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
-        return userCashRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus() != Status.NOTUSE);
-
+        return userCashRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
     }
-
-    ;
 
     @Override
     public Mono<GetMapUserResponse> findOne(String id) {
