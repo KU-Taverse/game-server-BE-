@@ -15,7 +15,7 @@ public interface UserCashService {
 
     Flux<GetMapUserResponse> findAll();
 
-    Flux<User> findAllByTime(long length);
+    Flux<User> findAllByTime();
 
     Mono<GetMapUserResponse> findOne(String userId);
 

@@ -1,5 +1,7 @@
 package kutaverse.game.map.service;
 
+import static kutaverse.game.map.repository.util.RepositoryUtil.DURATION_MINUTE;
+
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.dto.request.PostMapUserRequest;
@@ -8,7 +10,6 @@ import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.repository.UserCashRepository;
 import kutaverse.game.websocket.map.dto.request.UserRequestDto;
 import kutaverse.game.map.repository.UserRepository;
-import kutaverse.game.map.repository.util.RepositoryUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -48,15 +49,12 @@ public class UserCashServiceImpl implements UserCashService {
 
     /**
      * 시간 범위에 해당하는 NOTUSE가 아닌 유저를 반환
-     * @param length 시간의 길이 단위 초)
      * @return Flux<User>
      */
     @Override
-    public Flux<User> findAllByTime(long length) {
-        if (length == RepositoryUtil.INFINITE_TIME)
-            return userCashRepository.getAll().filter(user -> user.getStatus() != Status.NOTUSE);
-        return userCashRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toSeconds() < length && user.getStatus() != Status.NOTUSE);
-
+    public Flux<User> findAllByTime() {
+        return userCashRepository.getAll().filter(user -> Duration.between(user.getLocalDateTime(), LocalDateTime.now()).toMinutes() < DURATION_MINUTE
+                && user.getStatus() != Status.NOTUSE);
     }
 
     ;

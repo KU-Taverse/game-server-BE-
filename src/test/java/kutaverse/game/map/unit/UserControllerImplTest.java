@@ -8,6 +8,7 @@ import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.service.UserCashService;
+import kutaverse.game.map.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +29,10 @@ import reactor.test.StepVerifier;
 public class UserControllerImplTest {
 
     @MockBean
-    UserCashService userService;
+    UserCashService userCashService;
+
+    @MockBean
+    UserService userService;
 
     @Autowired
     UserController userController;
@@ -43,12 +47,12 @@ public class UserControllerImplTest {
     @DisplayName("user를 저장했을 때 user에 대한 return 값을 받아 와야 한다.")
     public void test1() {
         //given
-        Mockito.when(userService.create(postMapUserRequest)).thenReturn(Mono.just(postMapUserResponse));
+        Mockito.when(userCashService.create(postMapUserRequest)).thenReturn(Mono.just(postMapUserResponse));
         //when
 
         Mono<PostMapUserResponse> postMapUserResponseMono = userController.addUser(postMapUserRequest);
         //then
-        Mockito.verify(userService, Mockito.times(1)).create(postMapUserRequest);
+        Mockito.verify(userCashService, Mockito.times(1)).create(postMapUserRequest);
         StepVerifier
                 .create(postMapUserResponseMono)
                 .expectNext(postMapUserResponse)
@@ -86,13 +90,13 @@ public class UserControllerImplTest {
         GetMapUserResponse getMapUserResponse1 = GetMapUserResponse.toDto(user1);
         GetMapUserResponse getMapUserResponse2 = GetMapUserResponse.toDto(user2);
 
-        Mockito.when(userService.findAll()).thenReturn(Flux.just(getMapUserResponse1, getMapUserResponse2));
+        Mockito.when(userCashService.findAll()).thenReturn(Flux.just(getMapUserResponse1, getMapUserResponse2));
         //when
 
         Flux<GetMapUserResponse> allUser = userController.getAllUser();
 
         //then
-        Mockito.verify(userService, Mockito.times(1)).findAll();
+        Mockito.verify(userCashService, Mockito.times(1)).findAll();
         StepVerifier
                 .create(allUser)
                 .expectNext(getMapUserResponse1)
@@ -108,14 +112,14 @@ public class UserControllerImplTest {
         String userId = "1";
         Long reval = 1L;
 
-        Mockito.when(userService.deleteById(userId)).thenReturn(Mono.just(reval));
+        Mockito.when(userCashService.deleteById(userId)).thenReturn(Mono.just(reval));
         //when
 
         Mono<Long> longMono = userController.deleteUser(userId);
 
 
         //then
-        Mockito.verify(userService, Mockito.times(1)).deleteById(userId);
+        Mockito.verify(userCashService, Mockito.times(1)).deleteById(userId);
         StepVerifier.create(longMono)
                 .expectNext(reval)
                 .verifyComplete();
