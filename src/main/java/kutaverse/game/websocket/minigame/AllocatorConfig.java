@@ -20,9 +20,9 @@ public class AllocatorConfig {
         // 서버 주소 리스트를 직접 정의
         // 나중에 서버 도메인 주소로 바꾸어야함
         List<String> roomServers = Arrays.asList(
-                "ws://kutaverse.xyz/dis-game-service-1/game",
-                "ws://kutaverse.xyz/dis-game-service-2/game",
-                "ws://kutaverse.xyz/dis-game-service-3/game"
+                "wss://kutaverse.xyz/dis-game-service-1/game",
+                "wss://kutaverse.xyz/dis-game-service-2/game",
+                "wss://kutaverse.xyz/dis-game-service-3/game"
         );
         return new RoundRobinAllocator(roomServers, client1, client2, client3, objectMapper);
     }
