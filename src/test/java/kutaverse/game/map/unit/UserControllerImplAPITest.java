@@ -7,6 +7,7 @@ import kutaverse.game.map.dto.request.PostMapUserRequest;
 import kutaverse.game.map.dto.response.GetMapUserResponse;
 import kutaverse.game.map.dto.response.PostMapUserResponse;
 import kutaverse.game.map.service.UserCashService;
+import kutaverse.game.map.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,11 @@ public class UserControllerImplAPITest {
     UserController userController;
 
     @MockBean
-    UserCashService userService;
+    UserCashService userCashService;
+
+    @MockBean
+    UserService userService;
+
 
     User user = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND,1,1);
     User user1 = new User("1", 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, Status.STAND,1,1);
@@ -58,7 +63,7 @@ public class UserControllerImplAPITest {
     public void test1() {
 
         //given
-        Mockito.when(userService.create(postMapUserRequest)).thenReturn(Mono.just(postMapUserResponse));
+        Mockito.when(userCashService.create(postMapUserRequest)).thenReturn(Mono.just(postMapUserResponse));
         //when
         webTestClient.post()
                 .uri("/user")
@@ -70,7 +75,7 @@ public class UserControllerImplAPITest {
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody(UserCashService.class);
         //then
-        Mockito.verify(userService, Mockito.times(1)).create(refEq(postMapUserRequest));
+        Mockito.verify(userCashService, Mockito.times(1)).create(refEq(postMapUserRequest));
     }
 
     @Test
@@ -96,7 +101,7 @@ public class UserControllerImplAPITest {
     public void test3() {
 
         //given
-        Mockito.when(userService.findAll()).thenReturn(Flux.just(getMapUserResponse1, getMapUserResponse2));
+        Mockito.when(userCashService.findAll()).thenReturn(Flux.just(getMapUserResponse1, getMapUserResponse2));
         //when
         webTestClient.get()
                 .uri("/user")
@@ -106,7 +111,7 @@ public class UserControllerImplAPITest {
                 .jsonPath("$[0].userId").isEqualTo("1")
                 .jsonPath("$[1].userId").isEqualTo("2");
         //then
-        Mockito.verify(userService, Mockito.times(1)).findAll();
+        Mockito.verify(userCashService, Mockito.times(1)).findAll();
 
     }
 
@@ -117,7 +122,7 @@ public class UserControllerImplAPITest {
         //given
         String userId = "1";
         Long reval = 1L;
-        Mockito.when(userService.deleteById(userId)).thenReturn(Mono.just(reval));
+        Mockito.when(userCashService.deleteById(userId)).thenReturn(Mono.just(reval));
         //when
         webTestClient.delete()
                 .uri("/user/1")
@@ -126,6 +131,6 @@ public class UserControllerImplAPITest {
                 .expectBody(String.class)
                 .isEqualTo("1");
         //then
-        Mockito.verify(userService, Mockito.times(1)).deleteById(userId);
+        Mockito.verify(userCashService, Mockito.times(1)).deleteById(userId);
     }
 }

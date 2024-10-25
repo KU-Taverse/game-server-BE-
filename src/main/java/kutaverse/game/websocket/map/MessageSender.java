@@ -22,7 +22,7 @@ public class MessageSender {
     }
     @Scheduled(fixedRate = 33) // 0.033초마다 실행
     public void sendMessageToClients() {
-        userService.findAllByTime(durationTime)
+        userService.findAllByTime()
                 .collectList()
                 .map(JsonUtil::userListToJson)
                 .subscribe(this::sendUsersAsJsonToClients);
