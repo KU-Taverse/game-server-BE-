@@ -18,9 +18,14 @@ public class ChatService {
     public Mono<Chat> save(ChatRequestDto chatRequestDto){
         Chat chat=Chat.builder()
                 .senderUserId(chatRequestDto.getUserId())
+                .nickname(chatRequestDto.getNickname())
                 .content(chatRequestDto.getContent())
                 .createdAt(LocalDateTime.now())
                 .build();
-        return chatRepository.insert(chat);
+        return chatRepository.insert(chat)
+                .doOnNext(savedChat -> {
+                    System.out.println("Saved chat: " + savedChat);
+                });
+
     }
 }
