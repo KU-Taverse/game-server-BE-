@@ -53,10 +53,13 @@ public class ChatWebSocketHandler implements WebSocketHandler {
                     });
                 })
                 .flatMap(data->{
-                    return Flux.fromIterable(sessions.values())
-                            .flatMap(wsSession -> {
+                    return Flux.fromIterable(sessions.entrySet())
+                            .flatMap(entry -> {
+                                WebSocketSession wsSession = entry.getValue();
+                                String key = entry.getKey();
                                 if(!wsSession.isOpen()) {
                                     wsSession.close().subscribe();
+                                    sessions.remove(key);
                                     return Mono.never();
                                 }
                                 else
