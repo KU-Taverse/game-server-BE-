@@ -1,6 +1,7 @@
 package kutaverse.game.websocket.chat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kutaverse.game.chat.domain.Chat;
 import kutaverse.game.chat.service.ChatService;
 import kutaverse.game.websocket.chat.dto.request.ChatRequestDto;
 import kutaverse.game.websocket.chat.dto.response.ChatResponseDto;
@@ -9,6 +10,7 @@ import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +28,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
     public Mono<Void> handle(WebSocketSession session) {
         sessions.put(session.getId(), session);
         ObjectMapper objectMapper=new ObjectMapper();
+
         session.receive()
                 .map(WebSocketMessage::getPayloadAsText)
                 .map(data-> {
@@ -36,19 +39,30 @@ public class ChatWebSocketHandler implements WebSocketHandler {
                     }
                 })
                 .doOnNext(System.out::println)
-                .map(chatRequest -> {
-                    chatService.save(chatRequest).subscribe();
-                    ChatResponseDto response = new ChatResponseDto(chatRequest.getUserId(), chatRequest.getNickname(), chatRequest.getContent());
-                    try {
-                        return objectMapper.writeValueAsString(response);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
+                .flatMap(chatRequest -> {
+                    //chatService.save(chatRequest).subscribe();
+                    return chatService.save(chatRequest).map(savedChat -> {
+                        // 저장된 결과를 기반으로 응답 생성
+                        System.out.println(savedChat.getId());
+                        ChatResponseDto response = new ChatResponseDto(savedChat.getSenderUserId(), savedChat.getNickname(), savedChat.getContent());
+                        try {
+                            return objectMapper.writeValueAsString(response);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
                 })
                 .flatMap(data->{
-                    Flux.fromIterable(sessions.values())
-                            .flatMap(wsSession -> wsSession.send(Mono.just(wsSession.textMessage(data)))).subscribe();
-                    return Mono.never();
+                    return Flux.fromIterable(sessions.values())
+                            .flatMap(wsSession -> {
+                                if(!wsSession.isOpen()) {
+                                    wsSession.close().subscribe();
+                                    return Mono.never();
+                                }
+                                else
+                                    return wsSession.send(Mono.just(wsSession.textMessage(data)));
+                            }).then();
+                    //return Mono.never();
                 })
                 .subscribe();
 
