@@ -40,6 +40,8 @@ public class MatchingMaker {
                         .doOnSuccess(aVoid -> log.info("Player 2 세션이 성공적으로 닫혔습니다."))
                         .doOnError(e -> log.error("Player 2 세션 닫기 실패", e))
                         .subscribe();
+
+                MatchingQueue.deleteSession(player1.getKey(),player2.getKey());
             }
             else{
                 if(player1.getValue().isOpen()){
