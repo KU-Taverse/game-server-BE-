@@ -40,5 +40,13 @@ public class MatchingQueue {
         queueing.addFirst(player);
     }
 
+    public static void deleteSession(String userId1,String userId2){
+        WebSocketSession session1 = sessionMap.remove(userId1);
+        WebSocketSession session2 = sessionMap.remove(userId2);
+        queueing.removeIf(entry ->
+                entry.getKey().equals(userId1) || entry.getKey().equals(userId2)
+        );
+    }
+
 
 }
