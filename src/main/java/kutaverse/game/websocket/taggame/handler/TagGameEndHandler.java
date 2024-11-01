@@ -1,5 +1,7 @@
 package kutaverse.game.websocket.taggame.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kutaverse.game.taggame.domain.Role;
 import kutaverse.game.taggame.repository.TagGameUserRepository;
 import kutaverse.game.taggame.service.TagGameUserService;
@@ -18,7 +20,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class TagGameEndHandler implements CustomHandler {
 
-    private final TagGameUserService tagGameUserService;
+    private ObjectMapper objectMapper = new ObjectMapper();
     private final TagGameUserRepository tagGameUserRepository;
 
     @Override
@@ -63,12 +65,20 @@ public class TagGameEndHandler implements CustomHandler {
     }
 
     private void sendWinMessage(WebSocketSession webSocketSession) {
-        WebSocketMessage webSocketMessage = webSocketSession.textMessage("승리하였습니다.");
-        webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
+        String winMessage = "승리하였습니다.";
+        try {
+            String jsonMessage = objectMapper.writeValueAsString(winMessage);
+            WebSocketMessage webSocketMessage = webSocketSession.textMessage(jsonMessage);
+            webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
+        } catch (JsonProcessingException e) {}
     }
 
     private void sendLoseMessage(WebSocketSession webSocketSession) {
-        WebSocketMessage webSocketMessage = webSocketSession.textMessage("패배하였습니다.");
-        webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
+        String winMessage = "패배하였습니다.";
+        try {
+            String jsonMessage = objectMapper.writeValueAsString(winMessage);
+            WebSocketMessage webSocketMessage = webSocketSession.textMessage(jsonMessage);
+            webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
+        } catch (JsonProcessingException e) {}
     }
 }
