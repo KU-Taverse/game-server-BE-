@@ -8,6 +8,7 @@ import kutaverse.game.taggame.service.TagGameUserService;
 import kutaverse.game.websocket.taggame.dto.request.TagGameEndRequest;
 import kutaverse.game.websocket.taggame.dto.request.TagGameRequest;
 import kutaverse.game.websocket.taggame.dto.request.TagGameResultStatus;
+import kutaverse.game.websocket.taggame.dto.response.TagGameEndResponse;
 import kutaverse.game.websocket.taggame.util.TagGameRoom;
 import kutaverse.game.websocket.taggame.util.TagGameRoomManager;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +67,9 @@ public class TagGameEndHandler implements CustomHandler {
 
     private void sendWinMessage(WebSocketSession webSocketSession) {
         String winMessage = "승리하였습니다.";
+        TagGameEndResponse tagGameEndResponse = TagGameEndResponse.toDto(winMessage);
         try {
-            String jsonMessage = objectMapper.writeValueAsString(winMessage);
+            String jsonMessage = objectMapper.writeValueAsString(tagGameEndResponse);
             WebSocketMessage webSocketMessage = webSocketSession.textMessage(jsonMessage);
             webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
         } catch (JsonProcessingException e) {}
@@ -75,8 +77,9 @@ public class TagGameEndHandler implements CustomHandler {
 
     private void sendLoseMessage(WebSocketSession webSocketSession) {
         String winMessage = "패배하였습니다.";
+        TagGameEndResponse tagGameEndResponse = TagGameEndResponse.toDto(winMessage);
         try {
-            String jsonMessage = objectMapper.writeValueAsString(winMessage);
+            String jsonMessage = objectMapper.writeValueAsString(tagGameEndResponse);
             WebSocketMessage webSocketMessage = webSocketSession.textMessage(jsonMessage);
             webSocketSession.send(Mono.just(webSocketMessage)).subscribe();
         } catch (JsonProcessingException e) {}
