@@ -43,10 +43,10 @@ public class TagGameEndHandler implements CustomHandler {
             tagGameUserRepository.get(player.getKey())
                     .doOnNext( tagGameUser -> {
                         if(tagGameUser.getRole() == Role.TAGGER){
-                            sendLoseMessage(player.getValue());
+                            sendWinMessage(player.getValue());
                             return;
                         }
-                        sendWinMessage(player.getValue());
+                        sendLoseMessage(player.getValue());
                     })
                     .subscribe();
         });
@@ -57,10 +57,10 @@ public class TagGameEndHandler implements CustomHandler {
             tagGameUserRepository.get(player.getKey())
                     .doOnNext( tagGameUser -> {
                         if(tagGameUser.getRole() == Role.PLAYER){
-                            sendLoseMessage(player.getValue());
+                            sendWinMessage(player.getValue());
                             return;
                         }
-                        sendWinMessage(player.getValue());
+                        sendLoseMessage(player.getValue());
                     }).subscribe();
         });
     }
