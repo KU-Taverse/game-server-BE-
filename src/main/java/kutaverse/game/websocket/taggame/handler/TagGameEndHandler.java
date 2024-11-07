@@ -66,7 +66,7 @@ public class TagGameEndHandler implements CustomHandler {
     }
 
     private void sendWinMessage(WebSocketSession webSocketSession) {
-        String winMessage = "승리하였습니다.";
+        String winMessage = "win";
         TagGameEndResponse tagGameEndResponse = TagGameEndResponse.toDto(winMessage);
         try {
             String jsonMessage = objectMapper.writeValueAsString(tagGameEndResponse);
@@ -76,7 +76,7 @@ public class TagGameEndHandler implements CustomHandler {
     }
 
     private void sendLoseMessage(WebSocketSession webSocketSession) {
-        String winMessage = "패배하였습니다.";
+        String winMessage = "lose";
         TagGameEndResponse tagGameEndResponse = TagGameEndResponse.toDto(winMessage);
         try {
             String jsonMessage = objectMapper.writeValueAsString(tagGameEndResponse);
