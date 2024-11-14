@@ -25,11 +25,7 @@ public class UserRequestDto {
     private Double velocityZ;
     private Status status;
     private int aurora; //오로라
-
-    @JsonProperty("title_background")
     private int titleBackground; //배경
-
-    @JsonProperty("title_color")
     private int titleColor; //이름
 
     public User toEntity(){
