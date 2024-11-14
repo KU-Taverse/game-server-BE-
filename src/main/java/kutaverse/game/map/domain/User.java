@@ -40,7 +40,9 @@ public class User {
 
     private int aurora; //오로라
 
-    private int title; //칭호
+    private int titleBackground; //배경
+
+    private int titleColor; //이름
 
     private Double velocityX;
 
@@ -58,7 +60,7 @@ public class User {
     public User(String userId, Double positionX, Double positionY, Double positionZ,
                 Double rotationPitch, Double rotationYaw, Double rotationRoll,
                 Double velocityX, Double velocityY, Double velocityZ, Status status,
-                int aurora, int title) {
+                int aurora, int title_background,int title_color) {
         this.userId = userId;
         this.positionX = Math.round(positionX*1000.0)/1000.0;
         this.positionY = Math.round(positionY*1000.0)/1000.0;;
@@ -68,7 +70,8 @@ public class User {
         this.rotationRoll = Math.round(rotationRoll*1000.0)/1000.0;
         this.status = status;
         this.aurora=aurora;
-        this.title=title;
+        this.titleBackground=title_background;
+        this.titleColor=title_color;
         this.velocityX = Math.round(velocityX*1000.0)/1000.0;
         this.velocityY = Math.round(velocityY*1000.0)/1000.0;;
         this.velocityZ = Math.round(velocityZ*1000.0)/1000.0;

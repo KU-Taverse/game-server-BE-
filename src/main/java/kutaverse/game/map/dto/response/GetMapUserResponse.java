@@ -25,7 +25,8 @@ public class GetMapUserResponse {
     private Double velocityZ;
     private Status status;
     private int aurora; //오로라
-    private int title; //칭호
+    private int titleBackground; //배경
+    private int titleColor; //이름
 
     public static GetMapUserResponse toDto(User user){
         return builder()
@@ -41,7 +42,8 @@ public class GetMapUserResponse {
                 .velocityZ(user.getVelocityZ())
                 .status(user.getStatus())
                 .aurora(user.getAurora())
-                .title(user.getTitle())
+                .titleBackground(user.getTitleBackground())
+                .titleColor(user.getTitleColor())
                 .build();
     }
 }
