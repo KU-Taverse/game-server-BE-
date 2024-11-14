@@ -36,8 +36,8 @@ public class UserControllerTest {
     @Autowired
     UserCashRepository userCashRepository;
 
-    User user1=new User("11",2.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP,1,1);
-    User user2=new User("22",1.1,1.1,1.1,1.1,1.1,1.1,2.2,2.2,2.2, Status.STAND,1,1);
+    User user1=new User("11",2.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP,1,1,1);
+    User user2=new User("22",1.1,1.1,1.1,1.1,1.1,1.1,2.2,2.2,2.2, Status.STAND,1,1,1);
     GetMapUserResponse userResponse1=GetMapUserResponse.toDto(user1);
 
     @PostConstruct
@@ -86,7 +86,7 @@ public class UserControllerTest {
     @DisplayName("post 요청으로 db에 저장할 수 있다.")
     public void test3(){
         webTestClient = WebTestClient.bindToApplicationContext(applicationContext).configureClient().responseTimeout(Duration.ofHours(1)).build();
-        User user3=new User("3",1.234,2.345,3.4567,1.1,1.1,1.1,1.1,1.1,1.1, Status.NOTUSE,1,1);
+        User user3=new User("3",1.234,2.345,3.4567,1.1,1.1,1.1,1.1,1.1,1.1, Status.NOTUSE,1,1,1);
         PostMapUserRequest postMapUserRequest=PostMapUserRequest.toEntity(user3);
         PostMapUserResponse postMapUserResponse=PostMapUserResponse.toDto(user3);
         webTestClient.post()

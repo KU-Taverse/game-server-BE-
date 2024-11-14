@@ -46,8 +46,8 @@ public class MapWebsocketTest {
     @Autowired
     UserCashRepository userCashRepository;
 
-    User user1=new User("1",2.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP,1,1);
-    User user2=new User("2",1.1,1.1,1.1,1.1,1.1,1.1,2.2,2.2,2.2, Status.STAND,1,1);
+    User user1=new User("1",2.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1, Status.JUMP,1,1,1);
+    User user2=new User("2",1.1,1.1,1.1,1.1,1.1,1.1,2.2,2.2,2.2, Status.STAND,1,1,1);
 
     UserResponseDto userResponseDto1=UserResponseDto.toDto(user1);
     UserResponseDto userResponseDto2=UserResponseDto.toDto(user2);
@@ -90,7 +90,7 @@ public class MapWebsocketTest {
     public void test2() throws URISyntaxException {
         userCashRepository.delete(user1.getUserId()).block();
         userCashRepository.delete(user2.getUserId()).block();
-        User notUseUser = new User("2", 1.1, 1.1, 1.1, 1.1, 1.1, 1.1,1.1,1.1,1.1, Status.NOTUSE,1,1);
+        User notUseUser = new User("2", 1.1, 1.1, 1.1, 1.1, 1.1, 1.1,1.1,1.1,1.1, Status.NOTUSE,1,1,1);
         userCashRepository.add(notUseUser).block();
 
         int connectionTimeSecond=1;
