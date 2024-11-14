@@ -1,5 +1,6 @@
 package kutaverse.game.websocket.map.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import kutaverse.game.map.domain.Status;
 import kutaverse.game.map.domain.User;
 import kutaverse.game.map.domain.MapRequestType;
@@ -24,7 +25,12 @@ public class UserRequestDto {
     private Double velocityZ;
     private Status status;
     private int aurora; //오로라
-    private int title; //칭호
+
+    @JsonProperty("title_background")
+    private int titleBackground; //배경
+
+    @JsonProperty("title_color")
+    private int titleColor; //이름
 
     public User toEntity(){
         return User.builder()
@@ -40,7 +46,8 @@ public class UserRequestDto {
                 .velocityZ(velocityZ)
                 .status(status)
                 .aurora(aurora)
-                .title(title)
+                .title_background(titleBackground)
+                .title_color(titleColor)
                 .build();
     }
 }
